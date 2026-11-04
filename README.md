@@ -1,166 +1,165 @@
-# PrismaBank
 # 💳 Prisma Bank
 
-> Dashboard de pagamentos feito com **HTML, CSS e JavaScript puro**.
-> Projeto acadêmico desenvolvido no **1º período da faculdade**.
+> A payments dashboard built with **plain HTML, CSS and JavaScript**.
+> Academic project developed during the **1st semester of college**.
 
-![Status](https://img.shields.io/badge/status-em%20planejamento-yellow)
+![Status](https://img.shields.io/badge/status-planning-yellow)
 ![HTML](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![CSS](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
 
 ---
 
-## 📌 Sobre o projeto
+## 📌 About the project
 
-O **Prisma Bank** é o design de um **dashboard de pagamentos**, ou seja, um painel onde o usuário pode ver seu saldo, suas vendas, as transações recentes e outras informações financeiras de forma visual e organizada.
+**Prisma Bank** is the design of a **payments dashboard**: a panel where the user can see their balance, sales, recent transactions and other financial information in a clear, visual way.
 
-A ideia é se inspirar em plataformas de pagamento que já existem no mercado (como a [AmploPay](https://www.amplopay.com.br)) e criar a **nossa própria versão**, com identidade visual própria.
+The idea is to take inspiration from payment platforms that already exist (such as [AmploPay](https://www.amplopay.com.br)) and build **our own version** with its own visual identity.
 
-⚠️ **Importante:** este projeto é **apenas visual (front-end)**. Não terá banco de dados, login de verdade, nem pagamentos reais. Todos os números e informações mostrados na tela serão **dados fictícios**, só para deixar o design o mais próximo possível de um sistema real.
-
----
-
-## 🎯 Objetivos
-
-- Praticar a estrutura de páginas com **HTML**.
-- Aprender a estilizar e organizar o layout com **CSS** (Flexbox e Grid).
-- Usar **JavaScript** para deixar a página um pouco mais interativa.
-- Trabalhar em equipe usando **Git e GitHub**.
-- Criar um projeto bonito para colocar no portfólio. 🚀
+⚠️ **Important:** this project is **visual only (front-end)**. There will be no database, no real login and no real payments. Every number and piece of information on the screen will be **fake data**, used only to make the design look as close as possible to a real system.
 
 ---
 
-## 🛠️ Tecnologias
+## 🎯 Goals
 
-| Tecnologia | Para que vamos usar |
-|------------|---------------------|
-| **HTML5** | Estrutura da página (menu, cards, tabelas, etc.) |
-| **CSS3** | Cores, fontes, layout, responsividade e animações simples |
-| **JavaScript** | Interações básicas (abrir/fechar menu, trocar abas, mostrar/ocultar saldo...) |
-
-Não vamos usar frameworks (como React, Bootstrap ou Tailwind). A ideia é aprender a base primeiro.
+- Practice page structure with **HTML**.
+- Learn how to style and lay out pages with **CSS** (Flexbox and Grid).
+- Use **JavaScript** to make the page a bit more interactive.
+- Work as a team using **Git and GitHub**.
+- Build a good-looking project for our portfolio. 🚀
 
 ---
 
-## 🖥️ O que vai ter no dashboard
+## 🛠️ Technologies
 
-A planta abaixo é o que **pretendemos** fazer. Pode mudar um pouco durante o desenvolvimento.
+| Technology | What we'll use it for |
+|------------|-----------------------|
+| **HTML5** | Page structure (menu, cards, tables, etc.) |
+| **CSS3** | Colors, fonts, layout, responsiveness and simple animations |
+| **JavaScript** | Basic interactions (open/close menu, switch tabs, show/hide balance...) |
 
-### 1. Menu lateral (Sidebar)
-- Logo do Prisma Bank
-- Links: **Dashboard**, **Transações**, **Pagamentos**, **Clientes**, **Relatórios**, **Configurações**
-- Botão de **Sair**
-
-### 2. Cabeçalho (Header)
-- Mensagem de boas-vindas (ex: *"Olá, João 👋"*)
-- Campo de busca
-- Ícone de notificações
-- Foto/avatar do usuário
-
-### 3. Cards de resumo
-- 💰 **Saldo disponível** (com botão para mostrar/ocultar o valor 👁️)
-- 📈 **Vendas do dia / do mês**
-- ⏳ **Valores a receber**
-- 🔁 **Quantidade de transações**
-
-### 4. Gráfico de vendas
-- Um gráfico simples mostrando as vendas da semana ou do mês
-  *(pode ser feito com CSS/barras ou com uma biblioteca simples, se o professor permitir)*
-
-### 5. Tabela de transações recentes
-- Colunas: **Cliente**, **Data**, **Método** (Pix, Cartão, Boleto), **Valor** e **Status**
-- Status com cores:
-  - 🟢 Aprovado
-  - 🟡 Pendente
-  - 🔴 Recusado
-
-### 6. Ações rápidas
-- Botões como **Gerar Pix**, **Criar link de pagamento**, **Sacar** e **Transferir**
-  *(apenas visuais, ou abrindo um modal/pop-up simples)*
-
-### 7. Responsividade
-- O layout deve funcionar bem no **computador**, no **tablet** e no **celular**.
+We won't use frameworks (like React, Bootstrap or Tailwind). The goal is to learn the fundamentals first.
 
 ---
 
-## ✨ Interações com JavaScript (planejadas)
+## 🖥️ What the dashboard will include
 
-Coisas simples que queremos fazer com JS:
+This is what we **plan** to build. It may change a bit during development.
 
-- [ ] Mostrar/ocultar o saldo ao clicar no ícone de olho
-- [ ] Abrir e fechar o menu lateral no celular
-- [ ] Alternar entre **modo claro** e **modo escuro** 🌙
-- [ ] Filtrar a tabela de transações por status
-- [ ] Abrir um modal ao clicar em "Gerar Pix"
-- [ ] Mostrar a data atual no cabeçalho
+### 1. Sidebar
+- Prisma Bank logo
+- Links: **Dashboard**, **Transactions**, **Payments**, **Customers**, **Reports**, **Settings**
+- **Log out** button
+
+### 2. Header
+- Welcome message (e.g. *"Hi, John 👋"*)
+- Search field
+- Notifications icon
+- User photo/avatar
+
+### 3. Summary cards
+- 💰 **Available balance** (with a button to show/hide the amount 👁️)
+- 📈 **Sales today / this month**
+- ⏳ **Amount to receive**
+- 🔁 **Number of transactions**
+
+### 4. Sales chart
+- A simple chart showing sales for the week or month
+  *(can be made with CSS bars or a simple library, if the professor allows it)*
+
+### 5. Recent transactions table
+- Columns: **Customer**, **Date**, **Method** (Pix, Card, Boleto), **Amount** and **Status**
+- Color-coded status:
+  - 🟢 Approved
+  - 🟡 Pending
+  - 🔴 Declined
+
+### 6. Quick actions
+- Buttons like **Generate Pix**, **Create payment link**, **Withdraw** and **Transfer**
+  *(visual only, or opening a simple modal/pop-up)*
+
+### 7. Responsiveness
+- The layout should work well on **desktop**, **tablet** and **mobile**.
 
 ---
 
-## 📁 Estrutura de pastas (prevista)
+## ✨ JavaScript interactions (planned)
+
+Simple things we want to do with JS:
+
+- [ ] Show/hide the balance when clicking the eye icon
+- [ ] Open and close the sidebar on mobile
+- [ ] Toggle between **light mode** and **dark mode** 🌙
+- [ ] Filter the transactions table by status
+- [ ] Open a modal when clicking "Generate Pix"
+- [ ] Show the current date in the header
+
+---
+
+## 📁 Folder structure (planned)
 
 ```
 PrismaBank/
-├── index.html        # Página principal do dashboard
+├── index.html        # Main dashboard page
 ├── css/
-│   └── style.css     # Estilos do site
+│   └── style.css     # Site styles
 ├── js/
-│   └── script.js     # Interações em JavaScript
-├── img/              # Logo, ícones e imagens
-└── README.md         # Este arquivo
+│   └── script.js     # JavaScript interactions
+├── img/              # Logo, icons and images
+└── README.md         # This file
 ```
 
 ---
 
-## 🎨 Identidade visual (ideia inicial)
+## 🎨 Visual identity (initial idea)
 
-- **Nome:** Prisma Bank — o "prisma" lembra luz e cores, então a ideia é usar **gradientes** no visual.
-- **Cores:** tons de roxo/azul com detalhes em gradiente, fundo escuro ou claro.
-- **Fonte:** algo moderno e limpo, como *Poppins* ou *Inter* (Google Fonts).
-- **Estilo:** cards com cantos arredondados, sombras suaves e bastante espaço em branco.
+- **Name:** Prisma Bank — "prisma" (prism) suggests light and color, so the idea is to use **gradients** in the design.
+- **Colors:** purple/blue tones with gradient accents, on a dark or light background.
+- **Font:** something modern and clean, like *Poppins* or *Inter* (Google Fonts).
+- **Style:** rounded cards, soft shadows and plenty of white space.
 
-*(Ainda vamos definir a paleta final.)*
-
----
-
-## 🗺️ Etapas do desenvolvimento
-
-- [x] Criar o repositório no GitHub
-- [x] Escrever o README
-- [ ] Definir cores, fontes e logo
-- [ ] Fazer um rascunho do layout (papel ou Figma)
-- [ ] Montar a estrutura em HTML
-- [ ] Estilizar com CSS
-- [ ] Deixar responsivo
-- [ ] Adicionar as interações com JavaScript
-- [ ] Revisar e publicar (ex: GitHub Pages)
+*(We still need to pick the final palette.)*
 
 ---
 
-## ▶️ Como rodar o projeto
+## 🗺️ Development steps
 
-Como é só HTML, CSS e JS, não precisa instalar nada:
+- [x] Create the GitHub repository
+- [x] Write the README
+- [ ] Choose colors, fonts and logo
+- [ ] Sketch the layout (on paper or in Figma)
+- [ ] Build the HTML structure
+- [ ] Style it with CSS
+- [ ] Make it responsive
+- [ ] Add the JavaScript interactions
+- [ ] Review and publish (e.g. GitHub Pages)
 
-1. Baixe ou clone o repositório:
+---
+
+## ▶️ How to run the project
+
+Since it's just HTML, CSS and JS, there's nothing to install:
+
+1. Download or clone the repository:
    ```bash
    git clone https://github.com/gildonetto/PrismaBank.git
    ```
-2. Abra a pasta do projeto.
-3. Dê dois cliques no arquivo `index.html` para abrir no navegador.
+2. Open the project folder.
+3. Double-click `index.html` to open it in your browser.
 
-> 💡 Dica: no VS Code, a extensão **Live Server** atualiza a página automaticamente sempre que você salva.
+> 💡 Tip: in VS Code, the **Live Server** extension reloads the page automatically every time you save.
 
 ---
 
-## 👥 Equipe
+## 👥 Team
 
-| Nome | GitHub |
+| Name | GitHub |
 |------|--------|
 | Gildo Neto | [@gildonetto](https://github.com/gildonetto) |
-| *(adicionar integrantes)* | |
+| *(add team members)* | |
 
 ---
 
-## 📚 Observações
+## 📚 Notes
 
-Este é um projeto **acadêmico**, feito para fins de estudo. O Prisma Bank **não é um banco real** e não tem ligação com nenhuma instituição financeira. A AmploPay foi usada apenas como **referência de inspiração** para o layout.
+This is an **academic** project made for study purposes. Prisma Bank **is not a real bank** and is not affiliated with any financial institution. AmploPay was used only as a **design inspiration reference**.
