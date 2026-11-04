@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0b0e">
+  <title>Prisma Bank | Início</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Ícones reutilizados em toda a página com <use href="#i-..."> -->
+  <svg class="sprite" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7"/><path d="M6 9.5V20h12V9.5"/><path d="M10 20v-6h4v6"/></symbol>
+    <symbol id="i-pix" viewBox="0 0 24 24"><path d="M12 3l9 9-9 9-9-9z"/><path d="M8 12l2.5-2.5a2 2 0 0 1 3 0L16 12l-2.5 2.5a2 2 0 0 1-3 0z"/></symbol>
+    <symbol id="i-transfer" viewBox="0 0 24 24"><path d="M4 8h15"/><path d="M15 4l4 4-4 4"/><path d="M20 16H5"/><path d="M9 12l-4 4 4 4"/></symbol>
+    <symbol id="i-statement" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9.5 8h5"/><path d="M9.5 12h5"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 10h18"/><path d="M7 15h3"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h9"/><path d="M17 7h3"/><circle cx="15" cy="7" r="2"/><path d="M4 17h3"/><path d="M11 17h9"/><circle cx="9" cy="17" r="2"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 10a6 6 0 0 1 12 0c0 5 2 6.5 2 6.5H4S6 15 6 10z"/><path d="M10 20a2.2 2.2 0 0 0 4 0"/></symbol>
+    <symbol id="i-barcode" viewBox="0 0 24 24"><path d="M4 6v12"/><path d="M8 6v12"/><path d="M12 6v12"/><path d="M15 6v12"/><path d="M20 6v12"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/></symbol>
+    <symbol id="i-in" viewBox="0 0 24 24"><path d="M17 7L7 17"/><path d="M7 9v8h8"/></symbol>
+    <symbol id="i-out" viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M9 7h8v8"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11"/><path d="M17.5 6.5l-11 11"/></symbol>
+  </svg>
+
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="app">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="Prisma Bank, início">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path class="brand-prism" d="M16 5l11 20H5z"/>
+          <path class="brand-beam" d="M1 21l10.5-4"/>
+          <path class="brand-ray-a" d="M18.5 14.5L31 10"/>
+          <path class="brand-ray-b" d="M20 17.5L31 17"/>
+        </svg>
+        <span class="brand-name">Prisma Bank</span>
+      </a>
+
+      <nav aria-label="Menu principal">
+        <ul class="nav">
+          <li><a class="nav-item" href="#" aria-current="page" aria-label="Início"><svg class="icon"><use href="#i-home"/></svg><span class="label-full">Início</span><span class="label-short">Início</span></a></li>
+          <li><a class="nav-item" href="#" aria-label="Pix"><svg class="icon"><use href="#i-pix"/></svg><span class="label-full">Pix</span><span class="label-short">Pix</span></a></li>
+          <li><a class="nav-item" href="#" aria-label="Transferências"><svg class="icon"><use href="#i-transfer"/></svg><span class="label-full">Transferências</span><span class="label-short">Transf.</span></a></li>
+          <li><a class="nav-item" href="#" aria-label="Extrato"><svg class="icon"><use href="#i-statement"/></svg><span class="label-full">Extrato</span><span class="label-short">Extrato</span></a></li>
+          <li><a class="nav-item" href="#" aria-label="Cartões"><svg class="icon"><use href="#i-card"/></svg><span class="label-full">Cartões</span><span class="label-short">Cartões</span></a></li>
+          <li class="nav-last"><a class="nav-item" href="#" aria-label="Configurações"><svg class="icon"><use href="#i-settings"/></svg><span class="label-full">Configurações</span><span class="label-short">Config.</span></a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="page">
+      <header class="topbar">
+        <div class="balance">
+          <span class="balance-label">Saldo total</span>
+          <strong class="balance-value"><span class="balance-currency">R$</span> 24.860,35</strong>
+        </div>
+
+        <div class="topbar-actions">
+          <!-- <details> abre e fecha o painel sem precisar de JavaScript -->
+          <details class="notifications">
+            <summary class="icon-button" aria-label="Notificações, 3 novas">
+              <svg class="icon"><use href="#i-bell"/></svg>
+              <span class="badge" aria-hidden="true">3</span>
+            </summary>
+            <div class="notifications-panel">
+              <h2 class="notifications-title">Notificações</h2>
+              <ul class="notifications-list">
+                <li><strong>Pix recebido de Lucas Ferreira</strong><span>R$ 850,00 · hoje, 09:42</span></li>
+                <li><strong>Conta de luz vence hoje</strong><span>R$ 184,37 · pagamento pendente</span></li>
+                <li><strong>Pix para Studio Norte recusado</strong><span>R$ 96,50 · 1 de novembro</span></li>
+              </ul>
+            </div>
+          </details>
+          <div class="avatar" role="img" aria-label="Perfil de Ana Souza">AS</div>
+        </div>
+      </header>
+
+      <main class="dashboard" id="conteudo">
+        <section class="quick" aria-labelledby="quick-title">
+          <h2 class="visually-hidden" id="quick-title">Atalhos rápidos</h2>
+          <a class="action action-primary" href="#">
+            <span class="action-icon"><svg class="icon"><use href="#i-pix"/></svg></span>
+            <span class="action-text"><strong>Pix</strong><small>Envie e receba na hora</small></span>
+          </a>
+          <a class="action" href="#">
+            <span class="action-icon"><svg class="icon"><use href="#i-transfer"/></svg></span>
+            <span class="action-text"><strong>Transferir</strong><small>Para qualquer banco</small></span>
+          </a>
+          <a class="action" href="#">
+            <span class="action-icon"><svg class="icon"><use href="#i-barcode"/></svg></span>
+            <span class="action-text"><strong>Pagar</strong><small>Boletos e contas</small></span>
+          </a>
+          <a class="action" href="#">
+            <span class="action-icon"><svg class="icon"><use href="#i-phone"/></svg></span>
+            <span class="action-text"><strong>Recarregar</strong><small>Celular e transporte</small></span>
+          </a>
+        </section>
+
+        <section class="card spending" aria-labelledby="spending-title">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title" id="spending-title">Gastos mensais</h2>
+              <p class="card-subtitle">Últimos 6 meses fechados</p>
+            </div>
+            <dl class="spending-stats">
+              <div>
+                <dt>Outubro</dt>
+                <dd>R$ 3.810 <span class="delta">+12% sobre setembro</span></dd>
+              </div>
+              <div>
+                <dt><span class="avg-key" aria-hidden="true"></span>Média</dt>
+                <dd>R$ 3.200</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="plot">
+            <div class="gridline" style="--y:100" aria-hidden="true"><span>R$ 4 mil</span></div>
+            <div class="gridline" style="--y:50" aria-hidden="true"><span>R$ 2 mil</span></div>
+            <div class="gridline gridline-base" style="--y:0" aria-hidden="true"><span>R$ 0</span></div>
+
+            <!-- --v é a altura da barra em %: valor ÷ R$ 4.000 (topo da escala) -->
+            <ol class="bars" aria-label="Gastos por mês">
+              <li class="bar-item" style="--v:66" tabindex="0"><span class="bar"></span><span class="tip">Maio: R$ 2.640</span><span class="month" aria-hidden="true">Mai</span></li>
+              <li class="bar-item" style="--v:78" tabindex="0"><span class="bar"></span><span class="tip">Junho: R$ 3.120</span><span class="month" aria-hidden="true">Jun</span></li>
+              <li class="bar-item" style="--v:69.5" tabindex="0"><span class="bar"></span><span class="tip">Julho: R$ 2.780</span><span class="month" aria-hidden="true">Jul</span></li>
+              <li class="bar-item" style="--v:86.5" tabindex="0"><span class="bar"></span><span class="tip">Agosto: R$ 3.460</span><span class="month" aria-hidden="true">Ago</span></li>
+              <li class="bar-item" style="--v:84.75" tabindex="0"><span class="bar"></span><span class="tip">Setembro: R$ 3.390</span><span class="month" aria-hidden="true">Set</span></li>
+              <li class="bar-item is-current" style="--v:95.25" tabindex="0"><span class="bar"></span><span class="tip">Outubro: R$ 3.810</span><span class="month" aria-hidden="true">Out</span></li>
+            </ol>
+
+            <div class="avg-line" style="--y:80" aria-hidden="true"></div>
+          </div>
+        </section>
+
+        <section class="card statement" aria-labelledby="statement-title">
+          <div class="card-header card-header-center">
+            <h2 class="card-title" id="statement-title">Extrato recente</h2>
+            <a class="text-link" href="#">Ver extrato completo</a>
+          </div>
+
+          <table class="transactions">
+            <thead>
+              <tr>
+                <th scope="col">Descrição</th>
+                <th scope="col" class="col-detail">Data</th>
+                <th scope="col" class="col-detail">Tipo</th>
+                <th scope="col" class="col-detail">Status</th>
+                <th scope="col" class="col-amount">Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="tx">
+                    <span class="tx-icon tx-icon-in"><svg class="icon" role="img" aria-label="Entrada"><use href="#i-in"/></svg></span>
+                    <div class="tx-text"><strong>Lucas Ferreira</strong><small class="tx-meta">Hoje, 09:42 · Pix · Concluído</small></div>
+                  </div>
+                </td>
+                <td class="col-detail">Hoje, 09:42</td>
+                <td class="col-detail">Pix</td>
+                <td class="col-detail"><span class="status status-done"><svg class="icon"><use href="#i-check"/></svg>Concluído</span></td>
+                <td class="col-amount amount-in">+ R$ 850,00</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="tx">
+                    <span class="tx-icon"><svg class="icon" role="img" aria-label="Saída"><use href="#i-out"/></svg></span>
+                    <div class="tx-text"><strong>Supermercado Aurora</strong><small class="tx-meta">Hoje, 08:15 · Cartão · Concluído</small></div>
+                  </div>
+                </td>
+                <td class="col-detail">Hoje, 08:15</td>
+                <td class="col-detail">Cartão</td>
+                <td class="col-detail"><span class="status status-done"><svg class="icon"><use href="#i-check"/></svg>Concluído</span></td>
+                <td class="col-amount">− R$ 212,90</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="tx">
+                    <span class="tx-icon"><svg class="icon" role="img" aria-label="Saída"><use href="#i-out"/></svg></span>
+                    <div class="tx-text"><strong>Conta de luz</strong><small class="tx-meta">3 nov · Boleto · <em class="meta-pending">Pendente</em></small></div>
+                  </div>
+                </td>
+                <td class="col-detail">3 nov</td>
+                <td class="col-detail">Boleto</td>
+                <td class="col-detail"><span class="status status-pending"><svg class="icon"><use href="#i-clock"/></svg>Pendente</span></td>
+                <td class="col-amount">− R$ 184,37</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="tx">
+                    <span class="tx-icon"><svg class="icon" role="img" aria-label="Saída"><use href="#i-out"/></svg></span>
+                    <div class="tx-text"><strong>Renata Lima</strong><small class="tx-meta">3 nov · TED · Concluído</small></div>
+                  </div>
+                </td>
+                <td class="col-detail">3 nov</td>
+                <td class="col-detail">TED</td>
+                <td class="col-detail"><span class="status status-done"><svg class="icon"><use href="#i-check"/></svg>Concluído</span></td>
+                <td class="col-amount">− R$ 1.200,00</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="tx">
+                    <span class="tx-icon"><svg class="icon" role="img" aria-label="Saída"><use href="#i-out"/></svg></span>
+                    <div class="tx-text"><strong>Recarga de celular</strong><small class="tx-meta">2 nov · Recarga · Concluído</small></div>
+                  </div>
+                </td>
+                <td class="col-detail">2 nov</td>
+                <td class="col-detail">Recarga</td>
+                <td class="col-detail"><span class="status status-done"><svg class="icon"><use href="#i-check"/></svg>Concluído</span></td>
+                <td class="col-amount">− R$ 30,00</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="tx">
+                    <span class="tx-icon"><svg class="icon" role="img" aria-label="Saída"><use href="#i-out"/></svg></span>
+                    <div class="tx-text"><strong>Studio Norte</strong><small class="tx-meta">1 nov · Pix · <em class="meta-failed">Recusado</em></small></div>
+                  </div>
+                </td>
+                <td class="col-detail">1 nov</td>
+                <td class="col-detail">Pix</td>
+                <td class="col-detail"><span class="status status-failed"><svg class="icon"><use href="#i-x"/></svg>Recusado</span></td>
+                <td class="col-amount amount-failed">− R$ 96,50</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
