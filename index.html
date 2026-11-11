@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prisma Bank | Início</title>
+
+  <!-- Fonte do Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS da equipe -->
+  <link rel="stylesheet" href="css/style-1.css">
+  <link rel="stylesheet" href="css/style-2.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- ===== MENU LATERAL ===== -->
+    <aside class="sidebar" id="sidebar">
+      <a href="#" class="logo">
+        <span class="logo-icone">△</span>
+        <span class="logo-texto">Prisma Bank</span>
+      </a>
+
+      <nav class="menu">
+        <ul>
+          <li><a href="#" class="menu-link ativo"><span class="icone">⌂</span> Início</a></li>
+          <li><a href="#" class="menu-link"><span class="icone">◈</span> Pix</a></li>
+          <li><a href="#" class="menu-link"><span class="icone">⇄</span> Transferências</a></li>
+          <li><a href="#" class="menu-link"><span class="icone">▤</span> Extrato</a></li>
+          <li><a href="#" class="menu-link"><span class="icone">▭</span> Cartões</a></li>
+        </ul>
+      </nav>
+
+      <a href="#" class="menu-link config"><span class="icone">⚙</span> Configurações</a>
+    </aside>
+
+    <div class="conteudo">
+
+      <!-- ===== TOPO ===== -->
+      <header class="topo">
+        <button class="btn-menu" id="btn-menu" aria-label="Abrir menu">☰</button>
+
+        <div class="saldo">
+          <span class="saldo-titulo">Saldo total</span>
+          <strong class="saldo-valor" id="saldo-valor"><small>R$</small> 24.860,35</strong>
+        </div>
+
+        <div class="topo-acoes">
+          <button class="btn-notificacao" id="btn-notificacao" aria-label="Notificações">
+            🔔
+            <span class="badge">3</span>
+          </button>
+          <div class="avatar">AS</div>
+        </div>
+      </header>
+
+      <!-- ===== PAINEL ===== -->
+      <main class="painel">
+
+        <!-- Ações rápidas -->
+        <section class="acoes-rapidas">
+          <a href="#" class="card-acao destaque" id="btn-pix">
+            <span class="card-icone">◈</span>
+            <h3>Pix</h3>
+            <p>Envie e receba na hora</p>
+          </a>
+
+          <a href="#" class="card-acao">
+            <span class="card-icone">⇄</span>
+            <h3>Transferir</h3>
+            <p>Para qualquer banco</p>
+          </a>
+
+          <a href="#" class="card-acao">
+            <span class="card-icone">▥</span>
+            <h3>Pagar</h3>
+            <p>Boletos e contas</p>
+          </a>
+
+          <a href="#" class="card-acao">
+            <span class="card-icone">▯</span>
+            <h3>Recarregar</h3>
+            <p>Celular e transporte</p>
+          </a>
+        </section>
+
+        <!-- Gráfico de gastos -->
+        <section class="card grafico">
+          <div class="grafico-topo">
+            <div>
+              <h2>Gastos mensais</h2>
+              <p class="texto-fraco">Últimos 6 meses fechados</p>
+            </div>
+
+            <div class="grafico-resumo">
+              <div>
+                <span class="texto-fraco">Outubro</span>
+                <strong>R$ 3.810</strong>
+                <small class="texto-fraco">+12% sobre setembro</small>
+              </div>
+              <div>
+                <span class="texto-fraco">-- Média</span>
+                <strong>R$ 3.200</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="grafico-area">
+            <div class="grafico-eixo">
+              <span>R$ 4 mil</span>
+              <span>R$ 2 mil</span>
+              <span>R$ 0</span>
+            </div>
+
+            <div class="grafico-barras">
+              <div class="barra-item">
+                <div class="barra" style="height: 65%;"></div>
+                <span>Mai</span>
+              </div>
+              <div class="barra-item">
+                <div class="barra" style="height: 75%;"></div>
+                <span>Jun</span>
+              </div>
+              <div class="barra-item">
+                <div class="barra" style="height: 68%;"></div>
+                <span>Jul</span>
+              </div>
+              <div class="barra-item">
+                <div class="barra" style="height: 83%;"></div>
+                <span>Ago</span>
+              </div>
+              <div class="barra-item">
+                <div class="barra" style="height: 82%;"></div>
+                <span>Set</span>
+              </div>
+              <div class="barra-item atual">
+                <div class="barra" style="height: 95%;" title="Outubro: R$ 3.810"></div>
+                <span>Out</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Extrato recente -->
+        <section class="card extrato">
+          <div class="extrato-topo">
+            <h2>Extrato recente</h2>
+            <a href="#" class="link-destaque">Ver extrato completo</a>
+          </div>
+
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th>Descrição</th>
+                <th>Data</th>
+                <th>Tipo</th>
+                <th>Status</th>
+                <th class="valor">Valor</th>
+              </tr>
+            </thead>
+
+            <tbody id="tabela-extrato">
+              <tr>
+                <td class="descricao"><span class="icone-mov entrada">↙</span> Lucas Ferreira</td>
+                <td>Hoje, 09:42</td>
+                <td>Pix</td>
+                <td><span class="status concluido">✓ Concluído</span></td>
+                <td class="valor positivo">+ R$ 850,00</td>
+              </tr>
+              <tr>
+                <td class="descricao"><span class="icone-mov saida">↗</span> Supermercado Aurora</td>
+                <td>Hoje, 08:15</td>
+                <td>Cartão</td>
+                <td><span class="status concluido">✓ Concluído</span></td>
+                <td class="valor">− R$ 212,90</td>
+              </tr>
+              <tr>
+                <td class="descricao"><span class="icone-mov saida">↗</span> Conta de luz</td>
+                <td>3 nov</td>
+                <td>Boleto</td>
+                <td><span class="status pendente">◷ Pendente</span></td>
+                <td class="valor">− R$ 184,37</td>
+              </tr>
+              <tr>
+                <td class="descricao"><span class="icone-mov saida">↗</span> Renata Lima</td>
+                <td>3 nov</td>
+                <td>TED</td>
+                <td><span class="status concluido">✓ Concluído</span></td>
+                <td class="valor">− R$ 1.200,00</td>
+              </tr>
+              <tr>
+                <td class="descricao"><span class="icone-mov saida">↗</span> Recarga de celular</td>
+                <td>2 nov</td>
+                <td>Recarga</td>
+                <td><span class="status concluido">✓ Concluído</span></td>
+                <td class="valor">− R$ 30,00</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+      </main>
+    </div>
+
+  </div>
+
+  <!-- JavaScript da equipe -->
+  <script src="js/script-1.js"></script>
+  <script src="js/script-2.js"></script>
+</body>
+</html>
