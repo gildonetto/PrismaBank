@@ -156,7 +156,10 @@ Since it's just HTML, CSS and JS, there's nothing to install:
 | Name | GitHub |
 |------|--------|
 | Gildo Neto | [@gildonetto](https://github.com/gildonetto) |
-| *(add team members)* | |
+| Bruno César | |
+| João Pedro | |
+| Juan Soares | |
+| Rafael Rodrigues | |
 
 ---
 
