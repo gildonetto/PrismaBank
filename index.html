@@ -5,13 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prisma Bank | Início</title>
 
-  <!-- Quem ainda não fez o cadastro vai primeiro para a tela de cadastro -->
-  <script>
-    let usuarioPrisma = null;
-    try { usuarioPrisma = sessionStorage.getItem("prisma-usuario"); } catch (erro) {}
-    if (!usuarioPrisma) { window.location.replace("cadastro.html"); }
-  </script>
-
   <!-- Fonte do Google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
