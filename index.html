@@ -6,20 +6,13 @@
   <title>Prisma Bank | Início</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
-  <!-- Fonte do Google -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- CSS da equipe -->
+  <!-- Fonte do Google (IBM Plex Sans) e o CSS do site -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="css/style-1.css">
 </head>
 <body>
-  <!--
-    Ícones do site (SVG). Cada <symbol> é desenhado uma vez aqui e usado
-    em qualquer lugar com: <svg class="ico"><use href="#i-pix"/></svg>
-  -->
-  <svg class="sprite" aria-hidden="true">
+  <!-- Ícones: cada <symbol> é desenhado uma vez aqui e usado com <svg class="ico"><use href="#i-nome"/></svg> -->
+  <svg hidden>
     <symbol id="i-inicio" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></symbol>
     <symbol id="i-pix" viewBox="0 0 24 24"><path d="M12 2.5 21.5 12 12 21.5 2.5 12Z"/><path d="M8.5 12 12 8.5 15.5 12 12 15.5Z"/></symbol>
     <symbol id="i-transferir" viewBox="0 0 24 24"><path d="M4 8h15l-4-4"/><path d="M20 16H5l4 4"/></symbol>
@@ -35,264 +28,184 @@
     <symbol id="i-olho-off" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/><path d="M4 4l16 16"/></symbol>
     <symbol id="i-cadeado" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></symbol>
     <symbol id="i-entrada" viewBox="0 0 24 24"><path d="M17 7 7 17M7 9v8h8"/></symbol>
-    <symbol id="i-saida" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
-    <symbol id="i-meta" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></symbol>
   </svg>
-  <!--
-    Todas as telas do banco ficam neste arquivo.
-    Cada tela é um <main data-tela="..."> e só uma aparece por vez.
-    Os links do menu usam "#nome-da-tela" (ex.: href="#extrato")
-    e o script.js mostra a tela certa.
-  -->
+
+  <!-- Todas as telas do banco ficam neste arquivo: cada uma é um <main data-tela="...">
+       e o script.js mostra só a do # do endereço (ex.: index.html#extrato) -->
   <div class="app">
 
     <!-- ===== MENU LATERAL ===== -->
     <aside class="sidebar" id="sidebar">
-      <a href="#inicio" class="logo">
-        <span class="logo-icone">△</span>
-        <span class="logo-texto">Prisma Bank</span>
-      </a>
+      <a href="#inicio" class="logo"><img src="favicon.svg" alt="" width="28" height="28"> Prisma Bank</a>
 
       <nav class="menu">
-        <!-- Dois grupos, cada um com um título pequeno em cima -->
         <p class="menu-titulo">Conta</p>
-        <ul>
-          <li><a href="#inicio" class="menu-link ativo"><span class="icone"><svg class="ico"><use href="#i-inicio"/></svg></span> Início</a></li>
-          <li><a href="#extrato" class="menu-link"><span class="icone"><svg class="ico"><use href="#i-extrato"/></svg></span> Extrato</a></li>
-          <li><a href="#cartoes" class="menu-link"><span class="icone"><svg class="ico"><use href="#i-cartao"/></svg></span> Cartões</a></li>
-        </ul>
+        <a href="#inicio" class="menu-link"><svg class="ico"><use href="#i-inicio"/></svg> Início</a>
+        <a href="#extrato" class="menu-link"><svg class="ico"><use href="#i-extrato"/></svg> Extrato</a>
+        <a href="#cartoes" class="menu-link"><svg class="ico"><use href="#i-cartao"/></svg> Cartões</a>
 
         <p class="menu-titulo">Serviços</p>
-        <ul>
-          <li><a href="#pix" class="menu-link"><span class="icone"><svg class="ico"><use href="#i-pix"/></svg></span> Pix</a></li>
-          <li><a href="#transferencias" class="menu-link"><span class="icone"><svg class="ico"><use href="#i-transferir"/></svg></span> Transferências</a></li>
-          <li><a href="#pagar" class="menu-link"><span class="icone"><svg class="ico"><use href="#i-pagar"/></svg></span> Pagar</a></li>
-          <li><a href="#recarga" class="menu-link"><span class="icone"><svg class="ico"><use href="#i-recarga"/></svg></span> Recarga</a></li>
-        </ul>
+        <a href="#pix" class="menu-link"><svg class="ico"><use href="#i-pix"/></svg> Pix</a>
+        <a href="#transferencias" class="menu-link"><svg class="ico"><use href="#i-transferir"/></svg> Transferências</a>
+        <a href="#pagar" class="menu-link"><svg class="ico"><use href="#i-pagar"/></svg> Pagar</a>
+        <a href="#recarga" class="menu-link"><svg class="ico"><use href="#i-recarga"/></svg> Recarga</a>
       </nav>
 
-      <a href="#configuracoes" class="menu-link config"><span class="icone"><svg class="ico"><use href="#i-config"/></svg></span> Configurações</a>
+      <a href="#configuracoes" class="menu-link"><svg class="ico"><use href="#i-config"/></svg> Configurações</a>
     </aside>
 
     <div class="conteudo">
 
       <!-- ===== TOPO ===== -->
       <header class="topo">
-        <button class="btn-menu" id="btn-menu" aria-label="Abrir menu"><svg class="ico"><use href="#i-menu"/></svg></button>
+        <button class="btn-icone btn-menu" onclick="alternarMenu()" aria-label="Abrir menu"><svg class="ico"><use href="#i-menu"/></svg></button>
 
-        <div class="saldo">
-          <span class="saldo-titulo">Saldo total</span>
+        <div>
+          <span class="texto-fraco">Saldo disponível</span>
           <div class="saldo-linha">
-            <strong class="saldo-valor" id="saldo-valor"><small>R$</small> 24.860,35</strong>
-            <!-- Olho: esconde e mostra o saldo -->
-            <button class="btn-olho" id="btn-olho" aria-label="Esconder saldo"><svg class="ico"><use href="#i-olho"/></svg></button>
+            <strong class="saldo-valor"><small>R$</small> <span id="saldo-numero">24.860,35</span></strong>
+            <button class="btn-olho" onclick="alternarSaldo()" aria-label="Mostrar ou esconder o saldo"><svg class="ico"><use id="icone-olho" href="#i-olho"/></svg></button>
           </div>
         </div>
 
         <div class="topo-acoes">
-          <button class="btn-notificacao" id="btn-tema" aria-label="Mudar tema"><svg class="ico"><use href="#i-tema"/></svg></button>
-          <!-- Sino: abre uma caixinha com as notificações -->
+          <button class="btn-icone" onclick="alternarTema()" aria-label="Mudar o tema"><svg class="ico"><use href="#i-tema"/></svg></button>
+
           <div class="notificacoes">
-            <button class="btn-notificacao" id="btn-notificacao" aria-label="Notificações" aria-expanded="false">
+            <button class="btn-icone" onclick="alternarNotificacoes()" aria-label="Notificações">
               <svg class="ico"><use href="#i-sino"/></svg>
-              <span class="badge" id="badge-notificacoes"></span>
+              <span class="badge" id="badge"></span>
             </button>
 
             <div class="caixa-notificacoes" id="caixa-notificacoes" hidden>
               <div class="card-topo">
                 <h2>Notificações</h2>
-                <button class="link-destaque botao-texto" id="btn-limpar-notificacoes">Limpar</button>
+                <button class="link" id="btn-limpar" onclick="limparNotificacoes()">Limpar</button>
               </div>
               <ul class="lista" id="lista-notificacoes"><!-- preenchido pelo script.js --></ul>
             </div>
           </div>
+
           <a href="#configuracoes" class="avatar" title="Meu perfil">AS</a>
         </div>
       </header>
 
 
-      <!-- =====================================================
-           TELA: INÍCIO
-           ===================================================== -->
+      <!-- ===== TELA: INÍCIO ===== -->
       <main class="painel" data-tela="inicio" data-titulo="Início">
 
-        <!-- Saudação: "Bom dia/Boa tarde/Boa noite" e a data vêm do script.js -->
         <div class="saudacao">
-          <h1><span id="saudacao-texto">Olá</span>, Ana</h1>
-          <p id="data-hoje"></p>
+          <div>
+            <!-- "Bom dia / Boa tarde / Boa noite" e a data vêm do script.js -->
+            <h1><span id="saudacao">Olá</span>, Ana</h1>
+            <p class="texto-fraco" id="data-hoje"></p>
+          </div>
+
+          <nav class="atalhos">
+            <a href="#pix" class="botao"><svg class="ico"><use href="#i-pix"/></svg> Pix</a>
+            <a href="#transferencias" class="botao botao-secundario"><svg class="ico"><use href="#i-transferir"/></svg> Transferir</a>
+            <a href="#pagar" class="botao botao-secundario"><svg class="ico"><use href="#i-pagar"/></svg> Pagar</a>
+            <a href="#recarga" class="botao botao-secundario"><svg class="ico"><use href="#i-recarga"/></svg> Recarga</a>
+          </nav>
         </div>
 
-        <!-- Ações rápidas -->
-        <section class="acoes-rapidas">
-          <a href="#pix" class="card-acao destaque">
-            <span class="card-icone"><svg class="ico"><use href="#i-pix"/></svg></span>
-            <h3>Pix</h3>
-            <p>Envie e receba na hora</p>
-          </a>
-
-          <a href="#transferencias" class="card-acao">
-            <span class="card-icone"><svg class="ico"><use href="#i-transferir"/></svg></span>
-            <h3>Transferir</h3>
-            <p>Para qualquer banco</p>
-          </a>
-
-          <a href="#pagar" class="card-acao">
-            <span class="card-icone"><svg class="ico"><use href="#i-pagar"/></svg></span>
-            <h3>Pagar</h3>
-            <p>Boletos e contas</p>
-          </a>
-
-          <a href="#recarga" class="card-acao">
-            <span class="card-icone"><svg class="ico"><use href="#i-recarga"/></svg></span>
-            <h3>Recarregar</h3>
-            <p>Celular e transporte</p>
-          </a>
-        </section>
-
-        <!-- Gráfico de gastos -->
-        <section class="card grafico">
-          <div class="grafico-topo">
+        <!-- Gráfico: a altura de cada barra é o gasto do mês (100% = R$ 4 mil) -->
+        <section class="card">
+          <div class="card-topo">
             <div>
-              <h2>Gastos mensais</h2>
-              <p class="texto-fraco">Últimos 6 meses fechados</p>
+              <h2>Gastos por mês</h2>
+              <p class="texto-fraco">Maio a outubro</p>
             </div>
-
             <div class="grafico-resumo">
-              <div>
-                <span class="texto-fraco">Outubro</span>
-                <strong>R$ 3.810</strong>
-                <small class="texto-fraco">+12% sobre setembro</small>
-              </div>
-              <div>
-                <span class="texto-fraco">-- Média</span>
-                <strong>R$ 3.200</strong>
-              </div>
+              <div><span class="texto-fraco">Outubro</span><strong>R$ 3.810</strong><span class="texto-fraco">12% a mais que setembro</span></div>
+              <div><span class="texto-fraco media">Média</span><strong>R$ 3.200</strong></div>
             </div>
           </div>
 
           <div class="grafico-area">
-            <div class="grafico-eixo">
-              <span>R$ 4 mil</span>
-              <span>R$ 2 mil</span>
-              <span>R$ 0</span>
-            </div>
-
-            <div class="grafico-barras">
-              <div class="barra-item">
-                <div class="barra" style="height: 65%;"></div>
-                <span>Mai</span>
-              </div>
-              <div class="barra-item">
-                <div class="barra" style="height: 75%;"></div>
-                <span>Jun</span>
-              </div>
-              <div class="barra-item">
-                <div class="barra" style="height: 68%;"></div>
-                <span>Jul</span>
-              </div>
-              <div class="barra-item">
-                <div class="barra" style="height: 83%;"></div>
-                <span>Ago</span>
-              </div>
-              <div class="barra-item">
-                <div class="barra" style="height: 82%;"></div>
-                <span>Set</span>
-              </div>
-              <div class="barra-item atual">
-                <div class="barra" style="height: 95%;" title="Outubro: R$ 3.810"></div>
-                <span>Out</span>
-              </div>
+            <div class="grafico-eixo"><span>R$ 4 mil</span><span>R$ 2 mil</span><span>R$ 0</span></div>
+            <div class="grafico-barras" role="img" aria-label="Gastos: maio R$ 2.900, junho R$ 3.150, julho R$ 2.840, agosto R$ 3.100, setembro R$ 3.400, outubro R$ 3.810">
+              <div style="height: 72.5%" data-valor="R$ 2.900"><span>Mai</span></div>
+              <div style="height: 79%" data-valor="R$ 3.150"><span>Jun</span></div>
+              <div style="height: 71%" data-valor="R$ 2.840"><span>Jul</span></div>
+              <div style="height: 77.5%" data-valor="R$ 3.100"><span>Ago</span></div>
+              <div style="height: 85%" data-valor="R$ 3.400"><span>Set</span></div>
+              <div class="atual" style="height: 95%" data-valor="R$ 3.810"><span>Out</span></div>
             </div>
           </div>
         </section>
 
-        <!-- Extrato recente -->
-        <section class="card extrato">
-          <div class="card-topo">
-            <h2>Extrato recente</h2>
-            <a href="#extrato" class="link-destaque">Ver extrato completo</a>
-          </div>
+        <div class="coluna">
+          <section class="card">
+            <div class="card-topo">
+              <h2>Cartão de crédito</h2>
+              <a href="#cartoes" class="link">Ver cartão</a>
+            </div>
+            <span class="texto-fraco">Fatura atual · vence em 15 nov</span>
+            <strong class="valor-grande">R$ 1.284,60</strong>
+            <div class="barra"><span class="barra-limite"></span></div>
+            <span class="texto-fraco">Limite disponível: <strong class="limite-disponivel"></strong></span>
+          </section>
 
+          <!-- Caixinha: dinheiro guardado para uma meta -->
+          <section class="card">
+            <div class="card-topo">
+              <h2>Caixinha</h2>
+              <span class="texto-fraco">Viagem de férias</span>
+            </div>
+            <strong class="valor-grande">R$ 3.200</strong>
+            <div class="barra"><span style="width: 64%"></span></div>
+            <span class="texto-fraco">64% da meta de R$ 5.000</span>
+          </section>
+        </div>
+
+        <section class="card">
+          <div class="card-topo">
+            <h2>Últimas movimentações</h2>
+            <a href="#extrato" class="link">Ver extrato</a>
+          </div>
           <table class="tabela">
             <thead>
-              <tr>
-                <th>Descrição</th>
-                <th>Data</th>
-                <th>Tipo</th>
-                <th>Status</th>
-                <th class="valor">Valor</th>
-              </tr>
+              <tr><th>Descrição</th><th>Data</th><th>Tipo</th><th class="valor">Valor</th></tr>
             </thead>
-
             <tbody id="extrato-recente"><!-- preenchido pelo script.js --></tbody>
           </table>
         </section>
 
-        <!-- Linha de baixo: cartão, próximas contas e Pix rápido -->
-        <div class="painel-linha">
-          <section class="card">
-            <div class="card-topo">
-              <h2>Cartão de crédito</h2>
-              <a href="#cartoes" class="link-destaque">Ver cartão</a>
-            </div>
-            <span class="texto-fraco">Fatura atual · vence em 15 nov</span>
-            <strong class="valor-grande">R$ 1.284,60</strong>
-            <div class="barra-limite"><span></span></div>
-            <span class="texto-fraco">Limite disponível: <strong class="limite-disponivel"></strong></span>
-          </section>
-
+        <div class="coluna">
           <section class="card">
             <div class="card-topo">
               <h2>Próximas contas</h2>
-              <a href="#pagar" class="link-destaque">Ver todas</a>
+              <a href="#pagar" class="link">Ver todas</a>
             </div>
             <ul class="lista lista-contas"><!-- preenchido pelo script.js --></ul>
           </section>
 
-          <div class="coluna">
-            <section class="card">
-              <div class="card-topo">
-                <h2>Pix rápido</h2>
-                <a href="#pix" class="link-destaque">Novo Pix</a>
-              </div>
-              <div class="contatos"><!-- preenchido pelo script.js --></div>
-            </section>
-
-            <!-- Caixinha: dinheiro guardado para uma meta -->
-            <section class="card caixinha">
-              <span class="caixinha-icone"><svg class="ico"><use href="#i-meta"/></svg></span>
-              <div>
-                <span class="texto-fraco">Caixinha · Viagem de férias</span>
-                <strong>R$ 3.200 <small>de R$ 5.000</small></strong>
-                <div class="barra-meta"><span style="width: 64%;"></span></div>
-              </div>
-            </section>
-          </div>
+          <section class="card">
+            <div class="card-topo">
+              <h2>Pix rápido</h2>
+              <a href="#pix" class="link">Novo Pix</a>
+            </div>
+            <div class="contatos"><!-- preenchido pelo script.js --></div>
+          </section>
         </div>
 
       </main>
 
 
-      <!-- =====================================================
-           TELA: PIX
-           ===================================================== -->
+      <!-- ===== TELA: PIX ===== -->
       <main class="pagina" data-tela="pix" data-titulo="Pix" hidden>
-
-        <div class="pagina-topo">
-          <a href="#inicio" class="voltar">← Voltar ao início</a>
-          <h1>Pix</h1>
-          <p>Envie dinheiro na hora, a qualquer dia e horário.</p>
-        </div>
+        <h1>Pix</h1>
 
         <div class="colunas">
           <section class="card">
             <h2>Enviar Pix</h2>
-            <form class="formulario">
+            <form class="formulario" onsubmit="enviar(event)">
               <input type="hidden" name="tipo" value="Pix">
 
               <div class="campo">
-                <span>Enviar para um contato</span>
+                <span>Contatos</span>
                 <div class="contatos"><!-- preenchido pelo script.js --></div>
               </div>
 
@@ -303,8 +216,8 @@
 
               <div class="campo">
                 <label for="pix-valor">Valor (R$)</label>
-                <input type="number" id="pix-valor" name="valor" min="0.01" step="0.01" placeholder="0,00" required>
-                <small class="texto-fraco dica-saldo"></small>
+                <input type="number" id="pix-valor" name="valor" min="0.01" max="24860.35" step="0.01" placeholder="0,00" required>
+                <small class="texto-fraco">Saldo disponível: R$ 24.860,35</small>
               </div>
 
               <div class="campo">
@@ -312,16 +225,15 @@
                 <input type="text" id="pix-mensagem" placeholder="Ex.: almoço de sexta">
               </div>
 
-              <button type="submit" class="botao">Enviar Pix</button>
+              <button class="botao">Enviar Pix</button>
             </form>
           </section>
 
           <div class="coluna">
-            <!-- QR Code de enfeite (desenhado pelo script.js) -->
             <section class="card">
               <h2>Receber Pix</h2>
               <div class="receber-pix">
-                <div class="qr" id="qr-pix"></div>
+                <img class="qr" src="qr.svg" alt="QR Code para receber Pix">
                 <div>
                   <span class="texto-fraco">Sua chave</span>
                   <strong>ana.souza@email.com</strong>
@@ -333,17 +245,17 @@
             <section class="card">
               <h2>Suas chaves Pix</h2>
               <ul class="lista">
-                <li><div><strong>CPF</strong><span class="texto-fraco">•••.456.789-••</span></div></li>
-                <li><div><strong>E-mail</strong><span class="texto-fraco">ana.souza@email.com</span></div></li>
-                <li><div><strong>Celular</strong><span class="texto-fraco">(11) 9••••-4321</span></div></li>
+                <li><span class="texto-fraco">CPF</span><span>•••.456.789-••</span></li>
+                <li><span class="texto-fraco">E-mail</span><span>ana.souza@email.com</span></li>
+                <li><span class="texto-fraco">Celular</span><span>(11) 9••••-4321</span></li>
               </ul>
             </section>
 
             <section class="card">
-              <h2>Pix recentes</h2>
+              <h2>Pix recebidos</h2>
               <ul class="lista">
-                <li><div><strong>Lucas Ferreira</strong><span class="texto-fraco">Recebido hoje</span></div><span class="valor">+ R$ 850,00</span></li>
-                <li><div><strong>Juliana Costa</strong><span class="texto-fraco">Recebido em 30 out</span></div><span class="valor">+ R$ 300,00</span></li>
+                <li><div><strong>Lucas Ferreira</strong><span class="texto-fraco">Hoje, 09:42</span></div><span class="valor positivo">+ R$ 850,00</span></li>
+                <li><div><strong>Juliana Costa</strong><span class="texto-fraco">30 out</span></div><span class="valor positivo">+ R$ 300,00</span></li>
               </ul>
             </section>
           </div>
@@ -351,21 +263,14 @@
       </main>
 
 
-      <!-- =====================================================
-           TELA: TRANSFERÊNCIAS
-           ===================================================== -->
+      <!-- ===== TELA: TRANSFERÊNCIAS ===== -->
       <main class="pagina" data-tela="transferencias" data-titulo="Transferências" hidden>
-
-        <div class="pagina-topo">
-          <a href="#inicio" class="voltar">← Voltar ao início</a>
-          <h1>Transferências</h1>
-          <p>Envie dinheiro para contas de qualquer banco.</p>
-        </div>
+        <h1>Transferências</h1>
 
         <div class="colunas">
           <section class="card">
             <h2>Nova transferência</h2>
-            <form class="formulario">
+            <form class="formulario" onsubmit="enviar(event)">
               <input type="hidden" name="tipo" value="Transferência">
 
               <div class="campo">
@@ -399,8 +304,8 @@
 
               <div class="campo">
                 <label for="transf-valor">Valor (R$)</label>
-                <input type="number" id="transf-valor" name="valor" min="0.01" step="0.01" placeholder="0,00" required>
-                <small class="texto-fraco dica-saldo"></small>
+                <input type="number" id="transf-valor" name="valor" min="0.01" max="24860.35" step="0.01" placeholder="0,00" required>
+                <small class="texto-fraco">Saldo disponível: R$ 24.860,35</small>
               </div>
 
               <div class="campo">
@@ -411,7 +316,7 @@
                 </div>
               </div>
 
-              <button type="submit" class="botao">Transferir</button>
+              <button class="botao">Transferir</button>
             </form>
           </section>
 
@@ -424,21 +329,14 @@
       </main>
 
 
-      <!-- =====================================================
-           TELA: PAGAR
-           ===================================================== -->
+      <!-- ===== TELA: PAGAR ===== -->
       <main class="pagina" data-tela="pagar" data-titulo="Pagar" hidden>
-
-        <div class="pagina-topo">
-          <a href="#inicio" class="voltar">← Voltar ao início</a>
-          <h1>Pagar contas</h1>
-          <p>Pague boletos e contas de consumo.</p>
-        </div>
+        <h1>Pagar contas</h1>
 
         <div class="colunas">
           <section class="card">
             <h2>Pagar boleto</h2>
-            <form class="formulario">
+            <form class="formulario" onsubmit="enviar(event)">
               <input type="hidden" name="tipo" value="Pagamento de boleto">
 
               <div class="campo">
@@ -449,7 +347,7 @@
               <div class="campo-duplo">
                 <div class="campo">
                   <label for="pagar-valor">Valor (R$)</label>
-                  <input type="number" id="pagar-valor" name="valor" min="0.01" step="0.01" placeholder="0,00" required>
+                  <input type="number" id="pagar-valor" name="valor" min="0.01" max="24860.35" step="0.01" placeholder="0,00" required>
                 </div>
                 <div class="campo">
                   <label for="pagar-data">Data do pagamento</label>
@@ -457,7 +355,7 @@
                 </div>
               </div>
 
-              <button type="submit" class="botao">Pagar</button>
+              <button class="botao">Pagar</button>
             </form>
           </section>
 
@@ -469,21 +367,14 @@
       </main>
 
 
-      <!-- =====================================================
-           TELA: RECARGA
-           ===================================================== -->
+      <!-- ===== TELA: RECARGA ===== -->
       <main class="pagina" data-tela="recarga" data-titulo="Recarga" hidden>
-
-        <div class="pagina-topo">
-          <a href="#inicio" class="voltar">← Voltar ao início</a>
-          <h1>Recarga</h1>
-          <p>Coloque crédito no celular em poucos segundos.</p>
-        </div>
+        <h1>Recarga de celular</h1>
 
         <div class="colunas">
           <section class="card">
-            <h2>Recarregar celular</h2>
-            <form class="formulario">
+            <h2>Nova recarga</h2>
+            <form class="formulario" onsubmit="enviar(event)">
               <input type="hidden" name="tipo" value="Recarga de celular">
 
               <div class="campo">
@@ -512,132 +403,89 @@
                 </div>
               </div>
 
-              <button type="submit" class="botao">Recarregar</button>
+              <button class="botao">Recarregar</button>
             </form>
           </section>
 
           <section class="card">
             <h2>Recargas recentes</h2>
             <ul class="lista">
-              <li><div><strong>(11) 9••••-4321</strong><span class="texto-fraco">2 nov</span></div><span class="valor">R$ 30,00</span></li>
-              <li><div><strong>(11) 9••••-4321</strong><span class="texto-fraco">5 out</span></div><span class="valor">R$ 20,00</span></li>
+              <li><div><strong>(11) 9••••-4321</strong><span class="texto-fraco">Claro · 2 nov</span></div><span class="valor">R$ 30,00</span></li>
+              <li><div><strong>(11) 9••••-4321</strong><span class="texto-fraco">Claro · 5 out</span></div><span class="valor">R$ 20,00</span></li>
             </ul>
           </section>
         </div>
       </main>
 
 
-      <!-- =====================================================
-           TELA: EXTRATO
-           ===================================================== -->
+      <!-- ===== TELA: EXTRATO ===== -->
       <main class="pagina" data-tela="extrato" data-titulo="Extrato" hidden>
+        <h1>Extrato</h1>
 
-        <div class="pagina-topo">
-          <a href="#inicio" class="voltar">← Voltar ao início</a>
-          <h1>Extrato</h1>
-          <p>Todas as entradas e saídas da sua conta.</p>
-        </div>
+        <section class="card resumo">
+          <div><span class="texto-fraco">Entradas</span><strong class="positivo" id="resumo-entradas"></strong></div>
+          <div><span class="texto-fraco">Saídas</span><strong id="resumo-saidas"></strong></div>
+          <div><span class="texto-fraco">Saldo atual</span><strong>R$ 24.860,35</strong></div>
+        </section>
 
-        <div class="resumo">
-          <section class="card">
-            <span class="texto-fraco">Entradas no período</span>
-            <strong class="positivo" id="resumo-entradas"></strong>
-          </section>
-          <section class="card">
-            <span class="texto-fraco">Saídas no período</span>
-            <strong id="resumo-saidas"></strong>
-          </section>
-          <section class="card">
-            <span class="texto-fraco">Saldo atual</span>
-            <strong>R$ 24.860,35</strong>
-          </section>
-        </div>
-
-        <!-- Gastos por tipo: a rosca é feita só com CSS (conic-gradient) -->
         <section class="card">
           <h2>Para onde foi seu dinheiro</h2>
-          <div class="gastos">
-            <div class="rosca" id="rosca">
-              <div><span class="texto-fraco">Total gasto</span><strong id="rosca-total"></strong></div>
-            </div>
-            <ul class="lista legenda" id="legenda-gastos"><!-- preenchido pelo script.js --></ul>
-          </div>
+          <ul class="gastos" id="gastos"><!-- preenchido pelo script.js --></ul>
         </section>
 
         <section class="card">
           <div class="card-topo">
             <h2>Movimentações</h2>
             <div class="filtros">
-              <button class="filtro ativo" data-filtro="todos">Todos</button>
-              <button class="filtro" data-filtro="entrada">Entradas</button>
-              <button class="filtro" data-filtro="saida">Saídas</button>
+              <button class="filtro ativo" onclick="filtrar(this, 'todas')">Todas</button>
+              <button class="filtro" onclick="filtrar(this, 'entradas')">Entradas</button>
+              <button class="filtro" onclick="filtrar(this, 'saidas')">Saídas</button>
             </div>
           </div>
-
           <table class="tabela">
             <thead>
-              <tr>
-                <th>Descrição</th>
-                <th>Data</th>
-                <th>Tipo</th>
-                <th>Status</th>
-                <th class="valor">Valor</th>
-              </tr>
+              <tr><th>Descrição</th><th>Data</th><th>Tipo</th><th class="valor">Valor</th></tr>
             </thead>
-
             <tbody id="tabela-extrato"><!-- preenchido pelo script.js --></tbody>
           </table>
         </section>
       </main>
 
 
-      <!-- =====================================================
-           TELA: CARTÕES
-           ===================================================== -->
+      <!-- ===== TELA: CARTÕES ===== -->
       <main class="pagina" data-tela="cartoes" data-titulo="Cartões" hidden>
-
-        <div class="pagina-topo">
-          <a href="#inicio" class="voltar">← Voltar ao início</a>
-          <h1>Cartões</h1>
-          <p>Veja seu cartão, a fatura e o limite disponível.</p>
-        </div>
+        <h1>Cartões</h1>
 
         <div class="colunas">
           <section class="card">
             <h2>Cartão Prisma</h2>
-            <div>
-              <div class="cartao-visual" id="cartao-visual">
-                <div class="cartao-linha">
-                  <span class="cartao-marca">△ Prisma Bank</span>
-                  <span class="status-cartao" id="status-cartao">Ativo</span>
-                </div>
-
-                <div class="cartao-chip"></div>
-                <span class="cartao-numero" id="numero-cartao">•••• •••• •••• 4821</span>
-
-                <div class="cartao-linha">
-                  <div><small>Nome</small>ANA SOUZA</div>
-                  <div><small>Validade</small>08/31</div>
-                  <span class="cartao-tipo">Crédito</span>
-                </div>
+            <div class="cartao-visual" id="cartao">
+              <div class="cartao-linha">
+                <span class="cartao-marca">Prisma Bank</span>
+                <span class="cartao-etiqueta" id="status-cartao">Ativo</span>
               </div>
-
-              <div class="cartao-acoes">
-                <button class="acao-redonda" id="btn-mostrar-numero"><span><svg class="ico"><use href="#i-olho"/></svg></span><small>Mostrar número</small></button>
-                <button class="acao-redonda perigo" id="btn-bloquear"><span><svg class="ico"><use href="#i-cadeado"/></svg></span><small>Bloquear</small></button>
-                <button class="acao-redonda" id="btn-limite"><span><svg class="ico"><use href="#i-config"/></svg></span><small>Ajustar limite</small></button>
+              <div class="cartao-chip"></div>
+              <span class="cartao-numero" id="numero-cartao">•••• •••• •••• 4821</span>
+              <div class="cartao-linha">
+                <div><small>Nome</small>ANA SOUZA</div>
+                <div><small>Validade</small>08/31</div>
+                <span class="cartao-etiqueta">Crédito</span>
               </div>
+            </div>
+
+            <div class="cartao-acoes">
+              <button class="botao botao-secundario" onclick="alternarNumero(this)"><svg class="ico"><use href="#i-olho"/></svg> <span>Mostrar número</span></button>
+              <button class="botao botao-secundario botao-perigo" onclick="bloquearCartao(this)"><svg class="ico"><use href="#i-cadeado"/></svg> <span>Bloquear</span></button>
+              <button class="botao botao-secundario" onclick="alternarAjuste()"><svg class="ico"><use href="#i-config"/></svg> Ajustar limite</button>
             </div>
           </section>
 
           <div class="coluna">
-            <section class="card fatura">
+            <section class="card">
               <h2>Fatura atual</h2>
               <strong class="valor-grande">R$ 1.284,60</strong>
               <p class="texto-fraco">Fecha em 8 nov · vence em 15 nov</p>
-
-              <div class="barra-limite"><span></span></div>
-
+              <div class="barra"><span class="barra-limite"></span></div>
               <div class="limite-info">
                 <div><span class="texto-fraco">Usado</span><strong>R$ 1.284,60</strong></div>
                 <div><span class="texto-fraco">Disponível</span><strong class="limite-disponivel"></strong></div>
@@ -646,7 +494,7 @@
               <!-- Aparece ao clicar em "Ajustar limite" -->
               <div class="ajuste-limite" id="ajuste-limite" hidden>
                 <label for="limite-total">Limite total: <strong id="limite-total-texto"></strong></label>
-                <input type="range" id="limite-total" min="2000" max="15000" step="500" value="8000">
+                <input type="range" id="limite-total" min="2000" max="15000" step="500" value="8000" oninput="atualizarLimite()">
               </div>
             </section>
 
@@ -659,23 +507,15 @@
       </main>
 
 
-      <!-- =====================================================
-           TELA: CONFIGURAÇÕES
-           ===================================================== -->
+      <!-- ===== TELA: CONFIGURAÇÕES ===== -->
       <main class="pagina" data-tela="configuracoes" data-titulo="Configurações" hidden>
+        <h1>Configurações</h1>
 
-        <div class="pagina-topo">
-          <a href="#inicio" class="voltar">← Voltar ao início</a>
-          <h1>Configurações</h1>
-          <p>Seus dados, preferências e segurança da conta.</p>
-        </div>
-
-        <!-- Cartão de perfil -->
         <section class="card perfil">
-          <span class="perfil-avatar">AS</span>
+          <span class="avatar">AS</span>
           <div class="perfil-nome">
             <h2>Ana Souza</h2>
-            <p class="texto-fraco">Cliente desde março de 2024 · <span class="selo"><svg class="ico"><use href="#i-check"/></svg> Conta verificada</span></p>
+            <p class="texto-fraco">Cliente desde março de 2024</p>
           </div>
           <div class="perfil-conta">
             <div><span class="texto-fraco">Agência</span><strong>0001</strong></div>
@@ -687,10 +527,10 @@
           <section class="card">
             <h2>Meus dados</h2>
             <ul class="lista">
-              <li><span class="texto-fraco">Nome</span><strong>Ana Souza</strong></li>
-              <li><span class="texto-fraco">E-mail</span><strong>ana.souza@email.com</strong></li>
-              <li><span class="texto-fraco">Telefone</span><strong>(11) 98765-4321</strong></li>
-              <li><span class="texto-fraco">CPF</span><strong>•••.456.789-••</strong></li>
+              <li><span class="texto-fraco">Nome</span><span>Ana Souza</span></li>
+              <li><span class="texto-fraco">E-mail</span><span>ana.souza@email.com</span></li>
+              <li><span class="texto-fraco">Celular</span><span>(11) 98765-4321</span></li>
+              <li><span class="texto-fraco">CPF</span><span>•••.456.789-••</span></li>
             </ul>
           </section>
 
@@ -698,10 +538,7 @@
             <section class="card">
               <h2>Preferências</h2>
               <ul class="lista">
-                <li>
-                  <span>Tema claro ou escuro</span>
-                  <button class="botao botao-secundario" id="btn-tema-config">Trocar tema</button>
-                </li>
+                <li><span>Tema claro ou escuro</span><button class="botao botao-secundario botao-pequeno" onclick="alternarTema()">Trocar tema</button></li>
                 <li><label>Avisos de Pix recebido <input type="checkbox" checked></label></li>
                 <li><label>Notificações por e-mail <input type="checkbox" checked></label></li>
                 <li><label>Ofertas e novidades <input type="checkbox"></label></li>
@@ -710,29 +547,23 @@
 
             <section class="card">
               <h2>Conta</h2>
-              <div>
-                <a href="cadastro.html" class="botao botao-secundario botao-perigo">Sair da conta</a>
-              </div>
+              <a href="cadastro.html" class="botao botao-secundario botao-perigo">Sair da conta</a>
             </section>
           </div>
         </div>
       </main>
 
 
-      <!-- =====================================================
-           TELA: COMPROVANTE (aparece depois de enviar um formulário)
-           ===================================================== -->
+      <!-- ===== TELA: COMPROVANTE (abre depois de enviar um formulário) ===== -->
       <main class="pagina" data-tela="comprovante" data-titulo="Comprovante" hidden>
-
-        <section class="card comprovante" id="comprovante">
-          <div class="comprovante-icone"><svg class="ico"><use href="#i-check"/></svg></div>
-          <h1>Operação realizada!</h1>
-          <p class="texto-fraco">Este é um banco de mentira, nenhum dinheiro foi movimentado.</p>
+        <section class="card comprovante">
+          <h1>Comprovante</h1>
+          <p class="texto-fraco">Banco fictício: nenhum dinheiro foi movimentado.</p>
+          <strong class="valor-grande" id="comp-valor">—</strong>
 
           <ul class="lista">
             <li><span class="texto-fraco">Tipo</span><strong id="comp-tipo">—</strong></li>
             <li><span class="texto-fraco">Para</span><strong id="comp-destino">—</strong></li>
-            <li><span class="texto-fraco">Valor</span><strong id="comp-valor">—</strong></li>
             <li><span class="texto-fraco">Data</span><strong id="comp-data">—</strong></li>
             <li><span class="texto-fraco">Autenticação</span><strong id="comp-codigo">—</strong></li>
           </ul>
@@ -746,15 +577,13 @@
 
       <!-- Rodapé: aparece embaixo de todas as telas -->
       <footer class="rodape">
-        <span>△ Prisma Bank · Projeto acadêmico · 2026</span>
+        <span>Prisma Bank · Projeto acadêmico · 2026</span>
         <span>Gildo Neto · Bruno César · João Pedro · Juan Soares · Rafael Rodrigues</span>
       </footer>
 
     </div>
-
   </div>
 
-  <!-- JavaScript da equipe -->
   <script src="script.js"></script>
 </body>
 </html>

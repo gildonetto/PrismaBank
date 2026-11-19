@@ -6,25 +6,22 @@
     <title>Prisma Bank | Criar conta</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
-    <!-- Fonte do Google -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+    <!-- Fonte do Google (IBM Plex Sans) e o CSS do site + o do cadastro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="css/style-1.css">
     <link rel="stylesheet" href="css/cadastro.css">
 </head>
 
 <body>
 
     <!-- Lado esquerdo: só aparece em telas grandes (ver cadastro.css) -->
-    <aside class="vitrine" aria-hidden="true">
-        <p class="vitrine-titulo">Seu dinheiro,<br>do seu jeito.</p>
-        <p class="vitrine-texto">Pix na hora, cartão sem anuidade e tudo num lugar só.</p>
+    <aside class="vitrine">
+        <p class="vitrine-titulo">Conta digital sem tarifa de manutenção.</p>
 
-        <div class="cartao-vitrine">
+        <div class="cartao-visual">
             <div class="cartao-linha">
-                <strong>△ Prisma Bank</strong>
-                <span>Crédito</span>
+                <span class="cartao-marca">Prisma Bank</span>
+                <span class="cartao-etiqueta">Crédito</span>
             </div>
             <div class="cartao-chip"></div>
             <span class="cartao-numero">•••• •••• •••• 4821</span>
@@ -35,49 +32,42 @@
         </div>
 
         <ul class="vitrine-lista">
-            <li>Conta digital gratuita</li>
-            <li>Pix ilimitado</li>
-            <li>Cartão sem anuidade</li>
+            <li>Cartão de crédito sem anuidade</li>
+            <li>Pix e TED ilimitados</li>
+            <li>Atendimento pelo app, todos os dias</li>
         </ul>
     </aside>
 
-    <!-- Lado direito: o formulário -->
-    <div class="area-form">
+    <!-- Lado direito: o formulário. Ao criar a conta, vai para o banco (index.html) -->
+    <main>
+        <div class="logo"><img src="favicon.svg" alt="" width="32" height="32"> Prisma Bank</div>
 
-        <h1>PrismaBank</h1>
+        <h1>Criar conta</h1>
 
-        <h2>Criar conta</h2>
-        <p>Preencha os dados abaixo para começar.</p>
-
-        <!-- Ao criar a conta, vai para o painel do banco (index.html).
-             O espaço entre os campos vem do CSS (cadastro.css). -->
-        <form action="index.html" id="form-cadastro">
-
-            <label for="nome">Nome completo:</label>
+        <form action="index.html">
+            <label for="nome">Nome completo</label>
             <input type="text" id="nome" placeholder="Seu nome" autocomplete="name" required>
 
-            <label for="email">Email:</label>
+            <label for="email">E-mail</label>
             <input type="email" id="email" placeholder="seu@email.com" autocomplete="email" required>
 
-            <label for="telefone">Telefone:</label>
+            <label for="telefone">Celular</label>
             <input type="tel" id="telefone" placeholder="(00) 00000-0000" autocomplete="tel" required>
 
-            <label for="senha">Senha:</label>
+            <label for="senha">Senha</label>
             <input type="password" id="senha" autocomplete="new-password" required>
 
-            <label for="confirmar">Confirmar senha:</label>
+            <label for="confirmar">Confirmar senha</label>
             <input type="password" id="confirmar" autocomplete="new-password" required>
 
             <input type="checkbox" id="termos" required>
-            <label for="termos">Concordo com os termos de uso e a política de privacidade.</label>
+            <label for="termos">Li e concordo com os termos de uso e a política de privacidade.</label>
 
-            <button type="submit">Criar conta</button>
-
+            <button class="botao">Criar conta</button>
         </form>
 
-        <p>Já possui uma conta? <a href="index.html">Entrar</a></p>
-
-    </div>
+        <p>Já tem conta? <a href="index.html">Entrar</a></p>
+    </main>
 
 </body>
 </html>

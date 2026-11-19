@@ -96,7 +96,7 @@ Simple things we want to do with JS:
 
 ---
 
-## 📁 Folder structure (planned)
+## 📁 Folder structure
 
 ```
 PrismaBank/
@@ -104,24 +104,23 @@ PrismaBank/
 │                     # pay, top-up, statement, cards, settings and receipt.
 │                     # Only one screen shows at a time (index.html#extrato, etc.)
 ├── cadastro.html     # Sign-up page
+├── script.js         # JavaScript interactions
 ├── css/
-│   └── style.css     # Site styles
-├── js/
-│   └── script.js     # JavaScript interactions
-├── img/              # Logo, icons and images
+│   ├── style-1.css   # Site styles (all screens, dark and light theme)
+│   └── cadastro.css  # Extra styles for the sign-up page
+├── favicon.svg       # Logo (also the browser tab icon)
+├── qr.svg            # QR code on the Pix screen
 └── README.md         # This file
 ```
 
 ---
 
-## 🎨 Visual identity (initial idea)
+## 🎨 Visual identity
 
-- **Name:** Prisma Bank — "prisma" (prism) suggests light and color, so the idea is to use **gradients** in the design.
-- **Colors:** purple/blue tones with gradient accents, on a dark or light background.
-- **Font:** something modern and clean, like *Poppins* or *Inter* (Google Fonts).
-- **Style:** rounded cards, soft shadows and plenty of white space.
-
-*(We still need to pick the final palette.)*
+- **Name:** Prisma Bank. The logo is a simple prism on a blue square.
+- **Colors:** one solid blue (`#2f5fe0`) for buttons, links and highlights, on a dark background, with a light theme as an option.
+- **Font:** *IBM Plex Sans* (Google Fonts).
+- **Style:** flat cards with thin borders, no gradients or heavy shadows, so the numbers stand out.
 
 ---
 
