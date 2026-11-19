@@ -100,7 +100,10 @@ Simple things we want to do with JS:
 
 ```
 PrismaBank/
-├── index.html        # Main dashboard page
+├── index.html        # The whole bank in one page: home, Pix, transfers,
+│                     # pay, top-up, statement, cards, settings and receipt.
+│                     # Only one screen shows at a time (index.html#extrato, etc.)
+├── cadastro.html     # Sign-up page
 ├── css/
 │   └── style.css     # Site styles
 ├── js/
@@ -145,7 +148,7 @@ Since it's just HTML, CSS and JS, there's nothing to install:
    git clone https://github.com/gildonetto/PrismaBank.git
    ```
 2. Open the project folder.
-3. Double-click `index.html` to open it in your browser.
+3. Double-click `index.html` to open it in your browser. It opens the bank dashboard. The sign-up page is `cadastro.html` (also reached with "Sair da conta" in Settings).
 
 > 💡 Tip: in VS Code, the **Live Server** extension reloads the page automatically every time you save.
 

@@ -1,58 +1,83 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrismaBank - Criar Conta</title>
+    <title>Prisma Bank | Criar conta</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <!-- Fonte do Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/cadastro.css">
 </head>
 
 <body>
 
-    <h1>PrismaBank</h1>
+    <!-- Lado esquerdo: só aparece em telas grandes (ver cadastro.css) -->
+    <aside class="vitrine" aria-hidden="true">
+        <p class="vitrine-titulo">Seu dinheiro,<br>do seu jeito.</p>
+        <p class="vitrine-texto">Pix na hora, cartão sem anuidade e tudo num lugar só.</p>
 
-    <h2>Criar conta</h2>
-    <p>Preencha os dados abaixo para começar.</p>
+        <div class="cartao-vitrine">
+            <div class="cartao-linha">
+                <strong>△ Prisma Bank</strong>
+                <span>Crédito</span>
+            </div>
+            <div class="cartao-chip"></div>
+            <span class="cartao-numero">•••• •••• •••• 4821</span>
+            <div class="cartao-linha">
+                <span>SEU NOME AQUI</span>
+                <span>08/31</span>
+            </div>
+        </div>
 
-    <form>
+        <ul class="vitrine-lista">
+            <li>Conta digital gratuita</li>
+            <li>Pix ilimitado</li>
+            <li>Cartão sem anuidade</li>
+        </ul>
+    </aside>
 
-        <label for="nome">Nome completo:</label>
-        <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
+    <!-- Lado direito: o formulário -->
+    <div class="area-form">
 
-        <br><br>
+        <h1>PrismaBank</h1>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+        <h2>Criar conta</h2>
+        <p>Preencha os dados abaixo para começar.</p>
 
-        <br><br>
+        <!-- Ao criar a conta, vai para o painel do banco (index.html).
+             O espaço entre os campos vem do CSS (cadastro.css). -->
+        <form action="index.html" id="form-cadastro">
 
-        <label for="telefone">Telefone:</label>
-        <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
+            <label for="nome">Nome completo:</label>
+            <input type="text" id="nome" placeholder="Seu nome" autocomplete="name" required>
 
-        <br><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="seu@email.com" autocomplete="email" required>
 
-        <label for="senha">Senha:</label>
-        <input type="password" id="senha" name="senha" required>
+            <label for="telefone">Telefone:</label>
+            <input type="tel" id="telefone" placeholder="(00) 00000-0000" autocomplete="tel" required>
 
-        <br><br>
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" autocomplete="new-password" required>
 
-        <label for="confirmar">Confirmar senha:</label>
-        <input type="password" id="confirmar" name="confirmar" required>
+            <label for="confirmar">Confirmar senha:</label>
+            <input type="password" id="confirmar" autocomplete="new-password" required>
 
-        <br><br>
+            <input type="checkbox" id="termos" required>
+            <label for="termos">Concordo com os termos de uso e a política de privacidade.</label>
 
-        <input type="checkbox" id="termos" name="termos" required>
+            <button type="submit">Criar conta</button>
 
-        <label for="termos">
-            Concordo com os termos de uso e a política de privacidade.
-        </label>
+        </form>
 
-        <br><br>
+        <p>Já possui uma conta? <a href="index.html">Entrar</a></p>
 
-        <button type="submit">Criar conta</button>
-
-    </form>
-
-    <p>Já possui uma conta? <a href="login.html">Entrar</a></p>
+    </div>
 
 </body>
-</html> 
+</html>

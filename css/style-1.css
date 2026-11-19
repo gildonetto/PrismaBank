@@ -1,0 +1,1845 @@
+/* ==========================================================================
+   Prisma Bank: painel
+   Fundo escuro, cinzas para o conteúdo e o gradiente azul → ciano só nos
+   destaques (logo, Pix, mês atual do gráfico).
+   ========================================================================== */
+
+/* ---------- Cores e medidas (mude aqui para mudar o site todo) ---------- */
+:root {
+  color-scheme: dark;
+
+  /* Fundos */
+  --bg: #0a0b0e;
+  --surface: #121419;
+  --surface-2: #1a1d24;
+  --surface-3: #232730;
+  --line: #262a33;
+  --line-strong: #3a404c;
+
+  /* Texto */
+  --text: #f2f4f8;
+  --text-2: #a9afbc;
+  --text-3: #868d9b;
+
+  /* Destaques */
+  --blue: #2f6bff;
+  --cyan: #22e0e8;
+  --gradiente: linear-gradient(135deg, var(--blue), var(--cyan));
+  --destaque: var(--cyan);
+
+  /* Status */
+  --sucesso: #3ddc97;
+  --aviso: #f5b84b;
+  --erro: #ff6b6b;
+
+  /* Gráfico */
+  --barra: #566074;
+  --barra-hover: #7a859b;
+
+  /* Formas */
+  --raio-p: 8px;
+  --raio: 14px;
+  --sombra: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.18);
+  --transicao: 180ms ease;
+
+  --largura-menu: 250px;
+}
+
+/* Modo claro: o JavaScript só precisa colocar a classe "claro" no <body> */
+body.claro {
+  color-scheme: light;
+
+  --bg: #f3f5f9;
+  --surface: #ffffff;
+  --surface-2: #f0f2f7;
+  --surface-3: #e4e8ef;
+  --line: #e1e5ec;
+  --line-strong: #c5ccd8;
+
+  --text: #12151b;
+  --text-2: #4c5362;
+  --text-3: #667083;
+
+  --destaque: #0a6bb0; /* ciano puro fica ilegível sobre branco */
+  --sucesso: #12805c;
+  --aviso: #9a6200;
+  --erro: #c62828;
+
+  --barra: #aab2c2;
+  --barra-hover: #7c869a;
+
+  --sombra: 0 1px 2px rgb(18 21 27 / 0.05), 0 8px 24px rgb(18 21 27 / 0.05);
+}
+
+/* ---------- Base ---------- */
+/* Barra de rolagem fina, na cor do site */
+html {
+  scrollbar-color: #3a404c #0a0b0e;
+  scrollbar-width: thin;
+}
+
+html:has(body.claro) {
+  scrollbar-color: #c5ccd8 #f3f5f9;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Manrope", system-ui, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color var(--transicao), color var(--transicao);
+}
+
+h2,
+h3,
+p,
+ul {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.texto-fraco {
+  color: var(--text-2);
+  font-size: 12px;
+}
+
+/* ---------- Estrutura: menu à esquerda + conteúdo ---------- */
+.app {
+  display: grid;
+  grid-template-columns: var(--largura-menu) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+/* ---------- Menu lateral ---------- */
+.sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  height: 100vh;
+  padding: 22px 12px;
+  border-right: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.logo-icone {
+  font-size: 24px;
+  line-height: 1;
+  background: var(--gradiente);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.menu {
+  flex: 1;
+}
+
+.menu ul {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Título pequeno de cada grupo do menu ("Conta", "Serviços") */
+.menu-titulo {
+  margin: 0 0 8px;
+  padding: 0 16px;
+  color: var(--text-3);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.menu ul + .menu-titulo {
+  margin-top: 26px;
+}
+
+.menu-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: var(--raio-p);
+  color: var(--text-2);
+  font-size: 16.5px;
+  font-weight: 500;
+  transition: background-color var(--transicao), color var(--transicao);
+}
+
+.menu-link:hover {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.menu-link.ativo {
+  background: var(--surface-2);
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* Barrinha colorida à esquerda do item ativo */
+.menu-link.ativo::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 0;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--gradiente);
+}
+
+.menu-link.ativo .icone {
+  color: var(--destaque);
+}
+
+.icone {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+}
+
+.icone .ico {
+  width: 22px;
+  height: 22px;
+}
+
+/* ---------- Conteúdo ---------- */
+/* Três faixas: topo, a tela aberta e o rodapé (que fica sempre embaixo) */
+.conteudo {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-width: 0;
+  min-height: 100vh;
+}
+
+/* ---------- Topo ---------- */
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 26px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.btn-menu {
+  display: none; /* só aparece no celular */
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: var(--raio-p);
+  background: var(--surface);
+  font-size: 18px;
+}
+
+.saldo {
+  display: flex;
+  flex-direction: column;
+}
+
+.saldo-titulo {
+  color: var(--text-2);
+  font-size: 12px;
+}
+
+.saldo-valor {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.saldo-valor small {
+  color: var(--text-2);
+  font-size: inherit;
+  font-weight: 600;
+}
+
+.topo-acoes {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.btn-notificacao {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: var(--raio-p);
+  background: var(--surface);
+  font-size: 14px;
+  transition: border-color var(--transicao);
+}
+
+.btn-notificacao:hover {
+  border-color: var(--line-strong);
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: grid;
+  place-items: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--cyan);
+  color: #04131f;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--gradiente);
+  color: #04131f;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* ---------- Painel: atalhos + gráfico em cima, extrato embaixo ---------- */
+/* Todas as telas têm a mesma largura, então ficam alinhadas entre si */
+.painel,
+.pagina {
+  gap: 16px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 22px 26px 40px;
+}
+
+.painel {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 10fr);
+  align-content: start;
+}
+
+/* Caixa padrão: usada nos cards e nos atalhos do Início */
+.card,
+.card-acao {
+  border: 1px solid var(--line);
+  border-radius: var(--raio);
+  background: var(--surface);
+  box-shadow: var(--sombra);
+}
+
+.card {
+  padding: 22px 20px;
+}
+
+.card h2 {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* ---------- Ações rápidas ---------- */
+.acoes-rapidas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.card-acao {
+  display: flex;
+  flex-direction: column;
+  min-height: 154px;
+  padding: 16px;
+  transition: border-color var(--transicao), transform var(--transicao);
+}
+
+.card-acao:hover,
+.card-acao:focus-visible {
+  border-color: var(--destaque);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.card-acao.destaque {
+  border-color: var(--blue);
+}
+
+.card-icone {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-bottom: auto;
+  border-radius: var(--raio-p);
+  background: var(--surface-3);
+  color: var(--destaque);
+  font-size: 15px;
+}
+
+.card-acao.destaque .card-icone {
+  background: var(--gradiente);
+  color: #04131f;
+}
+
+.card-acao h3 {
+  margin-top: 40px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.card-acao p {
+  color: var(--text-2);
+  font-size: 11.5px;
+}
+
+/* ---------- Gráfico de gastos ---------- */
+.grafico {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.grafico-topo {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.grafico-resumo {
+  display: flex;
+  gap: 24px;
+}
+
+.grafico-resumo > div {
+  display: flex;
+  flex-direction: column;
+  font-size: 11px;
+}
+
+.grafico-resumo strong {
+  font-size: 15px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.grafico-area {
+  --altura: 168px;
+  display: flex;
+  gap: 10px;
+  padding-bottom: 26px; /* espaço para os nomes dos meses */
+}
+
+.grafico-eixo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: var(--altura);
+  margin-top: -8px;
+  margin-bottom: -8px;
+  color: var(--text-3);
+  font-size: 10px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.grafico-barras {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  justify-content: space-around;
+  height: var(--altura);
+  border-bottom: 1px solid var(--line-strong);
+  /* linhas de fundo em R$ 4 mil e R$ 2 mil */
+  background-image: linear-gradient(var(--line) 1px, transparent 1px);
+  background-size: 100% 50%;
+}
+
+/* Linha tracejada da média (R$ 3.200 de R$ 4 mil = 80%) */
+.grafico-barras::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 80%;
+  left: 0;
+  z-index: 2;
+  border-top: 1.5px dashed var(--text-2);
+  pointer-events: none;
+}
+
+.barra-item {
+  position: relative;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.barra {
+  position: relative;
+  width: min(30px, 60%);
+  border-radius: 3px 3px 0 0;
+  background: var(--barra);
+  transition: background-color var(--transicao);
+}
+
+.barra-item:hover .barra {
+  background: var(--barra-hover);
+}
+
+.barra-item span {
+  position: absolute;
+  bottom: -24px;
+  color: var(--text-2);
+  font-size: 11px;
+}
+
+.barra-item.atual .barra {
+  background: linear-gradient(to top, var(--blue), var(--cyan));
+}
+
+.barra-item.atual span {
+  color: var(--text);
+  font-weight: 800;
+}
+
+/* Etiqueta em cima do mês atual (usa o texto do atributo title) */
+.barra-item.atual .barra::after {
+  content: attr(title);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: -6px;
+  z-index: 3;
+  padding: 4px 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 10.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ---------- Extrato ---------- */
+.extrato {
+  grid-column: 1 / -1;
+}
+
+/* Título do card com um link ou botões à direita */
+.card-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.link-destaque {
+  color: var(--destaque);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.link-destaque:hover {
+  text-decoration: underline;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+.tabela th {
+  padding: 0 0 10px;
+  color: var(--text-2);
+  font-size: 11px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.tabela td {
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  color: var(--text-2);
+}
+
+.tabela tbody tr {
+  transition: background-color var(--transicao);
+}
+
+.tabela tbody tr:hover {
+  background: var(--surface-2);
+}
+
+.descricao {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text) !important;
+  font-weight: 700;
+}
+
+.icone-mov {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--raio-p);
+  background: var(--surface-2);
+  color: var(--text-2);
+  font-size: 12px;
+}
+
+/* Uma cor para cada tipo de movimentação (em R G B).
+   O script.js coloca a classe: tipo-pix, tipo-cartao, tipo-boleto... */
+.tipo-pix     { --cor: 34 224 232; }
+.tipo-cartao  { --cor: 167 139 250; }
+.tipo-boleto  { --cor: 245 184 75; }
+.tipo-ted     { --cor: 96 145 255; }
+.tipo-recarga { --cor: 244 114 182; }
+
+.icone-mov[class*="tipo-"] {
+  background: rgb(var(--cor) / 0.14);
+  color: rgb(var(--cor));
+}
+
+/* Status em formato de pílula: verde = concluído, amarelo = pendente */
+.status {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status.concluido {
+  background: color-mix(in srgb, var(--sucesso) 14%, transparent);
+  color: var(--sucesso);
+}
+
+.status.pendente {
+  background: color-mix(in srgb, var(--aviso) 14%, transparent);
+  color: var(--aviso);
+}
+
+.tabela .valor {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.tabela td.valor {
+  color: var(--text);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.tabela td.valor.positivo {
+  color: var(--destaque);
+}
+
+/* ==========================================================================
+   Páginas internas: Pix, Transferências, Pagar, Recarga, Extrato, Cartões,
+   Configurações e Comprovante. Usam o mesmo menu e topo do painel.
+   ========================================================================== */
+
+.pagina {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Título da página com o link "Voltar" em cima */
+.pagina-topo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.voltar {
+  width: fit-content;
+  margin-bottom: 6px;
+  color: var(--text-2);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.voltar:hover {
+  color: var(--text);
+}
+
+.pagina-topo h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.pagina-topo p {
+  color: var(--text-2);
+}
+
+/* Duas colunas: a maior à esquerda */
+.colunas {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.coluna {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Espaço entre o título do cartão e o que vem embaixo */
+.pagina .card > h2 + * {
+  margin-top: 16px;
+}
+
+/* ---------- Formulários ---------- */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo > label,
+.campo > span {
+  color: var(--text-2);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.campo input,
+.campo select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--raio-p);
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+  transition: border-color var(--transicao), box-shadow var(--transicao);
+}
+
+.campo input::placeholder {
+  color: var(--text-3);
+}
+
+.campo input:focus,
+.campo select:focus {
+  border-color: var(--destaque);
+  box-shadow: 0 0 0 3px rgb(34 224 232 / 0.18);
+  outline: none;
+}
+
+/* Dois campos lado a lado (ex.: agência e conta) */
+.campo-duplo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Botões de escolha em formato de "pílula" (usam radio por baixo) */
+.opcoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.opcao input {
+  position: absolute;
+  opacity: 0;
+}
+
+/* Pílulas: opções dos formulários e filtros do extrato */
+.opcao span,
+.filtro {
+  display: inline-block;
+  padding: 8px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-2);
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color var(--transicao), color var(--transicao);
+}
+
+.opcao input:checked + span,
+.filtro.ativo {
+  border-color: var(--destaque);
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.opcao input:focus-visible + span {
+  outline: 2px solid var(--destaque);
+  outline-offset: 2px;
+}
+
+/* ---------- Botões ---------- */
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border: 1px solid transparent;
+  border-radius: var(--raio-p);
+  background: var(--gradiente);
+  color: #04131f;
+  font-weight: 800;
+  transition: filter var(--transicao), border-color var(--transicao);
+}
+
+.botao:hover {
+  filter: brightness(1.1);
+}
+
+.botao-secundario {
+  border-color: var(--line-strong);
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.botao-secundario:hover {
+  border-color: var(--text-3);
+  filter: none;
+}
+
+.botao-perigo {
+  color: var(--erro);
+}
+
+/* ---------- Listas dentro dos cartões ---------- */
+.lista li,
+.lista label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.lista li {
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+
+.lista li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.lista li:last-child {
+  padding-bottom: 0;
+}
+
+.lista strong {
+  display: block;
+  font-weight: 700;
+}
+
+.lista .valor {
+  font-weight: 800;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Linha inteira clicável (caixas de seleção das configurações) */
+.lista label {
+  width: 100%;
+  cursor: pointer;
+}
+
+.lista input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--cyan);
+  cursor: pointer;
+}
+
+/* ---------- Extrato ---------- */
+.resumo {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.resumo strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 20px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.resumo .positivo {
+  color: var(--destaque);
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filtro {
+  padding: 7px 14px;
+  font-size: 12.5px;
+}
+
+/* ---------- Cartões ---------- */
+.cartao-visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  aspect-ratio: 1.586; /* proporção de um cartão de verdade */
+  padding: 26px 28px;
+  border-radius: 20px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 85% 10%, rgb(255 255 255 / 0.25), transparent 45%),
+    linear-gradient(135deg, #10255f, #2f6bff 55%, #22c3e8);
+  color: #fff;
+  box-shadow: 0 20px 48px rgb(47 107 255 / 0.3);
+  transition: box-shadow var(--transicao);
+}
+
+/* Faixa de brilho na diagonal */
+.cartao-visual::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  bottom: -40%;
+  left: 55%;
+  width: 70px;
+  background: rgb(255 255 255 / 0.08);
+  transform: rotate(25deg);
+  pointer-events: none;
+}
+
+/* O JavaScript coloca a classe "bloqueado" quando o cartão é bloqueado */
+.cartao-visual.bloqueado {
+  background: linear-gradient(135deg, #2a2d35, #4a4f5a);
+  box-shadow: none;
+}
+
+/* Linha de cima e linha de baixo: o último item vai para a direita */
+.cartao-linha {
+  display: flex;
+  align-items: flex-end;
+  gap: 28px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.cartao-linha > :last-child {
+  margin-left: auto;
+}
+
+.cartao-linha small {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.cartao-marca {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.cartao-chip {
+  width: 44px;
+  height: 32px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, #f3d98b, #c9a34a);
+}
+
+.cartao-numero {
+  font-size: clamp(18px, 2.6vw, 26px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+}
+
+.cartao-tipo {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* Etiqueta "Ativo" / "Bloqueado" em cima do cartão */
+.status-cartao {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.18);
+  font-size: 11px;
+}
+
+.status-cartao.bloqueado {
+  background: var(--erro);
+}
+
+/* Botões redondos embaixo do cartão */
+.cartao-acoes {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 20px;
+}
+
+.acao-redonda {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-2);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.acao-redonda span {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--destaque);
+  font-size: 20px;
+  transition: border-color var(--transicao), transform var(--transicao);
+}
+
+.acao-redonda:hover {
+  color: var(--text);
+}
+
+.acao-redonda:hover span {
+  border-color: var(--destaque);
+  transform: translateY(-2px);
+}
+
+.acao-redonda.perigo span {
+  color: var(--erro);
+}
+
+/* Fatura e limite */
+.fatura {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.barra-limite,
+.barra-meta {
+  height: 8px;
+  margin: 14px 0 10px;
+  border-radius: 999px;
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.barra-limite span,
+.barra-meta span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--gradiente);
+  transition: width var(--transicao);
+}
+
+.limite-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.limite-info strong {
+  display: block;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.limite-info > div:last-child {
+  text-align: right;
+}
+
+.ajuste-limite {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--text-2);
+  font-size: 12.5px;
+}
+
+.ajuste-limite strong {
+  color: var(--text);
+}
+
+.ajuste-limite input {
+  width: 100%;
+  accent-color: var(--cyan);
+}
+
+/* Últimas compras: ícone + nome */
+.compra {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ---------- Início: linha de baixo (cartão, contas, Pix rápido) ---------- */
+.painel-linha {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.valor-grande {
+  display: block;
+  margin-top: 2px;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.texto-fraco strong {
+  color: var(--text);
+}
+
+/* ---------- Contatos (bolinhas com as iniciais) ---------- */
+.contatos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.contato {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-2);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Cada contato tem a sua cor (vem do script.js como --cor) */
+.contato .avatar,
+.favorecido .avatar {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgb(var(--cor) / 0.35);
+  background: rgb(var(--cor) / 0.14);
+  color: rgb(var(--cor));
+  transition: border-color var(--transicao), transform var(--transicao);
+}
+
+.contato:hover {
+  color: var(--text);
+}
+
+.contato:hover .avatar,
+.favorecido:hover .avatar {
+  border-color: rgb(var(--cor));
+  transform: translateY(-2px);
+}
+
+/* Favorecidos da tela de Transferências: a linha inteira é um botão */
+.favorecido {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+}
+
+.favorecido:hover strong {
+  color: var(--destaque);
+}
+
+/* ---------- Notificações (caixinha que abre no sino) ---------- */
+.notificacoes {
+  position: relative;
+}
+
+.caixa-notificacoes {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 30;
+  width: 340px;
+  padding: 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--raio);
+  background: var(--surface);
+  box-shadow: 0 16px 40px rgb(0 0 0 / 0.45);
+}
+
+.caixa-notificacoes .card-topo {
+  margin-bottom: 10px;
+}
+
+.caixa-notificacoes h2 {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.caixa-notificacoes .lista li {
+  padding: 4px 0;
+}
+
+.notificacao {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  margin: 0 -8px;
+  padding: 8px;
+  border-radius: var(--raio-p);
+  transition: background-color var(--transicao);
+}
+
+.notificacao:hover {
+  background: var(--surface-2);
+}
+
+.notificacao .icone-mov {
+  flex-shrink: 0;
+  color: var(--destaque);
+}
+
+.notificacao p {
+  color: var(--text-2);
+  font-size: 13px;
+}
+
+.notificacao p strong {
+  display: inline;
+  color: var(--text);
+}
+
+/* Quando não tem nenhuma notificação */
+.caixa-notificacoes .sem-notificacoes {
+  flex-direction: column;
+  padding: 18px 0 8px;
+  color: var(--text-2);
+  text-align: center;
+}
+
+.sem-notificacoes span {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--gradiente);
+  color: #04131f;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+/* Botão com cara de link (ex.: "Limpar") */
+.botao-texto {
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+/* Texto de ajuda entre o título e a lista */
+.card > p.texto-fraco + .lista {
+  margin-top: 16px;
+}
+
+/* Valor + botão "Pagar" no lado direito das listas */
+.lista-direita {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.botao-pequeno {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+/* ---------- Saudação do Início ---------- */
+.saudacao {
+  grid-column: 1 / -1;
+}
+
+.saudacao h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.saudacao p {
+  color: var(--text-2);
+}
+
+/* A data vem em minúsculas ("quinta-feira, 19 de novembro") */
+.saudacao p::first-letter {
+  text-transform: uppercase;
+}
+
+/* ---------- Rodapé ---------- */
+.rodape {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 24px;
+  /* A linha de cima vai de ponta a ponta; o texto fica alinhado com os cards
+     (que ocupam no máximo 1148px no meio da tela) */
+  padding: 20px max(26px, calc((100% - 1148px) / 2)) 28px;
+  border-top: 1px solid var(--line);
+  color: var(--text-3);
+  font-size: 12px;
+}
+
+/* ---------- Ícones SVG ---------- */
+/* O "estoque" de ícones no começo do index.html não aparece na tela */
+.sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* Todo ícone: traço na cor do texto, sem preenchimento */
+.ico {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+.icone-mov .ico {
+  width: 15px;
+  height: 15px;
+  stroke-width: 2.2;
+}
+
+.acao-redonda .ico {
+  width: 22px;
+  height: 22px;
+}
+
+.comprovante-icone .ico {
+  width: 28px;
+  height: 28px;
+  stroke-width: 2.6;
+}
+
+.sem-notificacoes .ico {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.6;
+}
+
+/* ---------- Caixinha (meta de economia) no Início ---------- */
+.caixinha {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.caixinha > div {
+  flex: 1;
+}
+
+.caixinha-icone {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--gradiente);
+  color: #04131f;
+}
+
+.caixinha strong {
+  display: block;
+  margin-top: 2px;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.caixinha small {
+  color: var(--text-2);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.barra-meta {
+  margin: 10px 0 0;
+}
+
+/* ---------- Extrato: rosca de gastos e títulos por dia ---------- */
+.gastos {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+/* A rosca é um círculo com conic-gradient (o script.js monta as fatias).
+   O "buraco" do meio é a div de dentro, com a cor do card. */
+.rosca {
+  position: relative;
+  flex-shrink: 0;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: var(--surface-3);
+}
+
+.rosca > div {
+  position: absolute;
+  inset: 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--surface);
+  text-align: center;
+}
+
+.rosca strong {
+  font-size: 17px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.legenda {
+  flex: 1;
+}
+
+/* Título do dia ("Hoje", "3 de novembro") no meio da tabela */
+.tabela .grupo-dia td {
+  padding: 18px 0 8px;
+  color: var(--text-3);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tabela tbody tr.grupo-dia:hover {
+  background: none;
+}
+
+/* ---------- Perfil em Configurações ---------- */
+.perfil {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 22px;
+  background: linear-gradient(120deg, rgb(47 107 255 / 0.18), transparent 60%), var(--surface);
+}
+
+.perfil-avatar {
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--gradiente);
+  color: #04131f;
+  font-size: 22px;
+  font-weight: 800;
+  box-shadow: 0 8px 24px rgb(47 107 255 / 0.35);
+}
+
+.perfil-nome {
+  flex: 1;
+}
+
+.perfil-nome h2 {
+  font-size: 20px !important;
+}
+
+.pagina .perfil-nome h2 + * {
+  margin-top: 2px;
+}
+
+.selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--sucesso);
+  font-weight: 700;
+}
+
+.selo .ico {
+  width: 13px;
+  height: 13px;
+  stroke-width: 2.6;
+}
+
+.perfil-conta {
+  display: flex;
+  gap: 28px;
+}
+
+.perfil-conta strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+/* ---------- Saldo com o olho do lado ---------- */
+.saldo-linha {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-olho {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-2);
+  transition: background-color var(--transicao), color var(--transicao);
+}
+
+.btn-olho:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+/* ---------- Receber Pix (QR Code) ---------- */
+.receber-pix {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* O QR fica num quadrado branco, como num app de verdade */
+.qr {
+  flex-shrink: 0;
+  width: 124px;
+  padding: 10px;
+  border-radius: var(--raio-p);
+  background: #fff;
+}
+
+.qr svg {
+  display: block;
+  width: 100%;
+  fill: #0a0b0e;
+}
+
+.receber-pix strong {
+  display: block;
+  margin-bottom: 6px;
+  word-break: break-all;
+}
+
+/* ---------- Transição suave ao trocar de tela ---------- */
+[data-tela]:not([hidden]) {
+  animation: aparecer 220ms ease both;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* Quem pediu menos animação no sistema não vê animação */
+@media (prefers-reduced-motion: reduce) {
+  [data-tela]:not([hidden]) {
+    animation: none;
+  }
+}
+
+/* ---------- 7. Ajustes do modo claro ---------- */
+/* As cores dos tipos e dos contatos são claras demais para texto sobre branco:
+   no modo claro o ícone e as iniciais ficam numa versão mais escura da cor */
+body.claro .icone-mov[class*="tipo-"],
+body.claro .contato .avatar,
+body.claro .favorecido .avatar {
+  color: color-mix(in srgb, rgb(var(--cor)) 55%, #000);
+}
+
+/* ---------- Comprovante ---------- */
+/* Recibo: a borda de baixo é serrilhada, como papel de maquininha.
+   O "mask" recorta triângulos de 16px na parte de baixo do card. */
+.comprovante {
+  width: 100%;
+  max-width: 460px;
+  margin: 20px auto 0;
+  padding-bottom: 40px;
+  text-align: center;
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 16px 100%;
+  mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 16px 100%;
+}
+
+.comprovante-icone {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: var(--gradiente);
+  color: #04131f;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.comprovante h1 {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+/* Dados do recibo entre duas linhas tracejadas */
+.comprovante .lista {
+  margin: 22px 0;
+  padding: 16px 0;
+  border-top: 1.5px dashed var(--line-strong);
+  border-bottom: 1.5px dashed var(--line-strong);
+  text-align: left;
+}
+
+.comprovante .lista li {
+  border-top: 0;
+  padding: 6px 0;
+}
+
+#comp-codigo {
+  font-family: ui-monospace, Consolas, monospace;
+  letter-spacing: 0.08em;
+}
+
+.comprovante-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ---------- Telas médias: o gráfico desce para baixo dos atalhos ---------- */
+@media (max-width: 1100px) {
+  .painel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .acoes-rapidas {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .card-acao {
+    min-height: 130px;
+  }
+
+  .card-acao h3 {
+    margin-top: 24px;
+  }
+}
+
+/* ---------- Celular: o menu vira uma gaveta que abre pelo botão ☰ ---------- */
+@media (max-width: 800px) {
+  .app {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sidebar {
+    position: fixed;
+    left: 0;
+    z-index: 20;
+    width: 240px;
+    transform: translateX(-100%);
+    transition: transform var(--transicao);
+  }
+
+  /* O JavaScript coloca a classe "aberto" para mostrar o menu */
+  .sidebar.aberto {
+    transform: translateX(0);
+    box-shadow: 0 0 40px rgb(0 0 0 / 0.5);
+  }
+
+  .btn-menu {
+    display: grid;
+    place-items: center;
+  }
+
+  .topo {
+    padding: 12px 16px;
+  }
+
+  .saldo-valor {
+    font-size: 22px;
+  }
+
+  .painel,
+  .pagina {
+    padding: 16px 16px 32px;
+  }
+
+  .gastos {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .legenda {
+    width: 100%;
+  }
+
+  .rodape {
+    padding: 16px;
+  }
+
+  .colunas,
+  .resumo,
+  .painel-linha {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .acoes-rapidas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .grafico-topo {
+    flex-direction: column;
+  }
+
+  /* No celular a tabela mostra só descrição, status e valor */
+  .tabela th:nth-child(2),
+  .tabela td:nth-child(2),
+  .tabela th:nth-child(3),
+  .tabela td:nth-child(3) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .receber-pix {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* No celular a caixinha de notificações ocupa a largura da tela */
+  .caixa-notificacoes {
+    position: fixed;
+    top: 70px;
+    right: 16px;
+    left: 16px;
+    width: auto;
+  }
+
+  .campo-duplo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .card-acao {
+    min-height: 110px;
+  }
+
+  .card-acao p {
+    display: none;
+  }
+
+  .tabela th:nth-child(4),
+  .tabela td:nth-child(4) {
+    display: none;
+  }
+}
+
+/* ---------- Esconder com "hidden" ----------
+   O JavaScript usa o atributo hidden para esconder telas, linhas do extrato
+   e o ajuste de limite. O !important ganha de classes que definem "display". */
+[hidden] {
+  display: none !important;
+}

@@ -1,0 +1,395 @@
+/* ==========================================================================
+   Prisma Bank: tela de cadastro (cadastro.html)
+   Mesmas cores do painel (style-1.css): fundo escuro, cinzas para o
+   conteúdo e o gradiente azul → ciano só nos destaques.
+   ========================================================================== */
+
+/* ---------- Cores e medidas (mude aqui para mudar a tela toda) ---------- */
+:root {
+  color-scheme: dark;
+
+  /* Fundos */
+  --bg: #0a0b0e;
+  --surface: #121419;
+  --surface-2: #1a1d24;
+  --line: #262a33;
+  --line-strong: #3a404c;
+
+  /* Texto */
+  --text: #f2f4f8;
+  --text-2: #a9afbc;
+  --text-3: #868d9b;
+
+  /* Destaques */
+  --blue: #2f6bff;
+  --cyan: #22e0e8;
+  --gradiente: linear-gradient(135deg, var(--blue), var(--cyan));
+
+  /* Erro */
+  --erro: #ff6b6b;
+
+  /* Formas */
+  --raio-p: 8px;
+  --raio: 14px;
+  --sombra: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.18);
+  --transicao: 180ms ease;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* A página vira uma coluna estreita centralizada na tela */
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 540px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 24px 20px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Manrope", system-ui, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Brilho azul suave atrás do formulário */
+body::before {
+  content: "";
+  position: fixed;
+  top: -200px;
+  left: 50%;
+  z-index: -1;
+  width: 900px;
+  height: 600px;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side, rgb(47 107 255 / 0.22), transparent);
+  pointer-events: none;
+}
+
+/* ---------- Títulos ---------- */
+h1 {
+  margin: 0 0 16px;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+/* Triângulo do logo antes do nome, igual ao painel */
+h1::before {
+  content: "△ ";
+  background: var(--gradiente);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+h2 {
+  margin: 0 0 4px;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h2 + p {
+  margin: 0 0 18px;
+  color: var(--text-2);
+  font-size: 16px;
+}
+
+/* ---------- Formulário em formato de cartão ---------- */
+form {
+  padding: 26px 30px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: var(--sombra);
+  animation: entrar 400ms ease both;
+}
+
+@keyframes entrar {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--text-2);
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+/* ---------- Campos de texto ---------- */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"] {
+  display: block;
+  width: 100%;
+  margin-bottom: 14px;
+  padding: 12px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--raio-p);
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+  transition: border-color var(--transicao), box-shadow var(--transicao);
+}
+
+input::placeholder {
+  color: var(--text-3);
+}
+
+input:hover {
+  border-color: var(--text-3);
+}
+
+input:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgb(34 224 232 / 0.18);
+  outline: none;
+}
+
+/* Campo inválido: só fica vermelho depois que a pessoa mexeu nele,
+   e não logo que a página abre */
+input:user-invalid {
+  border-color: var(--erro);
+}
+
+input:user-invalid:focus {
+  box-shadow: 0 0 0 3px rgb(255 107 107 / 0.18);
+}
+
+/* Tira o fundo amarelo que o Chrome coloca no preenchimento automático */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text);
+  -webkit-box-shadow: 0 0 0 1000px var(--surface-2) inset;
+  caret-color: var(--text);
+  transition: background-color 9999s;
+}
+
+/* ---------- Caixa dos termos: quadradinho e texto na mesma linha ---------- */
+input[type="checkbox"] {
+  float: left;
+  width: 20px;
+  height: 20px;
+  margin: 2px 12px 0 0;
+  accent-color: var(--cyan);
+  cursor: pointer;
+}
+
+input[type="checkbox"] + label {
+  display: block;
+  margin-bottom: 20px;
+  font-weight: 500;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+/* ---------- Botão ---------- */
+button {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: 0;
+  border-radius: var(--raio-p);
+  background: var(--gradiente);
+  color: #04131f;
+  font: inherit;
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: filter var(--transicao), transform var(--transicao),
+    box-shadow var(--transicao);
+}
+
+button:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 6px 20px rgb(34 224 232 / 0.2);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: none;
+  box-shadow: none;
+}
+
+/* Contorno visível para quem navega pelo teclado (Tab) */
+button:focus-visible,
+a:focus-visible,
+input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+/* ---------- "Já possui uma conta? Entrar" ---------- */
+form + p {
+  margin: 18px 0 0;
+  color: var(--text-2);
+  text-align: center;
+}
+
+a {
+  color: var(--cyan);
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Vitrine (lado esquerdo, só em tela grande) ---------- */
+.vitrine {
+  display: none; /* no celular e em telas pequenas fica escondida */
+  flex-direction: column;
+  gap: 18px;
+}
+
+.vitrine-titulo {
+  margin: 0;
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.vitrine-texto {
+  margin: 0 0 12px;
+  color: var(--text-2);
+  font-size: 18px;
+}
+
+/* Cartão de exemplo, igual ao da tela Cartões do painel */
+.cartao-vitrine {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1.586;
+  padding: 24px 26px;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 85% 10%, rgb(255 255 255 / 0.25), transparent 45%),
+    linear-gradient(135deg, #10255f, #2f6bff 55%, #22c3e8);
+  color: #fff;
+  box-shadow: 0 24px 60px rgb(47 107 255 / 0.3);
+  transform: rotate(-4deg);
+}
+
+.cartao-linha {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.cartao-chip {
+  width: 44px;
+  height: 32px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, #f3d98b, #c9a34a);
+}
+
+.cartao-numero {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.vitrine-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-2);
+}
+
+.vitrine-lista li::before {
+  content: "✓";
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: var(--gradiente);
+  color: #04131f;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* Tela grande: vitrine à esquerda e formulário à direita */
+@media (min-width: 1000px) {
+  body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 500px;
+    align-items: center;
+    gap: 80px;
+    max-width: 1180px;
+    padding: 24px 40px;
+  }
+
+  .vitrine {
+    display: flex;
+  }
+}
+
+/* ---------- Celular ---------- */
+@media (max-width: 480px) {
+  body {
+    justify-content: flex-start;
+    padding: 32px 14px;
+  }
+
+  form {
+    padding: 24px 18px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 26px;
+  }
+
+  /* 16px evita o zoom automático do iPhone ao tocar no campo */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="password"] {
+    font-size: 16px;
+  }
+}
+
+/* Quem pediu menos animação no sistema não vê animação */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
