@@ -20,7 +20,7 @@
   --verde: #4cbb85;      /* dinheiro que entrou */
   --amarelo: #e2a63b;    /* pendente */
   --vermelho: #f07a7a;   /* bloquear, sair */
-  --barra: #4b4f58;      /* barras do gráfico que não são o mês atual */
+  --barra: #4b4f58;      /* barras do gráfico, menos a do último mês */
   --raio: 8px;
 }
 
@@ -259,7 +259,7 @@ button {
   margin-left: auto;
 }
 
-/* Botões quadrados só com ícone: menu (celular), tema e sino */
+/* Botões quadrados só com ícone: tema e sino */
 .btn-icone {
   position: relative;
   display: grid;
@@ -273,10 +273,6 @@ button {
 
 .btn-icone:hover {
   border-color: var(--borda-forte);
-}
-
-.btn-menu {
-  display: none; /* só aparece no celular */
 }
 
 /* Número de notificações não lidas em cima do sino */
@@ -683,7 +679,7 @@ button {
   background: var(--marca);
 }
 
-/* Nome do mês embaixo da barra */
+/* Nome do mês embaixo da barra. O script.js escreve "mai" e o capitalize deixa "Mai". */
 .grafico-barras span {
   position: absolute;
   top: calc(100% + 8px);
@@ -691,6 +687,7 @@ button {
   transform: translateX(-50%);
   color: var(--texto-2);
   font-size: 13px;
+  text-transform: capitalize;
 }
 
 .grafico-barras .atual span {
@@ -1112,6 +1109,11 @@ button {
   font-size: 13px;
 }
 
+/* ---------- Barra de baixo: só aparece no celular (ver abaixo) ---------- */
+.barra-celular {
+  display: none;
+}
+
 /* ---------- Telas médias: o Início vira uma coluna só ---------- */
 @media (max-width: 1100px) {
   .painel {
@@ -1119,7 +1121,8 @@ button {
   }
 }
 
-/* ---------- Celular: o menu vira uma gaveta que abre pelo botão ☰ ---------- */
+/* ---------- Celular: barra de navegação embaixo, e o menu vira
+   uma gaveta que abre pelo "Mais" dessa barra ---------- */
 @media (max-width: 800px) {
   .app,
   .colunas {
@@ -1141,8 +1144,33 @@ button {
     box-shadow: 0 0 40px rgb(0 0 0 / 0.5);
   }
 
-  .btn-menu {
+  /* Barra fixa embaixo com as telas mais usadas */
+  .barra-celular {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 15;
     display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    padding: 6px 8px;
+    border-top: 1px solid var(--borda);
+    background: var(--fundo);
+  }
+
+  /* Ícone em cima do nome; a tela aberta fica com o ícone azul */
+  .barra-celular .menu-link {
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px 0;
+    border: 0;
+    background: none;
+    font-size: 12px;
+  }
+
+  /* Espaço no fim da página para a barra não cobrir o rodapé */
+  .conteudo {
+    padding-bottom: 68px;
   }
 
   .topo {
@@ -1227,6 +1255,33 @@ button {
 
   .campo-duplo {
     grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Impressão: botão "Salvar em PDF" do comprovante ----------
+   Na folha sai só o comprovante, com fundo branco. */
+@media print {
+  :root {
+    color-scheme: light;
+    --fundo: #fff;
+    --card: #fff;
+    --borda: #ccc;
+    --borda-forte: #999;
+    --texto: #000;
+    --texto-2: #444;
+    --texto-3: #666;
+  }
+
+  .app {
+    display: block;
+  }
+
+  .sidebar,
+  .topo,
+  .rodape,
+  .barra-celular,
+  .comprovante-acoes {
+    display: none;
   }
 }
 

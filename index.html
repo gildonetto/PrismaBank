@@ -59,12 +59,10 @@
 
       <!-- ===== TOPO ===== -->
       <header class="topo">
-        <button class="btn-icone btn-menu" onclick="alternarMenu()" aria-label="Abrir menu"><svg class="ico"><use href="#i-menu"/></svg></button>
-
         <div>
           <span class="texto-fraco">Saldo disponível</span>
           <div class="saldo-linha">
-            <strong class="saldo-valor"><small>R$</small> <span id="saldo-numero">24.860,35</span></strong>
+            <strong class="saldo-valor"><small>R$</small> <span id="saldo-numero"></span></strong>
             <button class="btn-olho" onclick="alternarSaldo()" aria-label="Mostrar ou esconder o saldo"><svg class="ico"><use id="icone-olho" href="#i-olho"/></svg></button>
           </div>
         </div>
@@ -110,28 +108,29 @@
           </nav>
         </div>
 
-        <!-- Gráfico: a altura de cada barra é o gasto do mês (100% = R$ 4 mil) -->
+        <!-- Gráfico dos 6 meses antes deste: a altura de cada barra é o gasto do mês
+             (100% = R$ 4 mil). Os nomes dos meses vêm do script.js. -->
         <section class="card">
           <div class="card-topo">
             <div>
               <h2>Gastos por mês</h2>
-              <p class="texto-fraco">Maio a outubro</p>
+              <p class="texto-fraco">Últimos 6 meses</p>
             </div>
             <div class="grafico-resumo">
-              <div><span class="texto-fraco">Outubro</span><strong>R$ 3.810</strong><span class="texto-fraco">12% a mais que setembro</span></div>
+              <div><span class="texto-fraco">Em <span id="mes-passado"></span></span><strong>R$ 3.810</strong><span class="texto-fraco">12% a mais que <span id="mes-retrasado"></span></span></div>
               <div><span class="texto-fraco media">Média</span><strong>R$ 3.200</strong></div>
             </div>
           </div>
 
           <div class="grafico-area">
             <div class="grafico-eixo"><span>R$ 4 mil</span><span>R$ 2 mil</span><span>R$ 0</span></div>
-            <div class="grafico-barras" role="img" aria-label="Gastos: maio R$ 2.900, junho R$ 3.150, julho R$ 2.840, agosto R$ 3.100, setembro R$ 3.400, outubro R$ 3.810">
-              <div style="height: 72.5%" data-valor="R$ 2.900"><span>Mai</span></div>
-              <div style="height: 79%" data-valor="R$ 3.150"><span>Jun</span></div>
-              <div style="height: 71%" data-valor="R$ 2.840"><span>Jul</span></div>
-              <div style="height: 77.5%" data-valor="R$ 3.100"><span>Ago</span></div>
-              <div style="height: 85%" data-valor="R$ 3.400"><span>Set</span></div>
-              <div class="atual" style="height: 95%" data-valor="R$ 3.810"><span>Out</span></div>
+            <div class="grafico-barras" role="img" aria-label="Gastos dos últimos 6 meses, do mais antigo ao mais recente: R$ 2.900, R$ 3.150, R$ 2.840, R$ 3.100, R$ 3.400 e R$ 3.810">
+              <div style="height: 72.5%" data-valor="R$ 2.900"><span></span></div>
+              <div style="height: 79%" data-valor="R$ 3.150"><span></span></div>
+              <div style="height: 71%" data-valor="R$ 2.840"><span></span></div>
+              <div style="height: 77.5%" data-valor="R$ 3.100"><span></span></div>
+              <div style="height: 85%" data-valor="R$ 3.400"><span></span></div>
+              <div class="atual" style="height: 95%" data-valor="R$ 3.810"><span></span></div>
             </div>
           </div>
         </section>
@@ -142,7 +141,7 @@
               <h2>Cartão de crédito</h2>
               <a href="#cartoes" class="link">Ver cartão</a>
             </div>
-            <span class="texto-fraco">Fatura atual · vence em 15 nov</span>
+            <span class="texto-fraco">Fatura atual · vence em <span class="fatura-vence"></span></span>
             <strong class="valor-grande">R$ 1.284,60</strong>
             <div class="barra"><span class="barra-limite"></span></div>
             <span class="texto-fraco">Limite disponível: <strong class="limite-disponivel"></strong></span>
@@ -216,8 +215,8 @@
 
               <div class="campo">
                 <label for="pix-valor">Valor (R$)</label>
-                <input type="number" id="pix-valor" name="valor" min="0.01" max="24860.35" step="0.01" placeholder="0,00" required>
-                <small class="texto-fraco">Saldo disponível: R$ 24.860,35</small>
+                <input type="number" id="pix-valor" name="valor" min="0.01" step="0.01" placeholder="0,00" required>
+                <small class="texto-fraco saldo-disponivel"></small>
               </div>
 
               <div class="campo">
@@ -252,11 +251,8 @@
             </section>
 
             <section class="card">
-              <h2>Pix recebidos</h2>
-              <ul class="lista">
-                <li><div><strong>Lucas Ferreira</strong><span class="texto-fraco">Hoje, 09:42</span></div><span class="valor positivo">+ R$ 850,00</span></li>
-                <li><div><strong>Juliana Costa</strong><span class="texto-fraco">30 out</span></div><span class="valor positivo">+ R$ 300,00</span></li>
-              </ul>
+              <h2>Últimos Pix</h2>
+              <ul class="lista" id="lista-pix"><!-- preenchido pelo script.js --></ul>
             </section>
           </div>
         </div>
@@ -304,8 +300,8 @@
 
               <div class="campo">
                 <label for="transf-valor">Valor (R$)</label>
-                <input type="number" id="transf-valor" name="valor" min="0.01" max="24860.35" step="0.01" placeholder="0,00" required>
-                <small class="texto-fraco">Saldo disponível: R$ 24.860,35</small>
+                <input type="number" id="transf-valor" name="valor" min="0.01" step="0.01" placeholder="0,00" required>
+                <small class="texto-fraco saldo-disponivel"></small>
               </div>
 
               <div class="campo">
@@ -337,7 +333,7 @@
           <section class="card">
             <h2>Pagar boleto</h2>
             <form class="formulario" onsubmit="enviar(event)">
-              <input type="hidden" name="tipo" value="Pagamento de boleto">
+              <input type="hidden" name="tipo" value="Boleto">
 
               <div class="campo">
                 <label for="pagar-codigo">Código de barras</label>
@@ -347,7 +343,7 @@
               <div class="campo-duplo">
                 <div class="campo">
                   <label for="pagar-valor">Valor (R$)</label>
-                  <input type="number" id="pagar-valor" name="valor" min="0.01" max="24860.35" step="0.01" placeholder="0,00" required>
+                  <input type="number" id="pagar-valor" name="valor" min="0.01" step="0.01" placeholder="0,00" required>
                 </div>
                 <div class="campo">
                   <label for="pagar-data">Data do pagamento</label>
@@ -375,7 +371,7 @@
           <section class="card">
             <h2>Nova recarga</h2>
             <form class="formulario" onsubmit="enviar(event)">
-              <input type="hidden" name="tipo" value="Recarga de celular">
+              <input type="hidden" name="tipo" value="Recarga">
 
               <div class="campo">
                 <label for="recarga-operadora">Operadora</label>
@@ -409,10 +405,7 @@
 
           <section class="card">
             <h2>Recargas recentes</h2>
-            <ul class="lista">
-              <li><div><strong>(11) 9••••-4321</strong><span class="texto-fraco">Claro · 2 nov</span></div><span class="valor">R$ 30,00</span></li>
-              <li><div><strong>(11) 9••••-4321</strong><span class="texto-fraco">Claro · 5 out</span></div><span class="valor">R$ 20,00</span></li>
-            </ul>
+            <ul class="lista" id="lista-recargas"><!-- preenchido pelo script.js --></ul>
           </section>
         </div>
       </main>
@@ -425,7 +418,7 @@
         <section class="card resumo">
           <div><span class="texto-fraco">Entradas</span><strong class="positivo" id="resumo-entradas"></strong></div>
           <div><span class="texto-fraco">Saídas</span><strong id="resumo-saidas"></strong></div>
-          <div><span class="texto-fraco">Saldo atual</span><strong>R$ 24.860,35</strong></div>
+          <div><span class="texto-fraco">Saldo atual</span><strong id="resumo-saldo"></strong></div>
         </section>
 
         <section class="card">
@@ -484,7 +477,7 @@
             <section class="card">
               <h2>Fatura atual</h2>
               <strong class="valor-grande">R$ 1.284,60</strong>
-              <p class="texto-fraco">Fecha em 8 nov · vence em 15 nov</p>
+              <p class="texto-fraco">Fechou em <span class="fatura-fechou"></span> · vence em <span class="fatura-vence"></span></p>
               <div class="barra"><span class="barra-limite"></span></div>
               <div class="limite-info">
                 <div><span class="texto-fraco">Usado</span><strong>R$ 1.284,60</strong></div>
@@ -547,7 +540,7 @@
 
             <section class="card">
               <h2>Conta</h2>
-              <a href="cadastro.html" class="botao botao-secundario botao-perigo">Sair da conta</a>
+              <a href="login.html" class="botao botao-secundario botao-perigo">Sair da conta</a>
             </section>
           </div>
         </div>
@@ -558,7 +551,7 @@
       <main class="pagina" data-tela="comprovante" data-titulo="Comprovante" hidden>
         <section class="card comprovante">
           <h1>Comprovante</h1>
-          <p class="texto-fraco">Banco fictício: nenhum dinheiro foi movimentado.</p>
+          <p class="texto-fraco">Banco fictício: nenhum dinheiro de verdade foi movimentado.</p>
           <strong class="valor-grande" id="comp-valor">—</strong>
 
           <ul class="lista">
@@ -571,6 +564,8 @@
           <div class="comprovante-acoes">
             <a href="#inicio" class="botao">Voltar ao início</a>
             <a href="#extrato" class="botao botao-secundario">Ver extrato</a>
+            <!-- Abre a janela de impressão do navegador, que tem a opção "Salvar como PDF" -->
+            <button class="botao botao-secundario" onclick="print()">Salvar em PDF</button>
           </div>
         </section>
       </main>
@@ -582,6 +577,16 @@
       </footer>
 
     </div>
+
+    <!-- ===== BARRA DE BAIXO (só no celular) =====
+         As telas mais usadas; "Mais" abre o menu com todas -->
+    <nav class="barra-celular">
+      <a href="#inicio" class="menu-link"><svg class="ico"><use href="#i-inicio"/></svg> Início</a>
+      <a href="#pix" class="menu-link"><svg class="ico"><use href="#i-pix"/></svg> Pix</a>
+      <a href="#extrato" class="menu-link"><svg class="ico"><use href="#i-extrato"/></svg> Extrato</a>
+      <a href="#cartoes" class="menu-link"><svg class="ico"><use href="#i-cartao"/></svg> Cartões</a>
+      <button class="menu-link" onclick="alternarMenu()"><svg class="ico"><use href="#i-menu"/></svg> Mais</button>
+    </nav>
   </div>
 
   <script src="script.js"></script>

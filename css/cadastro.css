@@ -1,5 +1,5 @@
 /* ==========================================================
-   Prisma Bank: tela de cadastro (cadastro.html).
+   Prisma Bank: telas de cadastro e login (cadastro.html e login.html).
    Cores, fonte, botão e cartão vêm do style-1.css;
    aqui fica só o que é diferente nesta tela.
    ========================================================== */
@@ -136,9 +136,10 @@ form + p a:hover {
   color: var(--marca);
 }
 
-/* Tela grande: vitrine à esquerda e formulário à direita */
+/* Tela grande, no cadastro: vitrine à esquerda e formulário à direita.
+   O login não tem vitrine (:has) e continua com o formulário no meio. */
 @media (min-width: 1000px) {
-  body {
+  body:has(.vitrine) {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 460px;
     align-items: center;

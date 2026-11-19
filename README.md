@@ -103,6 +103,7 @@ PrismaBank/
 ├── index.html        # The whole bank in one page: home, Pix, transfers,
 │                     # pay, top-up, statement, cards, settings and receipt.
 │                     # Only one screen shows at a time (index.html#extrato, etc.)
+├── login.html        # Login page
 ├── cadastro.html     # Sign-up page
 ├── script.js         # JavaScript interactions
 ├── css/
