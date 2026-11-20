@@ -1,0 +1,1545 @@
+/* ==========================================================
+   Prisma Bank: estilos do site.
+   Usado pelo index.html (o banco), pelo login.html e pelo cadastro.html,
+   que têm alguns ajustes a mais no cadastro.css.
+   ========================================================== */
+
+/* ---------- Cores e medidas: mude aqui para mudar o site todo ---------- */
+:root {
+  color-scheme: dark;
+  --fundo: #0f1013;
+  --card: #17181c;
+  --card-2: #202227;     /* passar o mouse, item ativo */
+  --borda: #2a2c32;
+  --borda-forte: #3b3e46;
+  --texto: #ececef;
+  --texto-2: #a4a7af;    /* textos de apoio */
+  --texto-3: #7d818b;    /* textos bem discretos */
+  --marca: #2f5fe0;      /* o azul do Prisma: botões, barras e item ativo */
+  --link: #8aa8ff;       /* o mesmo azul, mais claro, para ler no fundo escuro */
+  --verde: #4cbb85;      /* dinheiro que entrou */
+  --vermelho: #f07a7a;   /* bloquear, sair */
+  --roxo: #a78bfa;       /* roxo, laranja e rosa: só nas bolinhas dos contatos */
+  --laranja: #e8a54b;
+  --rosa: #f07ab8;
+  --barra: #4b4f58;      /* barras do gráfico, menos a do último mês */
+  --raio: 8px;
+}
+
+/* Modo claro: o script.js coloca a classe "claro" na tag <html> */
+.claro {
+  color-scheme: light;
+  --fundo: #f4f5f7;
+  --card: #fff;
+  --card-2: #eef0f3;
+  --borda: #e3e5ea;
+  --borda-forte: #c9cdd5;
+  --texto: #16181d;
+  --texto-2: #50545e;
+  --texto-3: #6b707a;
+  --link: #2f5fe0;
+  --verde: #13804f;
+  --vermelho: #c43838;
+  --roxo: #6d4fd1;
+  --laranja: #9a5b00;
+  --rosa: #b83280;
+  --barra: #b9bdc6;
+}
+
+/* ---------- Base ---------- */
+* {
+  box-sizing: border-box;
+}
+
+/* Ao trocar de página (login → cadastro → banco), uma tela some suavemente na outra.
+   Funciona pelo Live Server; abrindo o arquivo direto, o navegador só troca de página. */
+@view-transition {
+  navigation: auto;
+}
+
+/* Barra de rolagem fina, nas cores do site */
+html {
+  scrollbar-color: var(--borda-forte) var(--fundo);
+  scrollbar-width: thin;
+}
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font: 16px/1.5 "IBM Plex Sans", system-ui, sans-serif;
+}
+
+h1,
+h2,
+p,
+ul {
+  margin: 0;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select {
+  color: inherit;
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Teclado: quem navega com Tab vê onde está (os campos já ganham a borda azul) */
+:is(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+}
+
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--marca);
+}
+
+.texto-fraco {
+  color: var(--texto-2);
+  font-size: 15px;
+}
+
+.texto-fraco strong {
+  color: var(--texto);
+  font-weight: 500;
+}
+
+/* Ícones do começo do index.html: só o traço, na cor do texto */
+.ico {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Texto só para leitor de tela (ex.: "Notificações" no sino, " senha" no "Mostrar") */
+.so-leitor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- Estrutura: menu à esquerda, conteúdo à direita ---------- */
+.app {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+/* ---------- Menu lateral ---------- */
+.sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  height: 100vh;
+  padding: 20px 12px;
+  border-right: 1px solid var(--borda);
+  background: var(--fundo);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.menu {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* "Conta" e "Serviços" */
+.menu-titulo {
+  margin: 18px 14px 2px;
+  color: var(--texto-2);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.menu-titulo:first-child {
+  margin-top: 0;
+}
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 14px;
+  border-radius: var(--raio);
+  color: var(--texto-2);
+  font-size: 17px;
+}
+
+.menu-link .ico {
+  width: 22px;
+  height: 22px;
+}
+
+.menu-link:hover {
+  background: var(--card);
+  color: var(--texto);
+}
+
+/* Tela aberta: o script.js coloca a classe "ativo" no link dela */
+.menu-link.ativo {
+  background: var(--card-2);
+  color: var(--texto);
+  font-weight: 500;
+}
+
+.menu-link.ativo .ico {
+  color: var(--link);
+}
+
+/* Suporte e Configurações, no pé do menu */
+.menu-fim {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ---------- Conteúdo: topo, a tela aberta e o rodapé ---------- */
+.conteudo {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-width: 0;
+  min-height: 100vh;
+}
+
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 28px;
+  border-bottom: 1px solid var(--borda);
+  background: var(--fundo);
+}
+
+.saldo-linha {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.saldo-valor {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* "R$" menor e mais claro que o número */
+.saldo-valor small {
+  color: var(--texto-2);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.btn-olho {
+  display: grid;
+  padding: 6px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--texto-2);
+}
+
+.btn-olho:hover {
+  background: var(--card-2);
+  color: var(--texto);
+}
+
+.topo-acoes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+/* Botões quadrados só com ícone: tema e sino */
+.btn-icone {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  background: var(--card);
+}
+
+.btn-icone:hover {
+  border-color: var(--borda-forte);
+}
+
+/* Número de notificações não lidas em cima do sino */
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: var(--marca);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+/* Bolinha com as iniciais (topo, contatos e perfil) */
+.avatar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--card-2);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ---------- Telas ---------- */
+.painel,
+.pagina {
+  display: grid;
+  gap: 20px;
+  align-content: start;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 28px 48px;
+}
+
+/* Início: coluna principal (2/3) e coluna da direita (1/3) */
+.painel {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+}
+
+/* Outras telas: formulário à esquerda, informações à direita */
+.colunas {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.coluna {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* No Início, o último card da coluna estica até o fim do card ao lado */
+.coluna > :last-child {
+  flex-grow: 1;
+}
+
+.card {
+  padding: 20px;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  background: var(--card);
+}
+
+.card > h2 {
+  margin-bottom: 16px;
+}
+
+/* Título do card com um link (ou os filtros) à direita */
+.card-topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-bottom: 16px;
+}
+
+.link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--link);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Botões ---------- */
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border: 1px solid var(--marca);
+  border-radius: var(--raio);
+  background: var(--marca);
+  color: #fff;
+  font-weight: 500;
+}
+
+.botao:hover {
+  filter: brightness(1.12);
+}
+
+.botao-secundario {
+  border-color: var(--borda-forte);
+  background: none;
+  color: var(--texto);
+}
+
+.botao-secundario:hover {
+  background: var(--card-2);
+  filter: none;
+}
+
+.botao-perigo {
+  color: var(--vermelho);
+}
+
+.botao-pequeno {
+  padding: 4px 12px;
+  font-size: 15px;
+}
+
+/* Botão desligado (ex.: "Fatura paga") */
+.botao:disabled {
+  opacity: 0.5;
+  cursor: default;
+  filter: none;
+}
+
+/* ---------- Formulários ---------- */
+.formulario {
+  display: grid;
+  gap: 16px;
+}
+
+.campo {
+  display: grid;
+  gap: 6px;
+}
+
+.campo > label,
+.campo > span {
+  color: var(--texto-2);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* Campos: os dos formulários, a busca do Extrato e o valor da caixinha */
+.campo input,
+.campo select,
+.busca,
+.caixinha-form input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--borda-forte);
+  border-radius: var(--raio);
+  background: var(--fundo);
+}
+
+:is(.campo, .caixinha-form) input::placeholder,
+.busca::placeholder {
+  color: var(--texto-3);
+}
+
+.campo input:focus,
+.campo select:focus,
+.busca:focus,
+.caixinha-form input:focus {
+  border-color: var(--marca);
+  outline: 1px solid var(--marca);
+}
+
+/* Caixa de marcar dentro do formulário ("Salvar nos favorecidos") */
+.marcar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--texto-2);
+  font-size: 15px;
+  cursor: pointer;
+}
+
+/* Dois campos lado a lado (agência e conta, valor e data) */
+.campo-duplo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Escolhas em botões (TED / Entre contas, valores da recarga).
+   Por baixo é um radio escondido; o <span> é o que aparece. */
+.opcoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* O radio fica preso dentro da opção (senão ele pega a largura da página inteira) */
+.opcao {
+  position: relative;
+}
+
+.opcao input {
+  position: absolute;
+  opacity: 0;
+}
+
+.opcao span {
+  display: block;
+  padding: 8px 14px;
+  border: 1px solid var(--borda-forte);
+  border-radius: var(--raio);
+  cursor: pointer;
+}
+
+.opcao input:checked + span {
+  border-color: var(--marca);
+  outline: 1px solid var(--marca);
+  background: color-mix(in srgb, var(--marca) 14%, transparent);
+}
+
+.opcao input:focus-visible + span {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+}
+
+/* ---------- Listas e tabela ---------- */
+.lista li,
+.lista label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.lista li {
+  padding: 12px 0;
+  border-top: 1px solid var(--borda);
+}
+
+.lista li:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.lista li:last-child {
+  padding-bottom: 0;
+}
+
+.lista strong {
+  display: block;
+  font-weight: 500;
+}
+
+/* Caixas de seleção das Preferências: a linha toda é clicável */
+.lista label {
+  width: 100%;
+  cursor: pointer;
+}
+
+/* Ícone antes do nome (Suas chaves Pix) */
+.com-icone {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Valor + botão "Pagar" no lado direito da lista de contas */
+.lista-direita {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--texto-2);
+}
+
+.tabela th {
+  padding: 0 0 8px;
+  color: var(--texto-3);
+  font-size: 15px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.tabela td {
+  padding: 12px 0;
+  border-top: 1px solid var(--borda);
+  font-size: 17px;
+}
+
+/* Espaço entre as colunas, para o texto de uma não encostar na outra */
+.tabela td + td,
+.tabela th + th {
+  padding-left: 12px;
+}
+
+/* Tipo (Pix, Cartão...): na cor do texto, sem negrito, para ler bem ao lado do nome */
+.tabela td.tipo {
+  color: var(--texto);
+}
+
+.tabela .valor {
+  text-align: right;
+}
+
+.descricao {
+  color: var(--texto);
+  font-weight: 500;
+}
+
+/* Valores em dinheiro: os números têm a mesma largura e ficam alinhados */
+.valor {
+  color: var(--texto);
+  font-weight: 500;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.positivo {
+  color: var(--verde);
+}
+
+/* Extrato separado por dia: a linha com a data ("Hoje", "Ontem", "16 nov") */
+.tabela .dia th {
+  padding-top: 16px;
+}
+
+.tabela .dia:first-child th {
+  padding-top: 0;
+}
+
+/* Movimentações que abrem o comprovante (tabelas e listas) */
+.tabela tr[tabindex],
+.lista li[tabindex] {
+  cursor: pointer;
+}
+
+.tabela tr[tabindex]:hover .descricao,
+.lista li[tabindex]:hover strong {
+  color: var(--link);
+}
+
+/* ---------- Início ---------- */
+.saudacao {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* A data vem em minúsculas ("quinta-feira, 19 de novembro") */
+.saudacao p::first-letter {
+  text-transform: uppercase;
+}
+
+/* Atalhos: Pix, Transferir, Pagar e Recarga */
+.atalhos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.grafico-resumo {
+  display: flex;
+  gap: 28px;
+}
+
+.grafico-resumo strong {
+  display: block;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Tracinho na legenda "Média", igual à linha do gráfico */
+.media::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  margin-right: 6px;
+  border-top: 1px dashed var(--texto-2);
+  vertical-align: middle;
+}
+
+/* O card do gráfico estica até a altura da coluna ao lado, e o gráfico estica junto */
+.grafico {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Gráfico de gastos: cada barra é uma <div> com a altura em %
+   (100% = R$ 4 mil, o topo do gráfico) */
+.grafico-area {
+  display: flex;
+  flex: 1;
+  gap: 12px;
+  min-height: 242px; /* 214px de barras + 28px embaixo para os nomes dos meses */
+  margin-top: 20px;
+  padding-bottom: 28px;
+}
+
+/* Valores do lado esquerdo: passam 9px da área em cima e embaixo,
+   assim o meio de cada texto fica em cima da sua linha */
+.grafico-eixo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: -9px 0;
+  color: var(--texto-3);
+  font-size: 14px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.grafico-barras {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  justify-content: space-around;
+  border-bottom: 1px solid var(--borda-forte);
+  /* linhas de fundo em R$ 4 mil e R$ 2 mil */
+  background: linear-gradient(var(--borda) 1px, transparent 1px) 0 0 / 100% 50%;
+}
+
+/* Linha tracejada da média: R$ 3.200 de R$ 4 mil = 80% da altura */
+.grafico-barras::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 80%;
+  left: 0;
+  z-index: 1;
+  border-top: 1px dashed var(--texto-2);
+}
+
+.grafico-barras > div {
+  position: relative;
+  width: 24px;
+  border-radius: 4px 4px 0 0;
+  background: var(--barra);
+}
+
+.grafico-barras > .atual {
+  background: var(--marca);
+}
+
+/* Este mês: azul mais claro, porque o mês ainda não acabou */
+.grafico-barras > .parcial {
+  background: color-mix(in srgb, var(--marca) 40%, transparent);
+}
+
+/* Nome do mês embaixo da barra */
+.grafico-barras span {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--texto-2);
+  font-size: 15px;
+  text-transform: capitalize;
+}
+
+.grafico-barras .atual span {
+  color: var(--texto);
+  font-weight: 500;
+}
+
+/* Ao passar o mouse, mostra o valor da barra (vem do data-valor) */
+.grafico-barras > div:hover::after {
+  content: attr(data-valor);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--texto);
+  color: var(--fundo);
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.valor-grande {
+  display: block;
+  margin: 2px 0 14px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* Barra de progresso (limite do cartão e caixinha):
+   o fundo é um azul fraquinho e o preenchimento é o azul da marca */
+.barra {
+  height: 8px;
+  margin: 12px 0 10px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--marca) 22%, var(--card));
+}
+
+.barra span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--marca);
+}
+
+/* Caixinha: o valor e os botões Guardar e Resgatar na mesma linha */
+.caixinha-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.caixinha-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 4px 10px;
+}
+
+/* Contatos do Pix rápido: bolinha com as iniciais e o nome embaixo */
+.contatos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.contato,
+.favorecido {
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.contato {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  color: var(--texto-2);
+  font-size: 15px;
+}
+
+/* Cada contato tem a sua cor, na ordem da lista: verde, roxo, laranja, rosa e repete */
+.contato .avatar,
+.favorecido .avatar {
+  --cor: var(--verde);
+  width: 44px;
+  height: 44px;
+  background: color-mix(in srgb, var(--cor) 18%, transparent); /* a cor bem clarinha no fundo */
+  color: var(--cor);
+}
+
+.contato:nth-child(4n + 2) .avatar,
+#favorecidos li:nth-child(4n + 2) .avatar {
+  --cor: var(--roxo);
+}
+
+.contato:nth-child(4n + 3) .avatar,
+#favorecidos li:nth-child(4n + 3) .avatar {
+  --cor: var(--laranja);
+}
+
+.contato:nth-child(4n + 4) .avatar,
+#favorecidos li:nth-child(4n + 4) .avatar {
+  --cor: var(--rosa);
+}
+
+.contato:hover {
+  color: var(--texto);
+}
+
+.contato:hover .avatar,
+.favorecido:hover .avatar {
+  background: color-mix(in srgb, var(--cor) 32%, transparent);
+}
+
+/* Favorecidos (Transferências): a linha inteira é um botão */
+.favorecido {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+}
+
+.favorecido:hover strong {
+  color: var(--link);
+}
+
+/* Texto de ajuda entre o título e a lista */
+.card > .texto-fraco + .lista {
+  margin-top: 16px;
+}
+
+/* ---------- Pix: receber com QR Code ---------- */
+.receber-pix {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.receber-pix strong {
+  display: block;
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+
+.receber-pix .botao {
+  margin-top: 10px;
+}
+
+/* O QR fica num quadrado branco, como num app de verdade */
+.qr {
+  flex-shrink: 0;
+  width: 120px;
+  padding: 8px;
+  border-radius: var(--raio);
+  background: #fff;
+}
+
+/* ---------- Extrato ---------- */
+/* Título com o período (7 dias / 30 dias / Tudo) à direita */
+.titulo-linha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.busca {
+  margin-bottom: 8px;
+}
+
+/* Resumo: três números lado a lado, separados por uma linha */
+.resumo {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 0;
+}
+
+.resumo div {
+  padding: 16px 20px;
+}
+
+.resumo div + div {
+  border-left: 1px solid var(--borda);
+}
+
+.resumo strong {
+  display: block;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Filtro Todas / Entradas / Saídas: três botões grudados */
+.filtros {
+  display: flex;
+  border: 1px solid var(--borda-forte);
+  border-radius: var(--raio);
+  overflow: hidden;
+}
+
+.filtro {
+  padding: 5px 12px;
+  border: 0;
+  background: none;
+  color: var(--texto-2);
+  font-size: 15px;
+}
+
+.filtro + .filtro {
+  border-left: 1px solid var(--borda-forte);
+}
+
+.filtro.ativo {
+  background: var(--card-2);
+  color: var(--texto);
+}
+
+/* O contorno do Tab fica para dentro, senão a caixa dos filtros corta */
+.filtro:focus-visible {
+  outline-offset: -2px;
+}
+
+/* ---------- Cartões ---------- */
+.cartao-visual {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  aspect-ratio: 1.586; /* proporção de um cartão de verdade */
+  padding: 26px 28px;
+  border-radius: 16px;
+  background: #1f3fae;
+  color: #fff;
+}
+
+/* Linha de cima e linha de baixo: o último item vai para a direita */
+.cartao-linha {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  font-weight: 500;
+  white-space: nowrap; /* o nome fica numa linha só; se for comprido demais, termina em "..." */
+}
+
+.cartao-linha > div:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cartao-linha > :last-child {
+  margin-left: auto;
+}
+
+.cartao-linha small,
+.cartao-etiqueta {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.cartao-marca {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+/* O nome no cartão vem do script.js e aparece em maiúsculas, como no cartão de verdade */
+.cartao-visual .usuario-nome {
+  text-transform: uppercase;
+}
+
+.cartao-chip {
+  width: 44px;
+  height: 32px;
+  border-radius: 6px;
+  background: #d9bd73;
+}
+
+.cartao-numero {
+  font-size: clamp(18px, 2.4vw, 24px);
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+}
+
+.cartao-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+/* Fatura: "Usado" à esquerda e "Disponível" à direita */
+.limite-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.limite-info strong {
+  display: block;
+  font-weight: 500;
+}
+
+.limite-info div:last-child {
+  text-align: right;
+}
+
+/* ---------- Notificações (caixinha que abre no sino) ---------- */
+.notificacoes {
+  position: relative;
+}
+
+.caixa-notificacoes {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 30;
+  width: 340px;
+  padding: 16px;
+  max-height: min(480px, 70vh); /* muitas notificações: a caixinha rola */
+  overflow-y: auto;
+  border: 1px solid var(--borda-forte);
+  border-radius: var(--raio);
+  background: var(--card);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.25); /* fica por cima do resto da tela */
+}
+
+.caixa-notificacoes h2 {
+  margin-bottom: 8px;
+}
+
+.caixa-notificacoes .lista li {
+  padding: 2px 0;
+  border: 0;
+}
+
+.notificacao {
+  display: flex;
+  gap: 12px;
+  width: calc(100% + 16px);
+  margin: 0 -8px;
+  padding: 8px;
+  border-radius: var(--raio);
+}
+
+.notificacao:hover {
+  background: var(--card-2);
+}
+
+.notificacao .ico {
+  margin-top: 2px;
+  color: var(--texto-2);
+}
+
+.notificacao p {
+  color: var(--texto-2);
+  font-size: 15px;
+}
+
+.notificacao strong {
+  display: inline;
+  color: var(--texto);
+}
+
+/* ---------- Configurações ---------- */
+.perfil {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 20px;
+}
+
+.perfil .avatar {
+  width: 56px;
+  height: 56px;
+  font-size: 18px;
+}
+
+/* Pelo menos 200px para o nome: sem espaço (celular), agência e conta descem */
+.perfil-nome {
+  flex: 1 1 200px;
+}
+
+.perfil-nome h2 {
+  font-size: 20px;
+}
+
+.perfil-conta {
+  display: flex;
+  gap: 28px;
+}
+
+.perfil-conta strong {
+  display: block;
+  font-weight: 500;
+}
+
+/* ---------- Comprovante ---------- */
+.comprovante {
+  width: 100%;
+  max-width: 460px;
+  margin: 12px auto 0;
+}
+
+.comprovante .valor-grande {
+  margin: 20px 0 0;
+  font-size: 30px;
+}
+
+/* Dados do recibo entre duas linhas tracejadas, como num papel de maquininha */
+.comprovante .lista {
+  margin: 20px 0;
+  padding: 16px 0;
+  border-top: 1px dashed var(--borda-forte);
+  border-bottom: 1px dashed var(--borda-forte);
+}
+
+.comprovante .lista li {
+  padding: 6px 0;
+  border: 0;
+}
+
+/* Valor do lado direito; se for comprido (código do boleto), quebra alinhado à direita */
+.comprovante .lista strong {
+  text-align: right;
+}
+
+#comp-codigo {
+  font-family: ui-monospace, Consolas, monospace;
+}
+
+/* Botões lado a lado (Confirmar / Voltar, Voltar ao início / Ver extrato / PDF) */
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ---------- Rodapé ---------- */
+.rodape {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 24px;
+  /* A linha de cima vai de ponta a ponta; o texto fica alinhado com os cards */
+  padding: 20px max(28px, calc((100% - 1124px) / 2)) 28px;
+  border-top: 1px solid var(--borda);
+  color: var(--texto-3);
+  font-size: 15px;
+}
+
+/* ---------- Olho do topo: esconde todos os valores ----------
+   O script.js põe a classe "oculto" no <body>. Tudo o que tem a classe "dinheiro"
+   fica invisível (mas continua ocupando o lugar) e aparecem bolinhas por cima. */
+.oculto .dinheiro {
+  position: relative;
+  visibility: hidden;
+}
+
+.oculto .dinheiro::after {
+  content: "••••";
+  position: absolute;
+  inset: 0;
+  color: var(--texto-2);
+  visibility: visible;
+}
+
+/* No topo, o saldo escondido fica do tamanho das bolinhas, e o olho vem logo depois */
+.oculto #saldo-numero {
+  display: inline-block;
+  width: 1.8em;
+}
+
+/* ---------- Barra de baixo: só aparece no celular (ver abaixo) ---------- */
+.barra-celular {
+  display: none;
+}
+
+/* ---------- Telas médias: o Início vira uma coluna só ---------- */
+@media (max-width: 1100px) {
+  .painel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Celular: barra de navegação embaixo, e o menu vira
+   uma gaveta que abre pelo "Mais" dessa barra ---------- */
+@media (max-width: 800px) {
+  .app,
+  .colunas {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sidebar {
+    position: fixed;
+    left: 0;
+    z-index: 20;
+    width: 250px;
+    transform: translateX(-100%);
+    /* "hidden": fechado, o Tab do teclado não passa pelos links escondidos */
+    visibility: hidden;
+    transition: transform 0.2s, visibility 0.2s;
+  }
+
+  /* O script.js coloca a classe "aberto" para mostrar o menu */
+  .sidebar.aberto {
+    transform: none;
+    visibility: visible;
+    box-shadow: 0 0 40px rgb(0 0 0 / 0.5);
+  }
+
+  /* Barra fixa embaixo com as telas mais usadas */
+  .barra-celular {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 15;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    padding: 6px 8px;
+    border-top: 1px solid var(--borda);
+    background: var(--fundo);
+  }
+
+  /* Ícone em cima do nome; a tela aberta fica com o ícone azul */
+  .barra-celular .menu-link {
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px 0;
+    border: 0;
+    background: none;
+    font-size: 13px;
+  }
+
+  /* Espaço no fim da página para a barra não cobrir o rodapé */
+  .conteudo {
+    padding-bottom: 68px;
+  }
+
+  .topo {
+    padding: 10px 16px;
+  }
+
+  .saldo-valor {
+    font-size: 24px;
+  }
+
+  .painel,
+  .pagina {
+    padding: 20px 16px 32px;
+  }
+
+  .rodape {
+    padding: 16px;
+  }
+
+  /* A tabela esconde a coluna Tipo (no Início a Data continua) */
+  .tabela .tipo {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  /* Falta espaço no topo: o perfil continua no menu (Configurações) */
+  .topo .avatar {
+    display: none;
+  }
+
+  /* Atalhos em 4 quadradinhos, com o ícone em cima do nome */
+  .atalhos {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .atalhos .botao {
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 4px;
+    font-size: 14px;
+  }
+
+  .resumo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tabela td {
+    font-size: 16px;
+  }
+
+  .resumo div + div {
+    border-top: 1px solid var(--borda);
+    border-left: 0;
+  }
+
+  .receber-pix {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* A caixinha de notificações ocupa a largura da tela */
+  .caixa-notificacoes {
+    position: fixed;
+    top: 64px;
+    right: 16px;
+    left: 16px;
+    width: auto;
+  }
+
+  .campo-duplo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Suporte ---------- */
+/* Três canais lado a lado (no celular, um embaixo do outro) */
+.canais {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.canais .card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.canais h2 {
+  margin: 0;
+}
+
+.canais strong {
+  margin-top: 12px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.canais .botao {
+  margin-top: 12px;
+}
+
+/* "Pix", "Cartão", "Conta": o nome de cada grupo de perguntas */
+.faq-grupo {
+  margin: 24px 0 4px;
+  color: var(--texto-2);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.card > h2 + .faq-grupo {
+  margin-top: 0;
+}
+
+/* Pergunta: o <summary> é a linha clicável; a resposta (<p>) só aparece aberta */
+.faq {
+  border-bottom: 1px solid var(--borda);
+}
+
+.faq:last-child {
+  border-bottom: 0;
+}
+
+.faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  font-weight: 500;
+  list-style: none; /* tira o triângulo padrão do navegador */
+  cursor: pointer;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+/* "+" à direita, que gira e vira "×" quando a pergunta está aberta */
+.faq summary::after {
+  content: "+";
+  flex-shrink: 0;
+  color: var(--texto-2);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1;
+  transition: transform 0.2s;
+}
+
+.faq[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq summary:hover {
+  color: var(--link);
+}
+
+.faq summary:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+}
+
+.faq p {
+  padding: 0 32px 16px 0;
+  color: var(--texto-2);
+}
+
+/* Dicas de segurança: texto que ocupa a linha toda */
+.dicas li {
+  display: block;
+}
+
+/* ---------- Impressão: botão "Salvar em PDF" do comprovante ----------
+   Na folha sai só o comprovante, com fundo branco. */
+@media print {
+  :root {
+    color-scheme: light;
+    --fundo: #fff;
+    --card: #fff;
+    --borda: #ccc;
+    --borda-forte: #999;
+    --texto: #000;
+    --texto-2: #444;
+    --texto-3: #666;
+  }
+
+  .app {
+    display: block;
+  }
+
+  .sidebar,
+  .topo,
+  .rodape,
+  .barra-celular,
+  .acoes {
+    display: none;
+  }
+}
+
+/* ---------- Esconder com "hidden" ----------
+   O !important ganha das classes que definem "display" (ex.: .card). */
+[hidden] {
+  display: none !important;
+}
