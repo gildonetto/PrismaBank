@@ -87,12 +87,12 @@ This is what we **plan** to build. It may change a bit during development.
 
 Simple things we want to do with JS:
 
-- [ ] Show/hide the balance when clicking the eye icon
-- [ ] Open and close the sidebar on mobile
-- [ ] Toggle between **light mode** and **dark mode** 🌙
+- [x] Show/hide the balance when clicking the eye icon
+- [x] Open and close the sidebar on mobile
+- [x] Toggle between **light mode** and **dark mode** 🌙
 - [ ] Filter the transactions table by status
 - [ ] Open a modal when clicking "Generate Pix"
-- [ ] Show the current date in the header
+- [x] Show the current date in the header
 
 ---
 
@@ -105,14 +105,46 @@ PrismaBank/
 │                     # Only one screen shows at a time (index.html#extrato, etc.)
 ├── login.html        # Login page
 ├── cadastro.html     # Sign-up page
-├── script.js         # JavaScript interactions
+├── script.js         # The bank's JavaScript (data, screens, Pix, statement...)
+├── comum.js          # Shared by the 3 pages: theme, input masks, password check
 ├── css/
 │   ├── style-1.css   # Site styles (all screens, dark and light theme)
 │   └── cadastro.css  # Extra styles for the sign-up page
 ├── favicon.svg       # Logo (also the browser tab icon)
 ├── qr.svg            # QR code on the Pix screen
+├── manifest.json     # Lets the phone install the site as an app
+├── icones/           # App icons (180, 192 and 512 px)
 └── README.md         # This file
 ```
+
+---
+
+## ⚙️ How it works
+
+**One page, many screens.** Every screen in `index.html` is a `<main data-tela="...">`. The function `mostrarTela()` in `script.js` reads the end of the address (`#extrato`, `#pix`...) and shows only that screen. Because each screen has its own address, the browser's back button works.
+
+**All the data lives in one object.** The balance, transactions, contacts, bills and notifications are all inside `dados`, at the top of `script.js`. `mostrarTudo()` redraws the screen from it, so after a Pix, the balance, the statement and the chart all change together.
+
+**The browser remembers.** When the page closes, `dados` is saved in `localStorage`. Dates are stored as "days from today", so the sample data never gets old. *Settings → Restaurar dados de exemplo* erases what was saved and starts over.
+
+**Sending money.** Pix, transfers, bills and top-ups follow the same path:
+
+1. `enviar()` checks the balance and builds the operation.
+2. The "Confira os dados" screen shows it before anything happens.
+3. `concluir()` takes the money out, adds it to the statement and opens the receipt.
+
+A bill paid for a future date becomes *Agendado* and only leaves the balance on that day.
+
+**Sign-up → bank.** `cadastro.html` sends the name, e-mail and phone in the address (`index.html?nome=...`), and the bank reads them with `URLSearchParams`. The password fields have no `name`, so they are never sent anywhere.
+
+**Shared code.** `comum.js` loads in the `<head>` of the three pages:
+- **Theme:** the first visit follows the computer's light/dark setting, and after that it remembers the user's choice.
+- **Masks:** `formatar()` adds the spaces, dashes and parentheses while you type (phone, account, bill code).
+- **Passwords:** sign-up checks that the two passwords match.
+
+**Keyboard and errors.**
+- **Enter** opens the focused item; **Esc** closes the menu and the notifications.
+- Form errors appear in Portuguese right on the field (no `alert()` windows).
 
 ---
 
@@ -129,12 +161,12 @@ PrismaBank/
 
 - [x] Create the GitHub repository
 - [x] Write the README
-- [ ] Choose colors, fonts and logo
+- [x] Choose colors, fonts and logo
 - [ ] Sketch the layout (on paper or in Figma)
-- [ ] Build the HTML structure
-- [ ] Style it with CSS
-- [ ] Make it responsive
-- [ ] Add the JavaScript interactions
+- [x] Build the HTML structure
+- [x] Style it with CSS
+- [x] Make it responsive
+- [x] Add the JavaScript interactions
 - [ ] Review and publish (e.g. GitHub Pages)
 
 ---
@@ -148,7 +180,7 @@ Since it's just HTML, CSS and JS, there's nothing to install:
    git clone https://github.com/gildonetto/PrismaBank.git
    ```
 2. Open the project folder.
-3. Double-click `index.html` to open it in your browser. It opens the bank dashboard. The sign-up page is `cadastro.html` (also reached with "Sair da conta" in Settings).
+3. Double-click `index.html` to open it in your browser. It opens the bank dashboard. "Sair da conta" in Settings goes to the login page (`login.html`), which links to the sign-up page (`cadastro.html`).
 
 > 💡 Tip: in VS Code, the **Live Server** extension reloads the page automatically every time you save.
 

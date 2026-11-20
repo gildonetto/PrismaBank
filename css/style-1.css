@@ -1,7 +1,7 @@
 /* ==========================================================
    Prisma Bank: estilos do site.
-   Usado pelo index.html (o banco) e pelo cadastro.html,
-   que tem alguns ajustes a mais no cadastro.css.
+   Usado pelo index.html (o banco), pelo login.html e pelo cadastro.html,
+   que têm alguns ajustes a mais no cadastro.css.
    ========================================================== */
 
 /* ---------- Cores e medidas: mude aqui para mudar o site todo ---------- */
@@ -96,6 +96,18 @@ select {
 
 button {
   cursor: pointer;
+}
+
+/* Teclado: quem navega com Tab vê onde está (os campos já ganham a borda azul) */
+:is(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+}
+
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--marca);
 }
 
 .texto-fraco {
@@ -411,6 +423,13 @@ button {
   font-size: 14px;
 }
 
+/* Botão desligado (ex.: "Fatura paga") */
+.botao:disabled {
+  opacity: 0.5;
+  cursor: default;
+  filter: none;
+}
+
 /* ---------- Formulários ---------- */
 .formulario {
   display: grid;
@@ -429,8 +448,11 @@ button {
   font-weight: 500;
 }
 
+/* Campos: os dos formulários, a busca do Extrato e o valor da caixinha */
 .campo input,
-.campo select {
+.campo select,
+.busca,
+.caixinha-form input {
   width: 100%;
   padding: 10px 12px;
   border: 1px solid var(--borda-forte);
@@ -438,14 +460,32 @@ button {
   background: var(--fundo);
 }
 
-.campo input::placeholder {
+:is(.campo, .caixinha-form) input::placeholder,
+.busca::placeholder {
   color: var(--texto-3);
 }
 
 .campo input:focus,
-.campo select:focus {
+.campo select:focus,
+.busca:focus,
+.caixinha-form input:focus {
   border-color: var(--marca);
   outline: 1px solid var(--marca);
+}
+
+/* CPF em "Meus dados": aparece, mas não dá para mudar */
+.campo input:disabled {
+  color: var(--texto-3);
+}
+
+/* Caixa de marcar dentro do formulário ("Salvar nos favorecidos") */
+.marcar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--texto-2);
+  font-size: 14px;
+  cursor: pointer;
 }
 
 /* Dois campos lado a lado (agência e conta, valor e data) */
@@ -461,6 +501,11 @@ button {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+/* O radio fica preso dentro da opção (senão ele pega a largura da página inteira) */
+.opcao {
+  position: relative;
 }
 
 .opcao input {
@@ -521,10 +566,11 @@ button {
   cursor: pointer;
 }
 
-.lista input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  accent-color: var(--marca);
+/* Ícone antes do nome (Suas chaves Pix) */
+.com-icone {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 /* Valor + botão "Pagar" no lado direito da lista de contas */
@@ -580,6 +626,26 @@ button {
   font-size: 13px;
 }
 
+/* Extrato separado por dia: a linha com a data ("Hoje", "Ontem", "16 nov") */
+.tabela .dia th {
+  padding-top: 16px;
+}
+
+.tabela .dia:first-child th {
+  padding-top: 0;
+}
+
+/* Movimentações que abrem o comprovante (tabelas e listas) */
+.tabela tr[tabindex],
+.lista li[tabindex] {
+  cursor: pointer;
+}
+
+.tabela tr[tabindex]:hover .descricao,
+.lista li[tabindex]:hover strong {
+  color: var(--link);
+}
+
 /* ---------- Início ---------- */
 .saudacao {
   grid-column: 1 / -1;
@@ -623,22 +689,30 @@ button {
   vertical-align: middle;
 }
 
+/* O card do gráfico estica até a altura da coluna ao lado, e o gráfico estica junto */
+.grafico {
+  display: flex;
+  flex-direction: column;
+}
+
 /* Gráfico de gastos: cada barra é uma <div> com a altura em %
    (100% = R$ 4 mil, o topo do gráfico) */
 .grafico-area {
   display: flex;
+  flex: 1;
   gap: 12px;
+  min-height: 242px; /* 214px de barras + 28px embaixo para os nomes dos meses */
   margin-top: 20px;
-  padding-bottom: 28px; /* espaço para os nomes dos meses */
+  padding-bottom: 28px;
 }
 
-/* Valores do lado esquerdo, cada um na altura da sua linha */
+/* Valores do lado esquerdo: passam 9px da área em cima e embaixo,
+   assim o meio de cada texto fica em cima da sua linha */
 .grafico-eixo {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 232px;
-  margin-top: -9px;
+  margin: -9px 0;
   color: var(--texto-3);
   font-size: 12px;
   text-align: right;
@@ -651,7 +725,6 @@ button {
   flex: 1;
   align-items: flex-end;
   justify-content: space-around;
-  height: 214px;
   border-bottom: 1px solid var(--borda-forte);
   /* linhas de fundo em R$ 4 mil e R$ 2 mil */
   background: linear-gradient(var(--borda) 1px, transparent 1px) 0 0 / 100% 50%;
@@ -677,6 +750,13 @@ button {
 
 .grafico-barras > .atual {
   background: var(--marca);
+}
+
+/* Este mês: só o contorno tracejado, porque o mês ainda não acabou */
+.grafico-barras > .parcial {
+  border: 1px dashed var(--texto-3);
+  border-bottom: 0;
+  background: none;
 }
 
 /* Nome do mês embaixo da barra. O script.js escreve "mai" e o capitalize deixa "Mai". */
@@ -732,6 +812,19 @@ button {
   height: 100%;
   border-radius: 4px;
   background: var(--marca);
+}
+
+/* Caixinha: o valor e os botões Guardar e Resgatar na mesma linha */
+.caixinha-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.caixinha-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 4px 10px;
 }
 
 /* Contatos do Pix rápido: bolinha com as iniciais e o nome embaixo */
@@ -802,6 +895,10 @@ button {
   word-break: break-all;
 }
 
+.receber-pix .botao {
+  margin-top: 10px;
+}
+
 /* O QR fica num quadrado branco, como num app de verdade */
 .qr {
   flex-shrink: 0;
@@ -812,6 +909,19 @@ button {
 }
 
 /* ---------- Extrato ---------- */
+/* Título com o período (7 dias / 30 dias / Tudo) à direita */
+.titulo-linha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.busca {
+  margin-bottom: 8px;
+}
+
 /* Resumo: três números lado a lado, separados por uma linha */
 .resumo {
   display: grid;
@@ -878,6 +988,11 @@ button {
   color: var(--texto);
 }
 
+/* O contorno do Tab fica para dentro, senão a caixa dos filtros corta */
+.filtro:focus-visible {
+  outline-offset: -2px;
+}
+
 /* ---------- Cartões ---------- */
 .cartao-visual {
   display: flex;
@@ -919,6 +1034,11 @@ button {
 .cartao-marca {
   font-size: 17px;
   font-weight: 600;
+}
+
+/* O nome no cartão vem do script.js e aparece em maiúsculas, como no cartão de verdade */
+.cartao-visual .usuario-nome {
+  text-transform: uppercase;
 }
 
 .cartao-chip {
@@ -986,6 +1106,8 @@ button {
   z-index: 30;
   width: 340px;
   padding: 16px;
+  max-height: min(480px, 70vh); /* muitas notificações: a caixinha rola */
+  overflow-y: auto;
   border: 1px solid var(--borda-forte);
   border-radius: var(--raio);
   background: var(--card);
@@ -1043,8 +1165,9 @@ button {
   font-size: 18px;
 }
 
+/* Pelo menos 200px para o nome: sem espaço (celular), agência e conta descem */
 .perfil-nome {
-  flex: 1;
+  flex: 1 1 200px;
 }
 
 .perfil-nome h2 {
@@ -1086,11 +1209,17 @@ button {
   border: 0;
 }
 
+/* Valor do lado direito; se for comprido (código do boleto), quebra alinhado à direita */
+.comprovante .lista strong {
+  text-align: right;
+}
+
 #comp-codigo {
   font-family: ui-monospace, Consolas, monospace;
 }
 
-.comprovante-acoes {
+/* Botões lado a lado (Confirmar / Voltar, Voltar ao início / Ver extrato / PDF) */
+.acoes {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -1107,6 +1236,28 @@ button {
   border-top: 1px solid var(--borda);
   color: var(--texto-3);
   font-size: 13px;
+}
+
+/* ---------- Olho do topo: esconde todos os valores ----------
+   O script.js põe a classe "oculto" no <body>. Tudo o que tem a classe "dinheiro"
+   fica invisível (mas continua ocupando o lugar) e aparecem bolinhas por cima. */
+.oculto .dinheiro {
+  position: relative;
+  visibility: hidden;
+}
+
+.oculto .dinheiro::after {
+  content: "••••";
+  position: absolute;
+  inset: 0;
+  color: var(--texto-2);
+  visibility: visible;
+}
+
+/* No topo, o saldo escondido fica do tamanho das bolinhas, e o olho vem logo depois */
+.oculto #saldo-numero {
+  display: inline-block;
+  width: 1.8em;
 }
 
 /* ---------- Barra de baixo: só aparece no celular (ver abaixo) ---------- */
@@ -1135,12 +1286,15 @@ button {
     z-index: 20;
     width: 250px;
     transform: translateX(-100%);
-    transition: transform 0.2s;
+    /* "hidden": fechado, o Tab do teclado não passa pelos links escondidos */
+    visibility: hidden;
+    transition: transform 0.2s, visibility 0.2s;
   }
 
   /* O script.js coloca a classe "aberto" para mostrar o menu */
   .sidebar.aberto {
     transform: none;
+    visibility: visible;
     box-shadow: 0 0 40px rgb(0 0 0 / 0.5);
   }
 
@@ -1190,11 +1344,8 @@ button {
     padding: 16px;
   }
 
-  /* A tabela mostra só a descrição e o valor */
-  .tabela th:nth-child(2),
-  .tabela td:nth-child(2),
-  .tabela th:nth-child(3),
-  .tabela td:nth-child(3) {
+  /* A tabela esconde a coluna Tipo (no Início a Data continua) */
+  .tabela .tipo {
     display: none;
   }
 }
@@ -1280,7 +1431,7 @@ button {
   .topo,
   .rodape,
   .barra-celular,
-  .comprovante-acoes {
+  .acoes {
     display: none;
   }
 }

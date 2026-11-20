@@ -4,12 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prisma Bank | Criar conta</title>
+    <meta name="description" content="Crie sua conta no Prisma Bank, um banco digital fictício feito em um projeto da faculdade.">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icones/icone-180.png">
 
     <!-- Fonte do Google (IBM Plex Sans) e o CSS do site + o do cadastro -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="css/style-1.css">
     <link rel="stylesheet" href="css/cadastro.css">
+    <!-- Tema, máscara do celular e conferência das senhas -->
+    <script src="comum.js"></script>
 </head>
 
 <body>
@@ -38,7 +45,9 @@
         </ul>
     </aside>
 
-    <!-- Lado direito: o formulário. Ao criar a conta, vai para o banco (index.html) -->
+    <!-- Lado direito: o formulário. Ao criar a conta, vai para o banco (index.html)
+         levando no endereço os campos que têm "name": nome, e-mail e celular.
+         As senhas não têm "name", então não vão para lugar nenhum. -->
     <main>
         <div class="logo"><img src="favicon.svg" alt="" width="32" height="32"> Prisma Bank</div>
 
@@ -46,19 +55,19 @@
 
         <form action="index.html">
             <label for="nome">Nome completo</label>
-            <input type="text" id="nome" placeholder="Seu nome" autocomplete="name" required>
+            <input type="text" id="nome" name="nome" placeholder="Seu nome" autocomplete="name" required>
 
             <label for="email">E-mail</label>
-            <input type="email" id="email" placeholder="seu@email.com" autocomplete="email" required>
+            <input type="email" id="email" name="email" placeholder="seu@email.com" autocomplete="email" required>
 
             <label for="telefone">Celular</label>
-            <input type="tel" id="telefone" placeholder="(00) 00000-0000" autocomplete="tel" required>
+            <input type="tel" id="telefone" name="celular" placeholder="(00) 00000-0000" autocomplete="tel" minlength="15" oninput="formatar(this, '(##) #####-####')" required>
 
             <label for="senha">Senha</label>
-            <input type="password" id="senha" autocomplete="new-password" required>
+            <input type="password" id="senha" autocomplete="new-password" oninput="conferirSenhas()" required>
 
             <label for="confirmar">Confirmar senha</label>
-            <input type="password" id="confirmar" autocomplete="new-password" required>
+            <input type="password" id="confirmar" autocomplete="new-password" oninput="conferirSenhas()" required>
 
             <input type="checkbox" id="termos" required>
             <label for="termos">Li e concordo com os termos de uso e a política de privacidade.</label>
