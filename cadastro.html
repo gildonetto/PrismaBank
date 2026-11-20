@@ -5,77 +5,143 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prisma Bank | Criar conta</title>
     <meta name="description" content="Crie sua conta no Prisma Bank, um banco digital fictício feito em um projeto da faculdade.">
-    <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icones/icone-180.png">
+    <link rel="icon" href="docs/favicon.svg" type="image/svg+xml">
 
-    <!-- Fonte do Google (IBM Plex Sans) e o CSS do site + o do cadastro -->
+    <!-- Fonte, o CSS do site e o das telas de entrada (login e cadastro) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="css/style-1.css">
     <link rel="stylesheet" href="css/cadastro.css">
-    <!-- Tema, máscara do celular e conferência das senhas -->
-    <script src="comum.js"></script>
+    <!-- Tema, máscara do celular, nome no cartão e as duas etapas -->
+    <script src="script.js"></script>
 </head>
 
-<body>
+<!-- "entrada" = tela de login ou cadastro; "cadastro" = o painel com o leque de cartões (ver cadastro.css) -->
+<body class="entrada cadastro">
 
-    <!-- Lado esquerdo: só aparece em telas grandes (ver cadastro.css) -->
-    <aside class="vitrine">
-        <p class="vitrine-titulo">Conta digital sem tarifa de manutenção.</p>
-
-        <div class="cartao-visual">
-            <div class="cartao-linha">
-                <span class="cartao-marca">Prisma Bank</span>
-                <span class="cartao-etiqueta">Crédito</span>
-            </div>
-            <div class="cartao-chip"></div>
-            <span class="cartao-numero">•••• •••• •••• 4821</span>
-            <div class="cartao-linha">
-                <span>SEU NOME AQUI</span>
-                <span>08/31</span>
-            </div>
+    <!-- Painel: três cartões em leque. O da frente mostra o nome enquanto a pessoa digita. -->
+    <aside class="arte">
+        <div class="logo">
+            <svg class="simbolo" viewBox="0 0 64 64" aria-hidden="true"><rect class="simbolo-fundo" width="64" height="64" rx="14"/><path class="simbolo-luz" d="M32 13 26.5 49H12Z" opacity=".7"/><path class="simbolo-luz" d="M32 13 52 49H26.5Z"/></svg>
+            Prisma Bank
         </div>
 
-        <ul class="vitrine-lista">
-            <li>Cartão de crédito sem anuidade</li>
-            <li>Pix e TED ilimitados</li>
-            <li>Atendimento pelo app, todos os dias</li>
-        </ul>
+        <div class="palco">
+            <div class="leque" aria-hidden="true">
+                <div class="cartao-visual verso verso-1"></div>
+                <div class="cartao-visual verso verso-2"></div>
+                <div class="cartao-visual frente">
+                    <div class="cartao-linha">
+                        <span class="cartao-marca">Prisma Bank</span>
+                        <span class="cartao-etiqueta">Crédito</span>
+                    </div>
+                    <div class="cartao-chip"></div>
+                    <span class="cartao-numero">•••• •••• •••• 4821</span>
+                    <div class="cartao-linha">
+                        <span id="cartao-nome">SEU NOME AQUI</span>
+                        <span>08/31</span>
+                    </div>
+                </div>
+            </div>
+            <p class="leque-dica">O nome que você digitar aparece aqui.</p>
+        </div>
+
+        <div class="arte-texto">
+            <p class="arte-frase">Seu cartão já<br>tem o seu nome.</p>
+            <!-- Três números do banco: o <dt> é o nome, o <dd> é o número grande -->
+            <dl class="numeros">
+                <div><dt>Anuidade</dt><dd>R$ 0</dd></div>
+                <div><dt>Pix</dt><dd>24 h</dd></div>
+                <div><dt>Atendimento</dt><dd>7 dias</dd></div>
+            </dl>
+        </div>
     </aside>
 
-    <!-- Lado direito: o formulário. Ao criar a conta, vai para o banco (index.html)
-         levando no endereço os campos que têm "name": nome, e-mail e celular.
-         As senhas não têm "name", então não vão para lugar nenhum. -->
-    <main>
-        <div class="logo"><img src="favicon.svg" alt="" width="32" height="32"> Prisma Bank</div>
+    <!-- Lado do formulário. Ao criar a conta, vai para o banco (index.html) levando no endereço
+         os campos que têm "name": nome, e-mail e celular. As senhas não têm "name": não vão junto. -->
+    <main class="lado-form">
+        <p class="troca">Já tem conta? <a href="login.html">Entrar</a></p>
 
-        <h1>Criar conta</h1>
+        <div class="corpo">
+            <h1>Criar conta</h1>
+            <p class="subtitulo">Dois passos e o cartão é seu.</p>
 
-        <form action="index.html">
-            <label for="nome">Nome completo</label>
-            <input type="text" id="nome" name="nome" placeholder="Seu nome" autocomplete="name" required>
+            <!-- As duas etapas. O script.js troca o data-atual e o CSS pinta a barrinha. -->
+            <ol class="etapas" id="etapas" data-atual="1">
+                <li>Seus dados</li>
+                <li>Senha</li>
+            </ol>
 
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" placeholder="seu@email.com" autocomplete="email" required>
+            <!-- novalidate: quem confere é o script.js, com a mensagem embaixo de cada campo -->
+            <form action="index.html" novalidate onsubmit="entrar(event)" oninput="corrigindo(event.target)">
 
-            <label for="telefone">Celular</label>
-            <input type="tel" id="telefone" name="celular" placeholder="(00) 00000-0000" autocomplete="tel" minlength="15" oninput="formatar(this, '(##) #####-####')" required>
+                <fieldset class="etapa" id="etapa-1">
+                    <legend class="so-leitor">Etapa 1 de 2: seus dados</legend>
 
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" autocomplete="new-password" oninput="conferirSenhas()" required>
+                    <div class="campo">
+                        <label for="nome">Nome completo</label>
+                        <input type="text" id="nome" name="nome" placeholder="Como está no seu documento" autocomplete="name" required
+                               oninput="mostrarNoCartao(this)"
+                               aria-describedby="nome-msg" data-erro="Digite o seu nome completo.">
+                        <p class="campo-msg" id="nome-msg" aria-live="polite"></p>
+                    </div>
 
-            <label for="confirmar">Confirmar senha</label>
-            <input type="password" id="confirmar" autocomplete="new-password" oninput="conferirSenhas()" required>
+                    <div class="campo">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" placeholder="voce@email.com" autocomplete="email" required
+                               aria-describedby="email-msg" data-erro="Digite um e-mail válido, como voce@email.com.">
+                        <p class="campo-msg" id="email-msg" aria-live="polite"></p>
+                    </div>
 
-            <input type="checkbox" id="termos" required>
-            <label for="termos">Li e concordo com os termos de uso e a política de privacidade.</label>
+                    <div class="campo">
+                        <label for="celular">Celular</label>
+                        <input type="tel" id="celular" name="celular" placeholder="(00) 00000-0000" autocomplete="tel" inputmode="numeric" required
+                               minlength="15" oninput="formatar(this, '(##) #####-####')"
+                               aria-describedby="celular-msg" data-erro="Digite o celular com DDD: (11) 98765-4321.">
+                        <p class="campo-msg" id="celular-msg" aria-live="polite"></p>
+                    </div>
 
-            <button class="botao">Criar conta</button>
-        </form>
+                    <button class="botao botao-grande">Continuar</button>
+                </fieldset>
 
-        <p>Já tem conta? <a href="login.html">Entrar</a></p>
+                <fieldset class="etapa" id="etapa-2" hidden>
+                    <legend class="so-leitor">Etapa 2 de 2: senha</legend>
+
+                    <div class="campo">
+                        <label for="senha">Senha</label>
+                        <div class="com-botao">
+                            <input type="password" id="senha" placeholder="Mínimo de 8 caracteres" autocomplete="new-password" required minlength="8"
+                                   aria-describedby="senha-msg" data-erro="A senha precisa de pelo menos 8 caracteres.">
+                            <button type="button" class="ver-senha" onclick="alternarSenha(this)">Mostrar</button>
+                        </div>
+                        <p class="campo-msg" id="senha-msg" aria-live="polite"></p>
+                    </div>
+
+                    <div class="campo">
+                        <label for="confirmar">Confirmar senha</label>
+                        <input type="password" id="confirmar" autocomplete="new-password" required
+                               aria-describedby="confirmar-msg" data-erro="Repita a mesma senha.">
+                        <p class="campo-msg" id="confirmar-msg" aria-live="polite"></p>
+                    </div>
+
+                    <div class="campo">
+                        <label class="termos">
+                            <input type="checkbox" id="termos" required aria-describedby="termos-msg" data-erro="Aceite os termos para criar a conta.">
+                            <span>Li e aceito os termos de uso e a política de privacidade.</span>
+                        </label>
+                        <p class="campo-msg" id="termos-msg" aria-live="polite"></p>
+                    </div>
+
+                    <div class="etapa-botoes">
+                        <button type="button" class="botao botao-secundario" onclick="trocarEtapa(1)">Voltar</button>
+                        <button class="botao botao-grande">Criar conta</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+        <p class="rodape-entrada">Prisma Bank é um banco fictício, feito num projeto da faculdade.</p>
     </main>
 
 </body>

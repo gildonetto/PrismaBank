@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prisma Bank | Início</title>
   <meta name="description" content="Prisma Bank: banco digital fictício feito com HTML, CSS e JavaScript em um projeto da faculdade.">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <!-- Para instalar o site como aplicativo, no celular ou no computador -->
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icones/icone-180.png">
+  <link rel="icon" href="docs/favicon.svg" type="image/svg+xml">
 
   <!-- Fonte do Google (IBM Plex Sans) e o CSS do site. O "preconnect" já abre a conexão
        com o Google enquanto o resto carrega, e a fonte chega mais rápido. -->
@@ -16,8 +13,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="css/style-1.css">
-  <!-- Tema e máscara dos campos. Fica aqui em cima para o tema entrar antes de a página aparecer. -->
-  <script src="comum.js"></script>
+  <!-- O JavaScript do site. Fica aqui em cima para o tema entrar antes de a página aparecer;
+       o banco liga no fim do <body>, com iniciarBanco() (parte 8 do script.js). -->
+  <script src="script.js"></script>
 </head>
 <body>
   <!-- Ícones: cada <symbol> é desenhado uma vez aqui e usado com <svg class="ico"><use href="#i-nome"/></svg> -->
@@ -33,9 +31,10 @@
     <symbol id="i-sino" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15Z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
     <symbol id="i-tema" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17Z" fill="currentColor"/></symbol>
     <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-ajuda" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.6a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.6M12 16.8v.2"/></symbol>
+    <symbol id="i-cadeado" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></symbol>
     <symbol id="i-olho" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
     <symbol id="i-olho-off" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/><path d="M4 4l16 16"/></symbol>
-    <symbol id="i-cadeado" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></symbol>
     <symbol id="i-entrada" viewBox="0 0 24 24"><path d="M17 7 7 17M7 9v8h8"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
     <symbol id="i-documento" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><circle cx="8.5" cy="11" r="2"/><path d="M5.5 16c.6-1.4 1.6-2 3-2s2.4.6 3 2M14.5 10h4M14.5 13.5h3"/></symbol>
@@ -48,7 +47,7 @@
 
     <!-- ===== MENU LATERAL ===== -->
     <aside class="sidebar" id="sidebar">
-      <a href="#inicio" class="logo"><img src="favicon.svg" alt="" width="28" height="28"> Prisma Bank</a>
+      <a href="#inicio" class="logo"><img src="docs/favicon.svg" alt="" width="28" height="28"> Prisma Bank</a>
 
       <nav class="menu">
         <p class="menu-titulo">Conta</p>
@@ -63,7 +62,10 @@
         <a href="#recarga" class="menu-link"><svg class="ico"><use href="#i-recarga"/></svg> Recarga</a>
       </nav>
 
-      <a href="#configuracoes" class="menu-link"><svg class="ico"><use href="#i-config"/></svg> Configurações</a>
+      <div class="menu-fim">
+        <a href="#suporte" class="menu-link"><svg class="ico"><use href="#i-ajuda"/></svg> Suporte</a>
+        <a href="#configuracoes" class="menu-link"><svg class="ico"><use href="#i-config"/></svg> Configurações</a>
+      </div>
     </aside>
 
     <div class="conteudo">
@@ -83,16 +85,15 @@
           <button class="btn-icone" onclick="alternarTema()" aria-label="Mudar o tema"><svg class="ico"><use href="#i-tema"/></svg></button>
 
           <div class="notificacoes">
-            <button class="btn-icone" id="sino" onclick="alternarNotificacoes()" aria-label="Notificações">
+            <!-- O leitor de tela lê "Notificações 3": o nome e o número que aparece na bolinha -->
+            <button class="btn-icone" id="sino" onclick="alternarNotificacoes()">
               <svg class="ico"><use href="#i-sino"/></svg>
+              <span class="so-leitor">Notificações</span>
               <span class="badge" id="badge"></span>
             </button>
 
             <div class="caixa-notificacoes" id="caixa-notificacoes" hidden>
-              <div class="card-topo">
-                <h2>Notificações</h2>
-                <button class="link" id="btn-limpar" onclick="limparNotificacoes()">Limpar</button>
-              </div>
+              <h2>Notificações</h2>
               <ul class="lista" id="lista-notificacoes"><!-- preenchido pelo script.js --></ul>
             </div>
           </div>
@@ -109,7 +110,7 @@
           <div>
             <!-- "Bom dia / Boa tarde / Boa noite", o nome e a data vêm do script.js -->
             <h1><span id="saudacao">Olá</span>, <span class="usuario-primeiro-nome">Ana</span></h1>
-            <p class="texto-fraco" id="data-hoje"></p>
+            <p class="texto-fraco">Quarta-feira, 25 de novembro</p>
           </div>
 
           <nav class="atalhos">
@@ -121,7 +122,7 @@
         </div>
 
         <!-- Gráfico: a altura de cada barra é o gasto do mês (100% = R$ 4 mil).
-             As 6 primeiras são os meses antes deste; a tracejada é este mês até hoje,
+             As 6 primeiras são os meses antes deste; a azul-clara é este mês até hoje,
              calculada pelo script.js com as saídas do extrato. -->
         <section class="card grafico">
           <div class="card-topo">
@@ -130,7 +131,7 @@
               <p class="texto-fraco">Últimos 6 meses e este mês até hoje</p>
             </div>
             <div class="grafico-resumo">
-              <div><span class="texto-fraco">Em <span id="mes-passado"></span></span><strong class="dinheiro">R$ 3.810</strong><span class="texto-fraco">12% a mais que <span id="mes-retrasado"></span></span></div>
+              <div><span class="texto-fraco">Em outubro</span><strong class="dinheiro">R$ 3.810</strong><span class="texto-fraco">12% a mais que setembro</span></div>
               <div><span class="texto-fraco media">Média</span><strong class="dinheiro">R$ 3.200</strong></div>
             </div>
           </div>
@@ -138,13 +139,13 @@
           <div class="grafico-area">
             <div class="grafico-eixo"><span>R$ 4 mil</span><span>R$ 2 mil</span><span>R$ 0</span></div>
             <div class="grafico-barras" role="img" aria-label="Gastos por mês, do mais antigo ao mais recente: R$ 2.900, R$ 3.150, R$ 2.840, R$ 3.100, R$ 3.400, R$ 3.810 e o mês atual, que ainda não acabou">
-              <div style="height: 72.5%" data-valor="R$ 2.900"><span></span></div>
-              <div style="height: 79%" data-valor="R$ 3.150"><span></span></div>
-              <div style="height: 71%" data-valor="R$ 2.840"><span></span></div>
-              <div style="height: 77.5%" data-valor="R$ 3.100"><span></span></div>
-              <div style="height: 85%" data-valor="R$ 3.400"><span></span></div>
-              <div class="atual" style="height: 95%" data-valor="R$ 3.810"><span></span></div>
-              <div class="parcial"><span></span></div>
+              <div style="height: 72.5%" data-valor="R$ 2.900"><span>Mai</span></div>
+              <div style="height: 79%" data-valor="R$ 3.150"><span>Jun</span></div>
+              <div style="height: 71%" data-valor="R$ 2.840"><span>Jul</span></div>
+              <div style="height: 77.5%" data-valor="R$ 3.100"><span>Ago</span></div>
+              <div style="height: 85%" data-valor="R$ 3.400"><span>Set</span></div>
+              <div class="atual" style="height: 95%" data-valor="R$ 3.810"><span>Out</span></div>
+              <div class="parcial" style="height: 45%" data-valor="R$ 1.790 até hoje"><span>Nov</span></div>
             </div>
           </div>
         </section>
@@ -155,28 +156,28 @@
               <h2>Cartão de crédito</h2>
               <a href="#cartoes" class="link">Ver cartão</a>
             </div>
-            <span class="texto-fraco">Fatura atual · vence em <span class="fatura-vence"></span></span>
+            <span class="texto-fraco">Fatura atual · vence em 29 nov</span>
             <strong class="valor-grande dinheiro fatura-valor"></strong>
             <div class="barra"><span class="barra-limite"></span></div>
             <span class="texto-fraco">Limite disponível: <strong class="dinheiro limite-disponivel"></strong></span>
           </section>
 
-          <!-- Caixinha: dinheiro guardado para uma meta.
-               "Guardar" tira do saldo e "Resgatar" devolve (script.js, moverCaixinha) -->
+          <!-- Caixinha: dinheiro guardado para uma meta. Só de enfeite:
+               os números são fixos e os botões não fazem nada (não têm onclick). -->
           <section class="card">
             <div class="card-topo">
               <h2>Caixinha</h2>
               <span class="texto-fraco">Viagem de férias</span>
             </div>
-            <strong class="valor-grande dinheiro" id="caixinha-valor"></strong>
-            <div class="barra"><span id="caixinha-barra"></span></div>
-            <span class="texto-fraco" id="caixinha-meta"></span>
+            <strong class="valor-grande dinheiro">R$ 3.200,00</strong>
+            <div class="barra"><span style="width: 64%"></span></div>
+            <span class="texto-fraco">64% da meta de <span class="dinheiro">R$ 5.000,00</span></span>
 
-            <form class="caixinha-form" onsubmit="moverCaixinha(event)">
-              <input type="number" name="valor" min="0.01" step="0.01" inputmode="decimal" placeholder="R$ 0,00" aria-label="Valor para guardar ou resgatar" required>
-              <button class="botao botao-secundario botao-pequeno" value="guardar">Guardar</button>
-              <button class="botao botao-secundario botao-pequeno" value="resgatar">Resgatar</button>
-            </form>
+            <div class="caixinha-form">
+              <input type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="R$ 0,00" aria-label="Valor para guardar ou resgatar">
+              <button type="button" class="botao botao-secundario botao-pequeno">Guardar</button>
+              <button type="button" class="botao botao-secundario botao-pequeno">Resgatar</button>
+            </div>
           </section>
         </div>
 
@@ -253,12 +254,11 @@
             <section class="card">
               <h2>Receber Pix</h2>
               <div class="receber-pix">
-                <img class="qr" src="qr.svg" alt="QR Code para receber Pix">
+                <img class="qr" src="docs/qr.svg" alt="QR Code para receber Pix">
                 <div>
                   <span class="texto-fraco">Sua chave</span>
                   <strong class="usuario-email">ana.souza@email.com</strong>
                   <p class="texto-fraco">Mostre o QR Code ou envie a chave para quem vai te pagar.</p>
-                  <button class="botao botao-secundario botao-pequeno" onclick="copiarChave(this)">Copiar chave</button>
                 </div>
               </div>
             </section>
@@ -274,7 +274,11 @@
 
             <section class="card">
               <h2>Últimos Pix</h2>
-              <ul class="lista" id="lista-pix"><!-- preenchido pelo script.js --></ul>
+              <ul class="lista">
+                <li><div><strong>Lucas Ferreira</strong><span class="texto-fraco">Recebido</span></div><span class="valor dinheiro positivo">+ R$ 850,00</span></li>
+                <li><div><strong>Juliana Costa</strong><span class="texto-fraco">Recebido</span></div><span class="valor dinheiro positivo">+ R$ 300,00</span></li>
+                <li><div><strong>Renata Lima</strong><span class="texto-fraco">Enviado</span></div><span class="valor dinheiro">− R$ 120,00</span></li>
+              </ul>
             </section>
           </div>
         </div>
@@ -304,7 +308,7 @@
                 </select>
               </div>
 
-              <!-- oninput="formatar(...)": a máscara do comum.js põe o traço sozinha -->
+              <!-- oninput="formatar(...)": a máscara do script.js põe o traço sozinha -->
               <div class="campo-duplo">
                 <div class="campo">
                   <label for="transf-agencia">Agência</label>
@@ -365,17 +369,10 @@
                 <input type="text" id="pagar-codigo" name="destino" placeholder="Digite os números do boleto" inputmode="numeric" minlength="47" oninput="formatar(this, '########### ########### ########### ###########')" required>
               </div>
 
-              <div class="campo-duplo">
-                <div class="campo">
-                  <label for="pagar-valor">Valor (R$)</label>
-                  <input type="number" id="pagar-valor" name="valor" min="0.01" step="0.01" inputmode="decimal" placeholder="0,00" required>
-                </div>
-                <div class="campo">
-                  <label for="pagar-data">Data do pagamento</label>
-                  <input type="date" id="pagar-data" name="data" required>
-                </div>
+              <div class="campo">
+                <label for="pagar-valor">Valor (R$)</label>
+                <input type="number" id="pagar-valor" name="valor" min="0.01" step="0.01" inputmode="decimal" placeholder="0,00" required>
               </div>
-              <small class="texto-fraco">Para agendar, escolha um dia depois de hoje: o dinheiro só sai nesse dia.</small>
 
               <button class="botao">Continuar</button>
             </form>
@@ -431,7 +428,10 @@
 
           <section class="card">
             <h2>Recargas recentes</h2>
-            <ul class="lista" id="lista-recargas"><!-- preenchido pelo script.js --></ul>
+            <ul class="lista">
+                <li><div><strong>(11) 98765-4321</strong><span class="texto-fraco">Vivo</span></div><span class="valor dinheiro">− R$ 30,00</span></li>
+                <li><div><strong>(11) 98765-4321</strong><span class="texto-fraco">Vivo</span></div><span class="valor dinheiro">− R$ 20,00</span></li>
+            </ul>
           </section>
         </div>
       </main>
@@ -439,13 +439,14 @@
 
       <!-- ===== TELA: EXTRATO ===== -->
       <main class="pagina" data-tela="extrato" data-titulo="Extrato" hidden>
-        <!-- O período vale para a tela toda: resumo, gastos e movimentações -->
+        <!-- O período vale para a tela toda: resumo e movimentações -->
         <div class="titulo-linha">
           <h1>Extrato</h1>
           <div class="filtros">
-            <button class="filtro" onclick="filtrar(this, 'dias', 7)">7 dias</button>
-            <button class="filtro ativo" onclick="filtrar(this, 'dias', 30)">30 dias</button>
-            <button class="filtro" onclick="filtrar(this, 'dias', Infinity)">Tudo</button>
+            <button class="filtro" onclick="filtrarPeriodo(this, 7)">7 dias</button>
+            <button class="filtro ativo" onclick="filtrarPeriodo(this, 30)">30 dias</button>
+            <!-- "Tudo" = 9999 dias para trás, mais do que qualquer movimentação -->
+            <button class="filtro" onclick="filtrarPeriodo(this, 9999)">Tudo</button>
           </div>
         </div>
 
@@ -456,17 +457,12 @@
         </section>
 
         <section class="card">
-          <h2>Para onde foi seu dinheiro</h2>
-          <ul class="gastos" id="gastos"><!-- preenchido pelo script.js --></ul>
-        </section>
-
-        <section class="card">
           <div class="card-topo">
             <h2>Movimentações</h2>
             <div class="filtros">
-              <button class="filtro ativo" onclick="filtrar(this, 'tipo', 'todas')">Todas</button>
-              <button class="filtro" onclick="filtrar(this, 'tipo', 'entradas')">Entradas</button>
-              <button class="filtro" onclick="filtrar(this, 'tipo', 'saidas')">Saídas</button>
+              <button class="filtro ativo" onclick="filtrarTipo(this, 'todas')">Todas</button>
+              <button class="filtro" onclick="filtrarTipo(this, 'entradas')">Entradas</button>
+              <button class="filtro" onclick="filtrarTipo(this, 'saidas')">Saídas</button>
             </div>
           </div>
           <input type="search" class="busca" placeholder="Buscar por nome ou tipo" aria-label="Buscar movimentações" oninput="buscar(this.value)">
@@ -486,13 +482,13 @@
         <div class="colunas">
           <section class="card">
             <h2>Cartão Prisma</h2>
-            <div class="cartao-visual" id="cartao">
+            <div class="cartao-visual">
               <div class="cartao-linha">
                 <span class="cartao-marca">Prisma Bank</span>
-                <span class="cartao-etiqueta" id="status-cartao">Ativo</span>
+                <span class="cartao-etiqueta">Ativo</span>
               </div>
               <div class="cartao-chip"></div>
-              <span class="cartao-numero" id="numero-cartao">•••• •••• •••• 4821</span>
+              <span class="cartao-numero">•••• •••• •••• 4821</span>
               <div class="cartao-linha">
                 <div><small>Nome</small><span class="usuario-nome">Ana Souza</span></div>
                 <div><small>Validade</small>08/31</div>
@@ -500,10 +496,10 @@
               </div>
             </div>
 
+            <!-- Só de enfeite: os botões aparecem, mas não fazem nada (não têm onclick) -->
             <div class="cartao-acoes">
-              <button class="botao botao-secundario" onclick="alternarNumero(this)"><svg class="ico"><use href="#i-olho"/></svg> <span>Mostrar número</span></button>
-              <button class="botao botao-secundario botao-perigo" onclick="bloquearCartao(this)"><svg class="ico"><use href="#i-cadeado"/></svg> <span>Bloquear</span></button>
-              <button class="botao botao-secundario" onclick="alternarAjuste()"><svg class="ico"><use href="#i-config"/></svg> Ajustar limite</button>
+              <button type="button" class="botao botao-secundario"><svg class="ico"><use href="#i-olho"/></svg> Mostrar número</button>
+              <button type="button" class="botao botao-secundario botao-perigo"><svg class="ico"><use href="#i-cadeado"/></svg> Bloquear</button>
             </div>
           </section>
 
@@ -515,23 +511,21 @@
                 <button class="botao botao-pequeno" id="btn-fatura" onclick="pagarFatura(this)">Pagar fatura</button>
               </div>
               <strong class="valor-grande dinheiro fatura-valor"></strong>
-              <p class="texto-fraco">Fechou em <span class="fatura-fechou"></span> · vence em <span class="fatura-vence"></span></p>
+              <p class="texto-fraco">Fechou em 22 nov · vence em 29 nov</p>
               <div class="barra"><span class="barra-limite"></span></div>
               <div class="limite-info">
                 <div><span class="texto-fraco">Usado</span><strong class="dinheiro fatura-valor"></strong></div>
                 <div><span class="texto-fraco">Disponível</span><strong class="dinheiro limite-disponivel"></strong></div>
               </div>
-
-              <!-- Aparece ao clicar em "Ajustar limite" -->
-              <div class="ajuste-limite" id="ajuste-limite" hidden>
-                <label for="limite-total">Limite total: <strong id="limite-total-texto"></strong></label>
-                <input type="range" id="limite-total" min="2000" max="15000" step="500" value="8000" oninput="atualizarLimite()">
-              </div>
             </section>
 
             <section class="card">
               <h2>Últimas compras</h2>
-              <ul class="lista" id="lista-compras"><!-- preenchido pelo script.js --></ul>
+              <ul class="lista">
+                <li><div><strong>Supermercado Aurora</strong><span class="texto-fraco">Mercado</span></div><span class="valor dinheiro">− R$ 212,90</span></li>
+                <li><div><strong>Farmácia Bem Estar</strong><span class="texto-fraco">Saúde</span></div><span class="valor dinheiro">− R$ 67,40</span></li>
+                <li><div><strong>Posto Central</strong><span class="texto-fraco">Combustível</span></div><span class="valor dinheiro">− R$ 180,00</span></li>
+              </ul>
             </section>
           </div>
         </div>
@@ -557,31 +551,13 @@
         <div class="colunas">
           <section class="card">
             <h2>Meus dados</h2>
-            <!-- Ao salvar, o nome novo aparece na saudação, nas iniciais e no cartão -->
-            <form class="formulario" onsubmit="salvarDados(event)">
-              <div class="campo">
-                <label for="dados-nome">Nome</label>
-                <input type="text" id="dados-nome" name="nome" autocomplete="name" required>
-              </div>
-
-              <div class="campo">
-                <label for="dados-email">E-mail</label>
-                <input type="email" id="dados-email" name="email" autocomplete="email" required>
-              </div>
-
-              <div class="campo-duplo">
-                <div class="campo">
-                  <label for="dados-celular">Celular</label>
-                  <input type="tel" id="dados-celular" name="celular" autocomplete="tel" minlength="15" oninput="formatar(this, '(##) #####-####')" required>
-                </div>
-                <div class="campo">
-                  <label for="dados-cpf">CPF</label>
-                  <input type="text" id="dados-cpf" value="•••.456.789-••" disabled>
-                </div>
-              </div>
-
-              <button class="botao">Salvar alterações</button>
-            </form>
+            <!-- Vêm do cadastro: o script.js preenche tudo o que tem a classe usuario-... -->
+            <ul class="lista">
+              <li><span class="texto-fraco">Nome</span><span class="usuario-nome">Ana Souza</span></li>
+              <li><span class="texto-fraco">E-mail</span><span class="usuario-email">ana.souza@email.com</span></li>
+              <li><span class="texto-fraco">Celular</span><span class="usuario-celular">(11) 9••••-4321</span></li>
+              <li><span class="texto-fraco">CPF</span><span>•••.456.789-••</span></li>
+            </ul>
           </section>
 
           <div class="coluna">
@@ -610,6 +586,106 @@
 
 
       <!-- ===== TELA: CONFIRMAR (abre antes de o dinheiro sair) ===== -->
+      <!-- ===== TELA: SUPORTE ===== -->
+      <!-- Só HTML e CSS: cada pergunta é um <details>, que o próprio navegador abre e fecha ao clicar -->
+      <main class="pagina" data-tela="suporte" data-titulo="Suporte" hidden>
+        <div>
+          <h1>Suporte</h1>
+          <p class="texto-fraco">Tire suas dúvidas ou fale com a gente.</p>
+        </div>
+
+        <!-- Canais de atendimento (o Prisma Bank é fictício: os números não existem) -->
+        <section class="canais">
+          <div class="card">
+            <h2>Chat</h2>
+            <p class="texto-fraco">24 horas, todos os dias</p>
+            <button type="button" class="botao botao-pequeno">Iniciar conversa</button>
+          </div>
+          <div class="card">
+            <h2>Telefone</h2>
+            <p class="texto-fraco">24 horas, todos os dias</p>
+            <strong>0800 000 0000</strong>
+          </div>
+          <div class="card">
+            <h2>Ouvidoria</h2>
+            <p class="texto-fraco">Dias úteis, das 8h às 18h</p>
+            <strong>0800 000 0001</strong>
+          </div>
+        </section>
+
+        <div class="colunas">
+          <section class="card">
+            <h2>Perguntas frequentes</h2>
+
+            <h3 class="faq-grupo">Pix</h3>
+            <details class="faq">
+              <summary>Como faço um Pix?</summary>
+              <p>No menu, abra <strong>Pix</strong>, digite a chave e o valor e clique em <strong>Continuar</strong>. Antes de o dinheiro sair, a tela "Confira os dados" mostra tudo para você conferir.</p>
+            </details>
+            <details class="faq">
+              <summary>O Pix funciona à noite e no fim de semana?</summary>
+              <p>Sim. O Pix funciona 24 horas, todos os dias, inclusive feriados, e o dinheiro chega na hora.</p>
+            </details>
+            <details class="faq">
+              <summary>Mandei um Pix para a pessoa errada. E agora?</summary>
+              <p>Peça a devolução para quem recebeu. Se for golpe, ligue para o 0800 000 0000: a gente abre um pedido de devolução no Banco Central.</p>
+            </details>
+            <details class="faq">
+              <summary>Onde encontro o comprovante?</summary>
+              <p>No <strong>Extrato</strong>, clique na movimentação. O comprovante abre com o código de autenticação e o botão <strong>Salvar em PDF</strong>.</p>
+            </details>
+
+            <h3 class="faq-grupo">Cartão</h3>
+            <details class="faq">
+              <summary>Quando a fatura fecha e vence?</summary>
+              <p>As duas datas aparecem em <strong>Cartões</strong>, logo abaixo do valor da fatura.</p>
+            </details>
+            <details class="faq">
+              <summary>Como pago a fatura?</summary>
+              <p>Em <strong>Cartões</strong>, clique em <strong>Pagar fatura</strong>. O valor sai do seu saldo e o limite volta a ficar disponível.</p>
+            </details>
+            <details class="faq">
+              <summary>Perdi meu cartão. O que faço?</summary>
+              <p>Ligue para o 0800 000 0000, a qualquer hora, e peça o bloqueio. Um cartão novo chega em até 7 dias úteis.</p>
+            </details>
+
+            <h3 class="faq-grupo">Conta</h3>
+            <details class="faq">
+              <summary>A conta ou o cartão têm tarifa?</summary>
+              <p>Não. A conta Prisma não tem tarifa mensal, e o cartão não tem anuidade.</p>
+            </details>
+            <details class="faq">
+              <summary>Como escondo os valores da tela?</summary>
+              <p>Clique no olho ao lado do saldo, lá em cima. Todos os valores do site viram bolinhas; clique de novo para mostrar.</p>
+            </details>
+            <details class="faq">
+              <summary>Como mudo meu e-mail ou celular?</summary>
+              <p>Por segurança, a troca é feita pelo telefone 0800 000 0000. Seus dados atuais aparecem em <strong>Configurações</strong>.</p>
+            </details>
+          </section>
+
+          <div class="coluna">
+            <section class="card">
+              <h2>Dicas de segurança</h2>
+              <ul class="lista dicas">
+                <li>O Prisma Bank nunca pede sua senha por telefone, e-mail ou mensagem.</li>
+                <li>Desconfie de pedidos com pressa, como "pague agora ou sua conta será bloqueada".</li>
+                <li>Antes de confirmar, confira o nome de quem vai receber o dinheiro.</li>
+              </ul>
+            </section>
+
+            <section class="card">
+              <h2>Atalhos</h2>
+              <ul class="lista">
+                <li><span>Ver o extrato</span><a href="#extrato" class="botao botao-secundario botao-pequeno">Extrato</a></li>
+                <li><span>Pagar a fatura</span><a href="#cartoes" class="botao botao-secundario botao-pequeno">Cartões</a></li>
+                <li><span>Trocar o tema</span><a href="#configuracoes" class="botao botao-secundario botao-pequeno">Configurações</a></li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </main>
+
       <main class="pagina" data-tela="confirmar" data-titulo="Confirmar" hidden>
         <section class="card comprovante">
           <h1>Confira os dados</h1>
@@ -675,6 +751,7 @@
     </nav>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Liga o banco (script.js, parte 8) agora que todo o HTML acima já existe -->
+  <script>iniciarBanco();</script>
 </body>
 </html>

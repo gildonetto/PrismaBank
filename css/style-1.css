@@ -18,8 +18,10 @@
   --marca: #2f5fe0;      /* o azul do Prisma: botões, barras e item ativo */
   --link: #8aa8ff;       /* o mesmo azul, mais claro, para ler no fundo escuro */
   --verde: #4cbb85;      /* dinheiro que entrou */
-  --amarelo: #e2a63b;    /* pendente */
   --vermelho: #f07a7a;   /* bloquear, sair */
+  --roxo: #a78bfa;       /* roxo, laranja e rosa: só nas bolinhas dos contatos */
+  --laranja: #e8a54b;
+  --rosa: #f07ab8;
   --barra: #4b4f58;      /* barras do gráfico, menos a do último mês */
   --raio: 8px;
 }
@@ -37,14 +39,22 @@
   --texto-3: #6b707a;
   --link: #2f5fe0;
   --verde: #13804f;
-  --amarelo: #9a6200;
   --vermelho: #c43838;
+  --roxo: #6d4fd1;
+  --laranja: #9a5b00;
+  --rosa: #b83280;
   --barra: #b9bdc6;
 }
 
 /* ---------- Base ---------- */
 * {
   box-sizing: border-box;
+}
+
+/* Ao trocar de página (login → cadastro → banco), uma tela some suavemente na outra.
+   Funciona pelo Live Server; abrindo o arquivo direto, o navegador só troca de página. */
+@view-transition {
+  navigation: auto;
 }
 
 /* Barra de rolagem fina, nas cores do site */
@@ -57,7 +67,7 @@ body {
   margin: 0;
   background: var(--fundo);
   color: var(--texto);
-  font: 15px/1.5 "IBM Plex Sans", system-ui, sans-serif;
+  font: 16px/1.5 "IBM Plex Sans", system-ui, sans-serif;
 }
 
 h1,
@@ -68,12 +78,12 @@ ul {
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 600;
 }
 
 h2 {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
 }
 
@@ -112,7 +122,7 @@ input[type="checkbox"] {
 
 .texto-fraco {
   color: var(--texto-2);
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .texto-fraco strong {
@@ -130,6 +140,16 @@ input[type="checkbox"] {
   stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+/* Texto só para leitor de tela (ex.: "Notificações" no sino, " senha" no "Mostrar") */
+.so-leitor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* ---------- Estrutura: menu à esquerda, conteúdo à direita ---------- */
@@ -157,7 +177,7 @@ input[type="checkbox"] {
   align-items: center;
   gap: 10px;
   padding: 0 14px;
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 600;
 }
 
@@ -171,8 +191,9 @@ input[type="checkbox"] {
 /* "Conta" e "Serviços" */
 .menu-titulo {
   margin: 18px 14px 2px;
-  color: var(--texto-3);
-  font-size: 13px;
+  color: var(--texto-2);
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .menu-titulo:first-child {
@@ -186,7 +207,7 @@ input[type="checkbox"] {
   padding: 11px 14px;
   border-radius: var(--raio);
   color: var(--texto-2);
-  font-size: 16.5px;
+  font-size: 17px;
 }
 
 .menu-link .ico {
@@ -208,6 +229,13 @@ input[type="checkbox"] {
 
 .menu-link.ativo .ico {
   color: var(--link);
+}
+
+/* Suporte e Configurações, no pé do menu */
+.menu-fim {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 /* ---------- Conteúdo: topo, a tela aberta e o rodapé ---------- */
@@ -237,7 +265,7 @@ input[type="checkbox"] {
 }
 
 .saldo-valor {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 600;
   line-height: 1.2;
   white-space: nowrap;
@@ -297,7 +325,7 @@ input[type="checkbox"] {
   border-radius: 9px;
   background: var(--marca);
   color: #fff;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 18px;
 }
@@ -311,7 +339,7 @@ input[type="checkbox"] {
   height: 38px;
   border-radius: 50%;
   background: var(--card-2);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
 }
 
@@ -377,7 +405,7 @@ input[type="checkbox"] {
   border: 0;
   background: none;
   color: var(--link);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
 }
 
@@ -420,7 +448,7 @@ input[type="checkbox"] {
 
 .botao-pequeno {
   padding: 4px 12px;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 /* Botão desligado (ex.: "Fatura paga") */
@@ -444,7 +472,7 @@ input[type="checkbox"] {
 .campo > label,
 .campo > span {
   color: var(--texto-2);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
 }
 
@@ -473,18 +501,13 @@ input[type="checkbox"] {
   outline: 1px solid var(--marca);
 }
 
-/* CPF em "Meus dados": aparece, mas não dá para mudar */
-.campo input:disabled {
-  color: var(--texto-3);
-}
-
 /* Caixa de marcar dentro do formulário ("Salvar nos favorecidos") */
 .marcar {
   display: flex;
   align-items: center;
   gap: 8px;
   color: var(--texto-2);
-  font-size: 14px;
+  font-size: 15px;
   cursor: pointer;
 }
 
@@ -589,7 +612,7 @@ input[type="checkbox"] {
 .tabela th {
   padding: 0 0 8px;
   color: var(--texto-3);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 500;
   text-align: left;
 }
@@ -597,6 +620,18 @@ input[type="checkbox"] {
 .tabela td {
   padding: 12px 0;
   border-top: 1px solid var(--borda);
+  font-size: 17px;
+}
+
+/* Espaço entre as colunas, para o texto de uma não encostar na outra */
+.tabela td + td,
+.tabela th + th {
+  padding-left: 12px;
+}
+
+/* Tipo (Pix, Cartão...): na cor do texto, sem negrito, para ler bem ao lado do nome */
+.tabela td.tipo {
+  color: var(--texto);
 }
 
 .tabela .valor {
@@ -618,12 +653,6 @@ input[type="checkbox"] {
 
 .positivo {
   color: var(--verde);
-}
-
-.pendente {
-  margin-left: 6px;
-  color: var(--amarelo);
-  font-size: 13px;
 }
 
 /* Extrato separado por dia: a linha com a data ("Hoje", "Ontem", "16 nov") */
@@ -675,7 +704,7 @@ input[type="checkbox"] {
 
 .grafico-resumo strong {
   display: block;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
 }
 
@@ -714,7 +743,7 @@ input[type="checkbox"] {
   justify-content: space-between;
   margin: -9px 0;
   color: var(--texto-3);
-  font-size: 12px;
+  font-size: 14px;
   text-align: right;
   white-space: nowrap;
 }
@@ -752,21 +781,19 @@ input[type="checkbox"] {
   background: var(--marca);
 }
 
-/* Este mês: só o contorno tracejado, porque o mês ainda não acabou */
+/* Este mês: azul mais claro, porque o mês ainda não acabou */
 .grafico-barras > .parcial {
-  border: 1px dashed var(--texto-3);
-  border-bottom: 0;
-  background: none;
+  background: color-mix(in srgb, var(--marca) 40%, transparent);
 }
 
-/* Nome do mês embaixo da barra. O script.js escreve "mai" e o capitalize deixa "Mai". */
+/* Nome do mês embaixo da barra */
 .grafico-barras span {
   position: absolute;
   top: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%);
   color: var(--texto-2);
-  font-size: 13px;
+  font-size: 15px;
   text-transform: capitalize;
 }
 
@@ -787,18 +814,18 @@ input[type="checkbox"] {
   border-radius: 4px;
   background: var(--texto);
   color: var(--fundo);
-  font-size: 12px;
+  font-size: 14px;
   white-space: nowrap;
 }
 
 .valor-grande {
   display: block;
   margin: 2px 0 14px;
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 600;
 }
 
-/* Barra de progresso (limite do cartão, caixinha e gastos):
+/* Barra de progresso (limite do cartão e caixinha):
    o fundo é um azul fraquinho e o preenchimento é o azul da marca */
 .barra {
   height: 8px;
@@ -846,13 +873,32 @@ input[type="checkbox"] {
   justify-items: center;
   gap: 6px;
   color: var(--texto-2);
-  font-size: 13px;
+  font-size: 15px;
 }
 
+/* Cada contato tem a sua cor, na ordem da lista: verde, roxo, laranja, rosa e repete */
 .contato .avatar,
 .favorecido .avatar {
+  --cor: var(--verde);
   width: 44px;
   height: 44px;
+  background: color-mix(in srgb, var(--cor) 18%, transparent); /* a cor bem clarinha no fundo */
+  color: var(--cor);
+}
+
+.contato:nth-child(4n + 2) .avatar,
+#favorecidos li:nth-child(4n + 2) .avatar {
+  --cor: var(--roxo);
+}
+
+.contato:nth-child(4n + 3) .avatar,
+#favorecidos li:nth-child(4n + 3) .avatar {
+  --cor: var(--laranja);
+}
+
+.contato:nth-child(4n + 4) .avatar,
+#favorecidos li:nth-child(4n + 4) .avatar {
+  --cor: var(--rosa);
 }
 
 .contato:hover {
@@ -861,7 +907,7 @@ input[type="checkbox"] {
 
 .contato:hover .avatar,
 .favorecido:hover .avatar {
-  background: var(--borda-forte);
+  background: color-mix(in srgb, var(--cor) 32%, transparent);
 }
 
 /* Favorecidos (Transferências): a linha inteira é um botão */
@@ -939,28 +985,8 @@ input[type="checkbox"] {
 
 .resumo strong {
   display: block;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 600;
-}
-
-/* "Para onde foi seu dinheiro": tipo, barra, porcentagem e valor */
-.gastos li {
-  display: grid;
-  grid-template-columns: 90px 1fr 44px 110px;
-  align-items: center;
-  gap: 16px;
-}
-
-.gastos li + li {
-  margin-top: 14px;
-}
-
-.gastos .barra {
-  margin: 0;
-}
-
-.gastos li > :nth-child(n + 3) {
-  text-align: right;
 }
 
 /* Filtro Todas / Entradas / Saídas: três botões grudados */
@@ -976,7 +1002,7 @@ input[type="checkbox"] {
   border: 0;
   background: none;
   color: var(--texto-2);
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .filtro + .filtro {
@@ -1005,17 +1031,19 @@ input[type="checkbox"] {
   color: #fff;
 }
 
-/* O script.js coloca a classe "bloqueado" quando o cartão é bloqueado */
-.cartao-visual.bloqueado {
-  background: #4b4e56;
-}
-
 /* Linha de cima e linha de baixo: o último item vai para a direita */
 .cartao-linha {
   display: flex;
   align-items: flex-end;
-  gap: 28px;
+  gap: 20px;
   font-weight: 500;
+  white-space: nowrap; /* o nome fica numa linha só; se for comprido demais, termina em "..." */
+}
+
+.cartao-linha > div:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cartao-linha > :last-child {
@@ -1025,7 +1053,7 @@ input[type="checkbox"] {
 .cartao-linha small,
 .cartao-etiqueta {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   opacity: 0.75;
@@ -1076,24 +1104,6 @@ input[type="checkbox"] {
   text-align: right;
 }
 
-.ajuste-limite {
-  display: grid;
-  gap: 8px;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--borda);
-  color: var(--texto-2);
-  font-size: 14px;
-}
-
-.ajuste-limite strong {
-  color: var(--texto);
-}
-
-.ajuste-limite input {
-  accent-color: var(--marca);
-}
-
 /* ---------- Notificações (caixinha que abre no sino) ---------- */
 .notificacoes {
   position: relative;
@@ -1114,7 +1124,7 @@ input[type="checkbox"] {
   box-shadow: 0 8px 24px rgb(0 0 0 / 0.25); /* fica por cima do resto da tela */
 }
 
-.caixa-notificacoes .card-topo {
+.caixa-notificacoes h2 {
   margin-bottom: 8px;
 }
 
@@ -1143,7 +1153,7 @@ input[type="checkbox"] {
 
 .notificacao p {
   color: var(--texto-2);
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .notificacao strong {
@@ -1235,7 +1245,7 @@ input[type="checkbox"] {
   padding: 20px max(28px, calc((100% - 1124px) / 2)) 28px;
   border-top: 1px solid var(--borda);
   color: var(--texto-3);
-  font-size: 13px;
+  font-size: 15px;
 }
 
 /* ---------- Olho do topo: esconde todos os valores ----------
@@ -1319,7 +1329,7 @@ input[type="checkbox"] {
     padding: 6px 0;
     border: 0;
     background: none;
-    font-size: 12px;
+    font-size: 13px;
   }
 
   /* Espaço no fim da página para a barra não cobrir o rodapé */
@@ -1332,7 +1342,7 @@ input[type="checkbox"] {
   }
 
   .saldo-valor {
-    font-size: 22px;
+    font-size: 24px;
   }
 
   .painel,
@@ -1367,27 +1377,20 @@ input[type="checkbox"] {
     flex-direction: column;
     gap: 4px;
     padding: 10px 4px;
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .resumo {
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .tabela td {
+    font-size: 16px;
+  }
+
   .resumo div + div {
     border-top: 1px solid var(--borda);
     border-left: 0;
-  }
-
-  /* Gastos: a barra desce para baixo do nome */
-  .gastos li {
-    grid-template-columns: 1fr auto auto;
-    gap: 6px 12px;
-  }
-
-  .gastos .barra {
-    order: 1;
-    grid-column: 1 / -1;
   }
 
   .receber-pix {
@@ -1407,6 +1410,105 @@ input[type="checkbox"] {
   .campo-duplo {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+
+/* ---------- Suporte ---------- */
+/* Três canais lado a lado (no celular, um embaixo do outro) */
+.canais {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.canais .card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.canais h2 {
+  margin: 0;
+}
+
+.canais strong {
+  margin-top: 12px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.canais .botao {
+  margin-top: 12px;
+}
+
+/* "Pix", "Cartão", "Conta": o nome de cada grupo de perguntas */
+.faq-grupo {
+  margin: 24px 0 4px;
+  color: var(--texto-2);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.card > h2 + .faq-grupo {
+  margin-top: 0;
+}
+
+/* Pergunta: o <summary> é a linha clicável; a resposta (<p>) só aparece aberta */
+.faq {
+  border-bottom: 1px solid var(--borda);
+}
+
+.faq:last-child {
+  border-bottom: 0;
+}
+
+.faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  font-weight: 500;
+  list-style: none; /* tira o triângulo padrão do navegador */
+  cursor: pointer;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+/* "+" à direita, que gira e vira "×" quando a pergunta está aberta */
+.faq summary::after {
+  content: "+";
+  flex-shrink: 0;
+  color: var(--texto-2);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1;
+  transition: transform 0.2s;
+}
+
+.faq[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq summary:hover {
+  color: var(--link);
+}
+
+.faq summary:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+}
+
+.faq p {
+  padding: 0 32px 16px 0;
+  color: var(--texto-2);
+}
+
+/* Dicas de segurança: texto que ocupa a linha toda */
+.dicas li {
+  display: block;
 }
 
 /* ---------- Impressão: botão "Salvar em PDF" do comprovante ----------

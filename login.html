@@ -5,39 +5,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prisma Bank | Entrar</title>
     <meta name="description" content="Entre no Prisma Bank, um banco digital fictício feito em um projeto da faculdade.">
-    <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icones/icone-180.png">
+    <link rel="icon" href="docs/favicon.svg" type="image/svg+xml">
 
-    <!-- Mesmo visual do cadastro: fonte, style-1.css e cadastro.css -->
+    <!-- Fonte, o CSS do site e o das telas de entrada (login e cadastro) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="css/style-1.css">
     <link rel="stylesheet" href="css/cadastro.css">
-    <!-- Tema claro ou escuro (o mesmo do banco) -->
-    <script src="comum.js"></script>
+    <!-- Tema e o formulário (erros embaixo dos campos e "Mostrar" senha) -->
+    <script src="script.js"></script>
 </head>
 
-<body>
+<!-- "entrada" = tela de login ou cadastro; "login" = o painel azul com o prisma (ver cadastro.css) -->
+<body class="entrada login">
 
-    <!-- Só o formulário, no meio da tela. Ao entrar, vai para o banco (index.html) -->
-    <main>
-        <div class="logo"><img src="favicon.svg" alt="" width="32" height="32"> Prisma Bank</div>
+    <!-- Painel: o prisma. A luz branca entra e sai nas cores do Prisma. -->
+    <aside class="arte">
+        <div class="logo">
+            <svg class="simbolo" viewBox="0 0 64 64" aria-hidden="true"><rect class="simbolo-fundo" width="64" height="64" rx="14"/><path class="simbolo-luz" d="M32 13 26.5 49H12Z" opacity=".7"/><path class="simbolo-luz" d="M32 13 52 49H26.5Z"/></svg>
+            Prisma Bank
+        </div>
 
-        <h1>Entrar</h1>
+        <!-- O desenho e os dois avisos são só enfeite: o leitor de tela pula (aria-hidden) -->
+        <div class="palco" aria-hidden="true">
+            <svg class="prisma" viewBox="0 0 480 300">
+                <!-- O raio começa bem à esquerda, fora do desenho, e o painel corta na borda -->
+                <line class="prisma-raio" x1="-1200" y1="515" x2="190" y2="150" pathLength="1"/>
+                <g class="prisma-cores">
+                    <polygon points="285,140 288.6,148 480,150 480,110" fill="#4cbb85"/>
+                    <polygon points="288.6,148 292.2,156 480,190 480,150" fill="#e8a54b"/>
+                    <polygon points="292.2,156 295.8,164 480,230 480,190" fill="#f07ab8"/>
+                    <polygon points="295.8,164 299.4,172 480,270 480,230" fill="#b9a4ff"/>
+                </g>
+                <polygon class="prisma-luz" points="190,150 285,140 299.4,172"/>
+                <polygon class="prisma-vidro" points="240,40 150,240 330,240"/>
+            </svg>
 
-        <form action="index.html">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" placeholder="seu@email.com" autocomplete="email" required>
+            <div class="nota nota-pix">
+                <span class="avatar">LF</span>
+                <div><strong>Pix recebido</strong><span>de Lucas Ferreira</span></div>
+                <b>+ R$ 850,00</b>
+            </div>
+            <div class="nota nota-caixinha">
+                <div><strong>Caixinha</strong><span>R$ 3.200 de R$ 5.000</span></div>
+                <div class="barra"><span style="width: 64%"></span></div>
+            </div>
+        </div>
 
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" autocomplete="current-password" required>
+        <p class="arte-frase">Todas as cores<br>do seu dinheiro.</p>
+    </aside>
 
-            <button class="botao">Entrar</button>
-        </form>
+    <!-- Lado do formulário. Ao entrar, vai para o banco (index.html). -->
+    <main class="lado-form">
+        <p class="troca">Não tem conta? <a href="cadastro.html">Criar conta</a></p>
 
-        <p>Não tem conta? <a href="cadastro.html">Criar conta</a></p>
+        <div class="corpo">
+            <h1>Entrar</h1>
+            <p class="subtitulo">Que bom te ver de novo.</p>
+
+            <!-- novalidate: quem confere é o script.js, com a mensagem embaixo de cada campo -->
+            <form action="index.html" novalidate onsubmit="entrar(event)" oninput="corrigindo(event.target)">
+                <div class="campo">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="voce@email.com" autocomplete="email" required
+                           aria-describedby="email-msg" data-erro="Digite um e-mail válido, como voce@email.com.">
+                    <p class="campo-msg" id="email-msg" aria-live="polite"></p>
+                </div>
+
+                <div class="campo">
+                    <label for="senha">Senha</label>
+                    <div class="com-botao">
+                        <input type="password" id="senha" autocomplete="current-password" required
+                               aria-describedby="senha-msg" data-erro="Digite a sua senha.">
+                        <button type="button" class="ver-senha" onclick="alternarSenha(this)">Mostrar</button>
+                    </div>
+                    <p class="campo-msg" id="senha-msg" aria-live="polite"></p>
+                </div>
+
+                <button class="botao botao-grande">Entrar</button>
+            </form>
+        </div>
+
+        <p class="rodape-entrada">Prisma Bank é um banco fictício, feito num projeto da faculdade.</p>
     </main>
 
 </body>
