@@ -7,7 +7,10 @@ function $(id) { return document.getElementById(id); }
 // Tema salvo no navegador. Na primeira visita, segue o do computador.
 let tema = localStorage.getItem("prisma-tema");
 if (tema === null && matchMedia("(prefers-color-scheme: light)").matches) tema = "claro";
-if (tema === "claro") document.documentElement.classList.add("claro");
+// Login e cadastro (<html data-so-escuro>) ficam sempre no escuro
+if (tema === "claro" && !document.documentElement.hasAttribute("data-so-escuro")) {
+  document.documentElement.classList.add("claro");
+}
 
 function alternarTema() {
   const claro = document.documentElement.classList.toggle("claro"); // toggle devolve true se ligou
