@@ -480,7 +480,11 @@ fieldset {
   animation-delay: 0.08s;
 }
 
+/* position + z-index: a frente fica por cima dos versos mesmo sem animação
+   (com "menos movimento" ligado no sistema, a parte 8 desliga as animações) */
 .frente {
+  position: relative;
+  z-index: 1;
   animation-delay: 0.16s;
 }
 
